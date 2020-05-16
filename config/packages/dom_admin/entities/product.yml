@@ -26,6 +26,10 @@ dom_admin:
                     - { property: 'createdAt', format: 'j / M / Y' }
                     - tags
                 filters: ['enabled', 'name', 'price']
+                actions:
+                    - { name: 'show', label: '', icon: 'search' }
+                    - { name: 'edit', label: '', icon: 'edit' }
+                    - { name: 'delete', label: '', icon: 'trash' }
             show:
                 fields:
                     - id
@@ -41,7 +45,7 @@ dom_admin:
                     - tags
             form:
                 fields:
-                    - { type: 'group', css_class: 'col-sm-8', label: 'Basic information', icon: 'pencil' }
+                    - { type: 'group', css_class: 'col-sm-6', label: 'Basic information', icon: 'pencil' }
                     - { property: 'name', css_class: 'large' }
                     - { property: 'description', type: 'fos_ckeditor' }
                     - { type: 'divider' }

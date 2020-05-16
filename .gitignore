@@ -8,7 +8,7 @@
 /.env.local
 /.env.local.php
 /.env.*.local
-/public/bundles/
+/public/bundles_bk/
 /var/
 /vendor/
 ###< symfony/framework-bundle ###
