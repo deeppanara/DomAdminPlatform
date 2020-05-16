@@ -24,7 +24,7 @@ class DomAdminExtension extends Extension
         // process bundle's configuration parameters
         $configs = $this->processConfigFiles($configs);
         $backendConfig = $this->processConfiguration(new Configuration(), $configs);
-        $container->setParameter('easyadmin.config', $backendConfig);
+        $container->setParameter('domadmin.config', $backendConfig);
 
         // load bundle's services
         $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
@@ -33,11 +33,11 @@ class DomAdminExtension extends Extension
 
         if ($container->getParameter('kernel.debug')) {
             // in 'dev', use the built-in Symfony exception listener
-            $container->removeDefinition('easyadmin.listener.exception');
+            $container->removeDefinition('domadmin.listener.exception');
         }
 
         if ($container->hasParameter('locale')) {
-            $container->getDefinition('easyadmin.configuration.design_config_pass')
+            $container->getDefinition('domadmin.configuration.design_config_pass')
                 ->replaceArgument(0, $container->getParameter('locale'));
         }
     }

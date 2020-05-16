@@ -16,6 +16,6 @@ class EasyAdminSectionType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'easyadmin_section';
+        return 'domadmin_section';
     }
 }

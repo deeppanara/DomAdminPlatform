@@ -95,7 +95,7 @@ class ViewConfigPass implements ConfigPassInterface
                         // if the label is the special value 'false', label must be hidden (use an empty string as the label)
                         $fieldConfig['label'] = '';
                         $fieldConfig['sortable'] = false;
-                    } elseif (null === $fieldConfig['label'] && 0 !== \strpos($fieldConfig['property'], '_easyadmin_form_design_element_')) {
+                    } elseif (null === $fieldConfig['label'] && 0 !== \strpos($fieldConfig['property'], '_domadmin_form_design_element_')) {
                         // else, generate the label automatically from its name (except if it's a
                         // special element created to render complex forms)
                         $fieldConfig['label'] = $this->humanize($fieldConfig['property']);

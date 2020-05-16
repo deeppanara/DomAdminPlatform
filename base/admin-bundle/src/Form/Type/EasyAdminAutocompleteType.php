@@ -53,7 +53,7 @@ class EasyAdminAutocompleteType extends AbstractType implements DataMapperInterf
     public function finishView(FormView $view, FormInterface $form, array $options)
     {
         // Add a custom block prefix to inner field to ease theming:
-        \array_splice($view['autocomplete']->vars['block_prefixes'], -1, 0, 'easyadmin_autocomplete_inner');
+        \array_splice($view['autocomplete']->vars['block_prefixes'], -1, 0, 'domadmin_autocomplete_inner');
     }
 
     /**
@@ -75,7 +75,7 @@ class EasyAdminAutocompleteType extends AbstractType implements DataMapperInterf
      */
     public function getBlockPrefix()
     {
-        return 'easyadmin_autocomplete';
+        return 'domadmin_autocomplete';
     }
 
     /**

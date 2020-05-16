@@ -1,5 +1,5 @@
-@import "./easyadmin-theme/variables.css";
-@import "./easyadmin-theme/variables.scss";
+@import "./domadmin-theme/variables.css";
+@import "./domadmin-theme/variables.scss";
 
 // Imports only the Bootstrap styles used by default in the backend.
 // If you develop features that need other Bootstrap components, check out the
@@ -32,13 +32,13 @@
 @import "~select2/dist/css/select2.css";
 @import "~select2-bootstrap-theme/dist/select2-bootstrap.css";
 
-@import "./easyadmin-theme/base.scss";
-@import "./easyadmin-theme/menu.scss";
-@import "./easyadmin-theme/datagrids.scss";
-@import "./easyadmin-theme/images.scss";
-@import "./easyadmin-theme/forms.scss";
-@import "./easyadmin-theme/buttons.scss";
-@import "./easyadmin-theme/switches.scss";
-@import "./easyadmin-theme/select2.scss";
-@import "./easyadmin-theme/errors.scss";
-@import "./easyadmin-theme/pages.scss";
+@import "./domadmin-theme/base.scss";
+@import "./domadmin-theme/menu.scss";
+@import "./domadmin-theme/datagrids.scss";
+@import "./domadmin-theme/images.scss";
+@import "./domadmin-theme/forms.scss";
+@import "./domadmin-theme/buttons.scss";
+@import "./domadmin-theme/switches.scss";
+@import "./domadmin-theme/select2.scss";
+@import "./domadmin-theme/errors.scss";
+@import "./domadmin-theme/pages.scss";

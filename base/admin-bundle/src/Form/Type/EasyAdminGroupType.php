@@ -16,6 +16,6 @@ class EasyAdminGroupType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'easyadmin_group';
+        return 'domadmin_group';
     }
 }

@@ -7,7 +7,7 @@ use DomBase\DomAdminBundle\Form\Type\EasyAdminAutocompleteType;
 use Symfony\Component\Form\FormConfigInterface;
 
 /**
- * This configurator is applied to any form field of type 'easyadmin_autocomplete'
+ * This configurator is applied to any form field of type 'domadmin_autocomplete'
  * and is used to configure the class of the autocompleted entity.
  *
  * @author Javier Eguiluz <javier.eguiluz@gmail.com>
@@ -43,7 +43,7 @@ class AutocompleteTypeConfigurator implements TypeConfiguratorInterface
     public function supports($type, array $options, array $metadata)
     {
         $supportedTypes = [
-            'easyadmin_autocomplete',
+            'domadmin_autocomplete',
             EasyAdminAutocompleteType::class,
         ];
 

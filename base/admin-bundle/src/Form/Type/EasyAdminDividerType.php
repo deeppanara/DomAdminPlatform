@@ -16,6 +16,6 @@ class EasyAdminDividerType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'easyadmin_divider';
+        return 'domadmin_divider';
     }
 }

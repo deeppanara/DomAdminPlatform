@@ -73,7 +73,7 @@ final class EasyAdminRouter
             $parameters['referer'] = \urlencode($request->getUri());
         }
 
-        return $this->urlGenerator->generate('easyadmin', $parameters);
+        return $this->urlGenerator->generate('domadmin', $parameters);
     }
 
     /**

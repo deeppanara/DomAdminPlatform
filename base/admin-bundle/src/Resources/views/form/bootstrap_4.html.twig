@@ -1,12 +1,12 @@
 {% use 'bootstrap_4_layout.html.twig' %}
 
 {% block form_start -%}
-    {% if 'easyadmin' == block_prefixes|slice(-2)|first %}
+    {% if 'domadmin' == block_prefixes|slice(-2)|first %}
         {% set attr = attr|merge({
-            'class': [attr.class|default(''), easyadmin.view ~ '-form']|join(' '),
-            'data-view': easyadmin.view,
-            'data-entity': easyadmin.entity.name,
-            'data-entity-id': attribute(value, easyadmin.entity.primary_key_field_name) ?? '',
+            'class': [attr.class|default(''), domadmin.view ~ '-form']|join(' '),
+            'data-view': domadmin.view,
+            'data-entity': domadmin.entity.name,
+            'data-entity-id': attribute(value, domadmin.entity.primary_key_field_name) ?? '',
         }) %}
     {% endif %}
 
@@ -30,7 +30,7 @@
             var containerDiv = $('#{{ id }}').parents('.form-group:first');
             var parentDiv = containerDiv.parents('[data-prototype]:first');
             containerDiv.remove();
-            parentDiv.trigger('easyadmin.collection.item-deleted');
+            parentDiv.trigger('domadmin.collection.item-deleted');
 
             var hasCountAttr = parentDiv.data('count');
 
@@ -95,7 +95,7 @@
                 var containerDiv = $('#{{ id }}').parents('.form-group:first');
                 var parentDiv = containerDiv.parents('[data-prototype]:first');
                 containerDiv.remove();
-                parentDiv.trigger('easyadmin.collection.item-deleted');
+                parentDiv.trigger('domadmin.collection.item-deleted');
 
                 if (0 == parentDiv.children().length && 'undefined' !== parentDiv.attr('data-empty-collection')) {
                     $(parentDiv.attr('data-empty-collection')).insertBefore(parentDiv);
@@ -124,13 +124,13 @@
 {# Rows #}
 
 {% block form_row -%}
-    {% set _field_type = easyadmin.field.fieldType|default('default') %}
+    {% set _field_type = domadmin.field.fieldType|default('default') %}
     <div class="form-group {% if (not compound or force_error|default(false)) and not valid %}has-error{% endif %} field-{{ block_prefixes|slice(-2)|first }}">
         {{- form_label(form) -}}
         <div class="form-widget">
             {{- form_widget(form) -}}
 
-            {% if _field_type in ['datetime', 'datetime_immutable', 'date', 'date_immutable', 'dateinterval', 'time', 'time_immutable', 'birthday'] and easyadmin.field.nullable|default(false) %}
+            {% if _field_type in ['datetime', 'datetime_immutable', 'date', 'date_immutable', 'dateinterval', 'time', 'time_immutable', 'birthday'] and domadmin.field.nullable|default(false) %}
                 <div class="nullable-control">
                     <label>
                         <input type="checkbox" {% if data is null %}checked="checked"{% endif %}>
@@ -139,8 +139,8 @@
                 </div>
             {% endif %}
 
-            {% if easyadmin.field.help|default(form.vars.help) != '' %}
-                <small class="form-help">{{ easyadmin.field.help|default(form.vars.help)|trans(domain = form.vars.translation_domain)|raw }}</small>
+            {% if domadmin.field.help|default(form.vars.help) != '' %}
+                <small class="form-help">{{ domadmin.field.help|default(form.vars.help)|trans(domain = form.vars.translation_domain)|raw }}</small>
             {% endif %}
 
             {{- form_errors(form) -}}
@@ -171,7 +171,7 @@
                 // Increment the counter and store it in the collection
                 collection.data('count', ++numItems);
 
-                collection.append(newItem).trigger('easyadmin.collection.item-added');
+                collection.append(newItem).trigger('domadmin.collection.item-added');
             });
         {% endset %}
 
@@ -187,7 +187,7 @@
 {% endblock collection_row %}
 
 {% block button_row -%}
-    <div class="form-group field-{{ block_prefixes|slice(-2)|first }} {{ easyadmin.field.css_class|default('') }}">
+    <div class="form-group field-{{ block_prefixes|slice(-2)|first }} {{ domadmin.field.css_class|default('') }}">
         {{- form_widget(form) -}}
     </div>
 {%- endblock button_row %}
@@ -239,7 +239,7 @@
 
 {% block empty_collection %}
     <div class="empty collection-empty">
-        {{ include(easyadmin.entity.templates.label_empty) }}
+        {{ include(domadmin.entity.templates.label_empty) }}
     </div>
 {% endblock empty_collection %}
 
@@ -249,7 +249,7 @@
 {% endblock %}
 
 {% block vich_file_widget %}
-    <div class="easyadmin-vich-file">
+    <div class="domadmin-vich-file">
         {% if download_uri|default('') is not empty %}
             {% set download_title = download_uri|split('/')|last ?: 'download'|trans({}, 'VichUploaderBundle') %}
             {% set file_extension = download_uri|split('.')|last %}
@@ -260,7 +260,7 @@
                 'png': 'fa-file-image-o',
                 'zip': 'fa-file-archive-o'
             } %}
-            <a class="easyadmin-vich-file-name" href="{{ asset(download_uri) }}">
+            <a class="domadmin-vich-file-name" href="{{ asset(download_uri) }}">
                 <i class="fa fa-fw {{ extension_icons[file_extension] ?? 'fa-file-o' }}"></i>
                 {{ download_title }}
             </a>
@@ -273,7 +273,7 @@
             document.getElementById('{{ form.file.vars.id }}_new_file_name').innerText = newFile.name + ' (' + fileSize.toFixed(2) + ' ' + (fileSizeInMegabytes ? 'MB' : 'KB') + ')';
         {% endset %}
 
-        <div class="easyadmin-vich-file-actions">
+        <div class="domadmin-vich-file-actions">
             {# the container element is needed to allow customizing the <input type="file" /> #}
             <div class="btn btn-secondary input-file-container">
                 <i class="fa fa-fw fa-upload"></i> {{ 'action.choose_file'|trans({}, 'DomAdminBundle') }}
@@ -294,20 +294,20 @@
 {% endblock %}
 
 {% block vich_image_widget %}
-    <div class="easyadmin-vich-image">
+    <div class="domadmin-vich-image">
         {% if image_uri|default('') is not empty %}
             {% if download_uri|default('') is empty %}
-                <div class="easyadmin-thumbnail">
+                <div class="domadmin-thumbnail">
                     <img style="cursor: initial" src="{{ asset(image_uri) }}">
                 </div>
             {% else %}
-                {% set _lightbox_id = 'easyadmin-lightbox-' ~ id %}
+                {% set _lightbox_id = 'domadmin-lightbox-' ~ id %}
 
-                <a href="#" class="easyadmin-thumbnail" data-featherlight="#{{ _lightbox_id }}" data-featherlight-close-on-click="anywhere">
+                <a href="#" class="domadmin-thumbnail" data-featherlight="#{{ _lightbox_id }}" data-featherlight-close-on-click="anywhere">
                     <img src="{{ asset(download_uri) }}">
                 </a>
 
-                <div id="{{ _lightbox_id }}" class="easyadmin-lightbox">
+                <div id="{{ _lightbox_id }}" class="domadmin-lightbox">
                     <img src="{{ asset(download_uri) }}">
                 </div>
             {% endif %}
@@ -320,7 +320,7 @@
             document.getElementById('{{ form.file.vars.id }}_new_file_name').innerText = newFile.name + ' (' + fileSize.toFixed(2) + ' ' + (fileSizeInMegabytes ? 'MB' : 'KB') + ')';
         {% endset %}
 
-        <div class="easyadmin-vich-image-actions">
+        <div class="domadmin-vich-image-actions">
             {# the container element is needed to allow customizing the <input type="file" /> #}
             <div class="btn btn-secondary input-file-container">
                 <i class="fa fa-fw fa-upload"></i> {{ 'action.choose_file'|trans({}, 'DomAdminBundle') }}
@@ -335,7 +335,7 @@
     </div>
 {% endblock %}
 
-{% block easyadmin_rest %}
+{% block domadmin_rest %}
     {{- form_rest(form) -}}
 
     <section class="content-footer">
@@ -343,47 +343,47 @@
             {{- block('item_actions') -}}
         </div>
     </section>
-{% endblock easyadmin_rest %}
+{% endblock domadmin_rest %}
 
 {% block item_actions %}
-    {% set _translation_domain = easyadmin.entity.translation_domain %}
-    {% set _trans_parameters = { '%entity_name%':  easyadmin.entity.name|trans, '%entity_label%': easyadmin.entity.label|trans } %}
+    {% set _translation_domain = domadmin.entity.translation_domain %}
+    {% set _trans_parameters = { '%entity_name%':  domadmin.entity.name|trans, '%entity_label%': domadmin.entity.label|trans } %}
 
     {# the 'save' action is hardcoded for the 'edit' and 'new' views #}
     <button type="submit" class="btn btn-primary action-save">
         <span class="btn-label">{{ 'action.save'|trans(_trans_parameters, _translation_domain) }}</span>
     </button>
 
-    {% set _entity_actions = (easyadmin.view == 'new')
-        ? easyadmin_get_actions_for_new_item(easyadmin.entity.name)
-        : easyadmin_get_actions_for_edit_item(easyadmin.entity.name) %}
+    {% set _entity_actions = (domadmin.view == 'new')
+        ? domadmin_get_actions_for_new_item(domadmin.entity.name)
+        : domadmin_get_actions_for_edit_item(domadmin.entity.name) %}
 
-    {% set _entity_id = (easyadmin.view == 'new')
+    {% set _entity_id = (domadmin.view == 'new')
         ? null
-        : attribute(easyadmin.item, easyadmin.entity.primary_key_field_name) %}
+        : attribute(domadmin.item, domadmin.entity.primary_key_field_name) %}
 
-    {% set _request_parameters = { entity: easyadmin.entity.name, referer: app.request.query.get('referer') } %}
+    {% set _request_parameters = { entity: domadmin.entity.name, referer: app.request.query.get('referer') } %}
 
     {{ include('@DomAdmin/default/includes/_actions.html.twig', {
         actions: _entity_actions,
-        entity_config: easyadmin.entity,
+        entity_config: domadmin.entity,
         request_parameters: _request_parameters,
         translation_domain: _translation_domain,
         trans_parameters: _trans_parameters,
         item_id: _entity_id,
-        item: easyadmin.item
+        item: domadmin.item
     }, with_context = false) }}
 {% endblock item_actions %}
 
 {# EasyAdmin form type #}
-{% block easyadmin_widget %}
-    {% set _translation_domain = easyadmin.entity.translation_domain %}
+{% block domadmin_widget %}
+    {% set _translation_domain = domadmin.entity.translation_domain %}
     <div class="row">
-        {% if easyadmin_form_tabs | length > 0 %}
+        {% if domadmin_form_tabs | length > 0 %}
             <div class="col-12">
                 <div class="nav-tabs-custom form-tabs">
                     <ul class="nav nav-tabs">
-                        {% for tab_name, tab_config in easyadmin_form_tabs %}
+                        {% for tab_name, tab_config in domadmin_form_tabs %}
                             <li class="nav-item">
                                 <a class="nav-link {% if tab_config.active %}active{% endif %}" href="#{{ tab_config['id'] }}" id="{{ tab_config['id'] }}-tab" data-toggle="tab">
                                     {%- if tab_config.icon|default(false) -%}
@@ -400,7 +400,7 @@
                         {% endfor %}
                     </ul>
                     <div class="tab-content">
-                        {% for tab_name, tab_config in easyadmin_form_tabs %}
+                        {% for tab_name, tab_config in domadmin_form_tabs %}
                             <div id="{{ tab_config['id'] }}" class="tab-pane {% if tab_config.active %}active{% endif %}">
                                 {% if tab_config['help']|default(false) %}
                                     <div class="content-header-help tab-help">
@@ -409,7 +409,7 @@
                                 {% endif %}
 
                                 <div class="row">
-                                    {{ block('easyadmin_widget_groups') }}
+                                    {{ block('domadmin_widget_groups') }}
                                 </div>
                             </div>
                         {% endfor %}
@@ -417,13 +417,13 @@
                 </div>
             </div>
         {% else %}
-            {{ block('easyadmin_widget_groups') }}
+            {{ block('domadmin_widget_groups') }}
         {% endif %}
     </div>
-{% endblock easyadmin_widget %}
+{% endblock domadmin_widget %}
 
-{% block easyadmin_widget_groups %}
-    {% for group_name, group_config in easyadmin_form_groups|filter(group_config => not group_config.form_tab or group_config.form_tab == tab_name) %}
+{% block domadmin_widget_groups %}
+    {% for group_name, group_config in domadmin_form_groups|filter(group_config => not group_config.form_tab or group_config.form_tab == tab_name) %}
         <div class="field-group col-{{ group_config.columns|default('12') }} {{ group_config.css_class|default('') }}">
             <fieldset>
                 {% if group_config.label|default(false) or group_config.icon|default(false) or group_config.collapsible|default(false) %}
@@ -440,9 +440,9 @@
                 {% endif %}
 
                 <div class="row">
-                    {% for field in form|filter(field => 'hidden' not in field.vars.block_prefixes and field.vars.easyadmin.form_group == group_name) %}
-                        {% if not field.vars.easyadmin.form_tab or field.vars.easyadmin.form_tab == tab_name %}
-                            <div class="col-{{ field.vars.easyadmin.field.columns|default('12') }} {{ field.vars.easyadmin.field.css_class|default('') }}">
+                    {% for field in form|filter(field => 'hidden' not in field.vars.block_prefixes and field.vars.domadmin.form_group == group_name) %}
+                        {% if not field.vars.domadmin.form_tab or field.vars.domadmin.form_tab == tab_name %}
+                            <div class="col-{{ field.vars.domadmin.field.columns|default('12') }} {{ field.vars.domadmin.field.css_class|default('') }}">
                                 {{ form_row(field) }}
                             </div>
                         {% endif %}
@@ -451,50 +451,50 @@
             </fieldset>
         </div>
     {% else %}
-        {% for field in form|filter(field => 'hidden' not in field.vars.block_prefixes and (not field.vars.easyadmin.form_tab or field.vars.easyadmin.form_tab == tab_name)) %}
-            <div class="col-{{ field.vars.easyadmin.field.columns|default('12') }} {{ field.vars.easyadmin.field.css_class|default('') }}">
+        {% for field in form|filter(field => 'hidden' not in field.vars.block_prefixes and (not field.vars.domadmin.form_tab or field.vars.domadmin.form_tab == tab_name)) %}
+            <div class="col-{{ field.vars.domadmin.field.columns|default('12') }} {{ field.vars.domadmin.field.css_class|default('') }}">
                 {{ form_row(field) }}
             </div>
         {% endfor %}
     {% endfor %}
-{% endblock easyadmin_widget_groups %}
+{% endblock domadmin_widget_groups %}
 
 {# EasyAdminAutocomplete form type #}
-{% block easyadmin_autocomplete_widget %}
+{% block domadmin_autocomplete_widget %}
     {{ form_widget(form.autocomplete, {
         attr: attr|merge({
-            'data-easyadmin-autocomplete-url' : path('easyadmin', {
+            'data-domadmin-autocomplete-url' : path('domadmin', {
                 action: 'autocomplete',
                 entity: autocomplete_entity_name,
             })|raw })
         })
     }}
-{% endblock easyadmin_autocomplete_widget %}
+{% endblock domadmin_autocomplete_widget %}
 
-{% block easyadmin_autocomplete_inner_label %}
+{% block domadmin_autocomplete_inner_label %}
     {% set name = form.parent.vars.name %}
     {{- block('form_label') -}}
-{% endblock easyadmin_autocomplete_inner_label %}
+{% endblock domadmin_autocomplete_inner_label %}
 
 {# EasyAdminSection form type #}
-{% block easyadmin_section_row %}
-    {% set _translation_domain = easyadmin.entity.translation_domain %}
-    <div class="form-section {{ easyadmin.field.icon|default(false) == false and easyadmin.field.label|default(false) == false ? 'form-section-empty' }} {{ easyadmin.field.css_class|default('') }}">
+{% block domadmin_section_row %}
+    {% set _translation_domain = domadmin.entity.translation_domain %}
+    <div class="form-section {{ domadmin.field.icon|default(false) == false and domadmin.field.label|default(false) == false ? 'form-section-empty' }} {{ domadmin.field.css_class|default('') }}">
         <h2>
-            {% if easyadmin.field.icon|default(false) %}<i class="fa fa-fw fa-{{ easyadmin.field.icon }}"></i>{% endif %}
-            <span>{% if easyadmin.field.label|default(false) %}{{ easyadmin.field.label|default('')|trans(domain = _translation_domain)|raw }}{% endif %}</span>
+            {% if domadmin.field.icon|default(false) %}<i class="fa fa-fw fa-{{ domadmin.field.icon }}"></i>{% endif %}
+            <span>{% if domadmin.field.label|default(false) %}{{ domadmin.field.label|default('')|trans(domain = _translation_domain)|raw }}{% endif %}</span>
         </h2>
 
-        {% if easyadmin.field.help|default(false) %}
-            <p class="form-section-help">{{ easyadmin.field.help|trans(domain = _translation_domain)|raw }}</p>
+        {% if domadmin.field.help|default(false) %}
+            <p class="form-section-help">{{ domadmin.field.help|trans(domain = _translation_domain)|raw }}</p>
         {% endif %}
     </div>
-{% endblock easyadmin_section_row %}
+{% endblock domadmin_section_row %}
 
 {# EasyAdminBatch form type #}
-{% block easyadmin_batch_widget %}
-    {% set _translation_domain = easyadmin.entity.translation_domain %}
-    {% set _trans_parameters = { '%entity_name%':  easyadmin.entity.name|trans, '%entity_label%': easyadmin.entity.label|trans } %}
+{% block domadmin_batch_widget %}
+    {% set _translation_domain = domadmin.entity.translation_domain %}
+    {% set _trans_parameters = { '%entity_name%':  domadmin.entity.name|trans, '%entity_label%': domadmin.entity.label|trans } %}
 
     {{ form_widget(form.ids) }}
     <button type="button" class="btn btn-link deselect-batch-button">{{ 'action.deselect'|trans(_trans_parameters, _translation_domain) }}</button>
@@ -506,12 +506,12 @@
             {%- endif -%}
         </button>
     {% endfor %}
-{% endblock easyadmin_batch_widget %}
+{% endblock domadmin_batch_widget %}
 
 {# EasyAdminFilters form type #}
-{% block easyadmin_filters_widget %}
-    {% set _translation_domain = easyadmin.entity.translation_domain %}
-    {% set applied_filters = easyadmin.filters.applied|default([]) %}
+{% block domadmin_filters_widget %}
+    {% set _translation_domain = domadmin.entity.translation_domain %}
+    {% set applied_filters = domadmin.filters.applied|default([]) %}
 
     {% for field in form %}
         <div class="filter-field {% if not loop.last %}border-bottom{% endif %} py-1 px-3 {% if loop.last %}pb-2{% endif %}">
@@ -558,4 +558,4 @@
     </script>
 
     {{ include('@DomAdmin/default/includes/_select2_widget.html.twig') }}
-{% endblock easyadmin_filters_widget %}
+{% endblock domadmin_filters_widget %}

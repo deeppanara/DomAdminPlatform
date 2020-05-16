@@ -22,7 +22,7 @@ final class FilterTypePass implements CompilerPassInterface
     public function process(ContainerBuilder $container): void
     {
         // type guessers
-        $guessers = $this->findAndSortTaggedServices('easyadmin.filter.type_guesser', $container);
+        $guessers = $this->findAndSortTaggedServices('domadmin.filter.type_guesser', $container);
         // the filter type guesser created by the user (in the app side) becomes
         // a form type guesser too due to autoconfiguration, and that can cause
         // issues in new/edit forms, so we need to exclude the filter type guesser
@@ -34,7 +34,7 @@ final class FilterTypePass implements CompilerPassInterface
         // types Map
         $typesMap = [];
         $servicesMap = [];
-        foreach ($container->findTaggedServiceIds('easyadmin.filter.type', true) as $serviceId => $attributes) {
+        foreach ($container->findTaggedServiceIds('domadmin.filter.type', true) as $serviceId => $attributes) {
             $class = $container->getDefinition($serviceId)->getClass();
             $name = $attributes[0]['alias'] ?? $class;
             $priority = $attributes[0]['priority'] ?? 0;
@@ -45,7 +45,7 @@ final class FilterTypePass implements CompilerPassInterface
             \krsort($typesMap);
             $typesMap = \array_merge(...$typesMap);
         }
-        $container->getDefinition('easyadmin.filter.registry')
+        $container->getDefinition('domadmin.filter.registry')
             ->replaceArgument(0, $typesMap)
             ->replaceArgument(1, new IteratorArgument($guessers));
 
@@ -54,9 +54,9 @@ final class FilterTypePass implements CompilerPassInterface
             \krsort($servicesMap);
             $servicesMap = \array_merge(...$servicesMap);
         }
-        $container->getDefinition('easyadmin.filter.extension')
+        $container->getDefinition('domadmin.filter.extension')
             ->replaceArgument(0, ServiceLocatorTagPass::register($container, $servicesMap));
         $formRegistry = $container->getDefinition('form.registry');
-        $formRegistry->replaceArgument(0, \array_merge([new Reference('easyadmin.filter.extension')], $formRegistry->getArgument(0)));
+        $formRegistry->replaceArgument(0, \array_merge([new Reference('domadmin.filter.extension')], $formRegistry->getArgument(0)));
     }
 }

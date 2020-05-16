@@ -45,7 +45,7 @@ dom_admin:
                     - { property: 'name', css_class: 'large' }
                     - { property: 'description', type: 'fos_ckeditor' }
                     - { type: 'divider' }
-                    - { property: 'categories', type: 'easyadmin_autocomplete' }
+                    - { property: 'categories', type: 'domadmin_autocomplete' }
                     - { type: 'group', css_class: 'col-sm-4', label: 'Product Details', icon: 'cube' }
                     - { property: 'ean', help: 'EAN-13 valid code. Leave empty if unknown.' }
                     - { property: 'price', type: 'number' }

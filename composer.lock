@@ -1250,7 +1250,7 @@
             "time": "2018-06-14T14:45:07+00:00"
         },
         {
-            "name": "easycorp/easyadmin-bundle",
+            "name": "easycorp/domadmin-bundle",
             "version": "v2.2.0",
             "source": {
                 "type": "git",

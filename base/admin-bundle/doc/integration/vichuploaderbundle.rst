@@ -206,12 +206,12 @@ VichUploaderBundle configuration.
     .. code-block:: twig
 
         {# templates/vich_uploader_image.html.twig #}
-        <a href="#" class="easyadmin-thumbnail" data-featherlight="#easyadmin-lightbox-{{ item.id }}" data-featherlight-close-on-click="anywhere">
+        <a href="#" class="domadmin-thumbnail" data-featherlight="#domadmin-lightbox-{{ item.id }}" data-featherlight-close-on-click="anywhere">
             {# the second parameter is the name of the property with the UploadableField annotation #}
             <img src="{{ vich_uploader_asset(item, 'imageFile') }}">
         </a>
 
-        <div id="easyadmin-lightbox-{{ item.id }}" class="easyadmin-lightbox">
+        <div id="domadmin-lightbox-{{ item.id }}" class="domadmin-lightbox">
             {# the second parameter is the name of the property with the UploadableField annotation #}
             <img src="{{ vich_uploader_asset(item, 'imageFile') }}">
         </div>

@@ -18,8 +18,8 @@ final class EasyAdminConfigPass implements CompilerPassInterface
      */
     public function process(ContainerBuilder $container)
     {
-        $configPasses = $this->findAndSortTaggedServices('easyadmin.config_pass', $container);
-        $definition = $container->getDefinition('easyadmin.config.manager');
+        $configPasses = $this->findAndSortTaggedServices('domadmin.config_pass', $container);
+        $definition = $container->getDefinition('domadmin.config.manager');
 
         foreach ($configPasses as $service) {
             $definition->addMethodCall('addConfigPass', [$service]);

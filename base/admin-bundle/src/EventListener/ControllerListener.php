@@ -36,7 +36,7 @@ class ControllerListener
     public function onKernelController(FilterControllerEvent $event)
     {
         $request = $event->getRequest();
-        if ('easyadmin' !== $request->attributes->get('_route')) {
+        if ('domadmin' !== $request->attributes->get('_route')) {
             return;
         }
 

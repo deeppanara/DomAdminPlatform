@@ -41,28 +41,28 @@ class EasyAdminExtension extends AbstractTypeExtension
             return;
         }
 
-        if ($request->attributes->has('easyadmin')) {
-            $easyadmin = $request->attributes->get('easyadmin');
-            $entity = $easyadmin['entity'];
-            $action = $easyadmin['view'];
+        if ($request->attributes->has('domadmin')) {
+            $domadmin = $request->attributes->get('domadmin');
+            $entity = $domadmin['entity'];
+            $action = $domadmin['view'];
             $fields = $entity[$action]['fields'] ?? [];
-            $filters = $easyadmin['filters'] ?? [];
-            $view->vars['easyadmin'] = [
+            $filters = $domadmin['filters'] ?? [];
+            $view->vars['domadmin'] = [
                 'entity' => $entity,
                 'view' => $action,
-                'item' => $easyadmin['item'],
+                'item' => $domadmin['item'],
                 'field' => null,
-                'form_group' => $form->getConfig()->getAttribute('easyadmin_form_group'),
-                'form_tab' => $form->getConfig()->getAttribute('easyadmin_form_tab'),
+                'form_group' => $form->getConfig()->getAttribute('domadmin_form_group'),
+                'form_tab' => $form->getConfig()->getAttribute('domadmin_form_tab'),
                 'filters' => $filters,
             ];
 
             /*
              * Checks if current form view is direct child on the topmost form
-             * (ie. this form view`s field exists in easyadmin configuration)
+             * (ie. this form view`s field exists in domadmin configuration)
              */
             if (null !== $view->parent && null === $view->parent->parent) {
-                $view->vars['easyadmin']['field'] = $fields[$view->vars['name']] ?? null;
+                $view->vars['domadmin']['field'] = $fields[$view->vars['name']] ?? null;
             }
         }
     }

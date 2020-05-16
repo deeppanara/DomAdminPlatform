@@ -78,14 +78,14 @@ attributes to help you target your own styles. The ``id`` follows this pattern:
 ========  ============================================
 View      ``<body>`` ID attribute
 ========  ============================================
-``edit``  ``easyadmin-edit-<entity_name>-<entity_id>``
-``list``  ``easyadmin-list-<entity_name>``
-``new``   ``easyadmin-new-<entity_name>``
-``show``  ``easyadmin-show-<entity_name>-<entity_id>``
+``edit``  ``domadmin-edit-<entity_name>-<entity_id>``
+``list``  ``domadmin-list-<entity_name>``
+``new``   ``domadmin-new-<entity_name>``
+``show``  ``domadmin-show-<entity_name>-<entity_id>``
 ========  ============================================
 
 If you are editing for example the element with ``id = 200`` of the ``User`` entity,
-the ``<body>`` of that page will be ``<body id="easyadmin-edit-User-200" ...>``.
+the ``<body>`` of that page will be ``<body id="domadmin-edit-User-200" ...>``.
 
 The pattern of the ``class`` attribute is different because it applies several
 CSS classes at the same time:
@@ -93,14 +93,14 @@ CSS classes at the same time:
 ========  ============================================
 View      ``<body>`` CSS class
 ========  ============================================
-``edit``  ``easyadmin edit edit-<entity_name>``
-``list``  ``easyadmin list list-<entity_name>``
-``new``   ``easyadmin new new-<entity_name>``
-``show``  ``easyadmin show show-<entity_name>``
+``edit``  ``domadmin edit edit-<entity_name>``
+``list``  ``domadmin list list-<entity_name>``
+``new``   ``domadmin new new-<entity_name>``
+``show``  ``domadmin show show-<entity_name>``
 ========  ============================================
 
 If you are displaying for example the listing of ``User`` entity elements, the
-``<body>`` of that page will be ``<body class="easyadmin list list-User" ...>``.
+``<body>`` of that page will be ``<body class="domadmin list list-User" ...>``.
 
 Changing the favicon
 --------------------
@@ -165,16 +165,16 @@ which contains all the Bootstrap parts not included by default by the backend:
             assets:
                 css:
                     # ...
-                    - 'bundles/easyadmin/bootstrap-all.css'
+                    - 'bundles/domadmin/bootstrap-all.css'
                 js:
-                    - 'bundles/easyadmin/bootstrap-all.js'
+                    - 'bundles/domadmin/bootstrap-all.js'
 
 Customizing the Backend Design
 ------------------------------
 
 The design of the backend is created with lots of CSS variables. This makes it
 easier to customize it to your own needs. You'll find all variables in the
-``assets/css/easyadmin-theme/variables.scss`` file. To override any of them,
+``assets/css/domadmin-theme/variables.scss`` file. To override any of them,
 create a CSS file and redefine the variable values:
 
 .. code-block:: css
@@ -208,7 +208,7 @@ Then, load this CSS file in your backend:
     Because of how Bootstrap styles are defined, it's not possible to use CSS
     variables to override every style. Sometimes you may need to also override
     the value of some Sass variables (which are also defined in the same
-    ``assets/css/easyadmin-theme/variables.scss`` file).
+    ``assets/css/domadmin-theme/variables.scss`` file).
 
 Managing the Backend Assets with Webpack
 ----------------------------------------

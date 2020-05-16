@@ -48,17 +48,17 @@ class EasyAdminTwigExtension extends AbstractExtension
     public function getFunctions()
     {
         return [
-            new TwigFunction('easyadmin_render_field_for_*_view', [$this, 'renderEntityField'], ['is_safe' => ['html'], 'needs_environment' => true]),
-            new TwigFunction('easyadmin_config', [$this, 'getBackendConfiguration']),
-            new TwigFunction('easyadmin_entity', [$this, 'getEntityConfiguration']),
-            new TwigFunction('easyadmin_path', [$this, 'getEntityPath']),
-            new TwigFunction('easyadmin_action_is_enabled', [$this, 'isActionEnabled']),
-            new TwigFunction('easyadmin_action_is_enabled_for_*_view', [$this, 'isActionEnabled']),
-            new TwigFunction('easyadmin_get_action', [$this, 'getActionConfiguration']),
-            new TwigFunction('easyadmin_get_action_for_*_view', [$this, 'getActionConfiguration']),
-            new TwigFunction('easyadmin_get_actions_for_*_item', [$this, 'getActionsForItem']),
-            new TwigFunction('easyadmin_logout_path', [$this, 'getLogoutPath']),
-            new TwigFunction('easyadmin_read_property', [$this, 'readProperty']),
+            new TwigFunction('domadmin_render_field_for_*_view', [$this, 'renderEntityField'], ['is_safe' => ['html'], 'needs_environment' => true]),
+            new TwigFunction('domadmin_config', [$this, 'getBackendConfiguration']),
+            new TwigFunction('domadmin_entity', [$this, 'getEntityConfiguration']),
+            new TwigFunction('domadmin_path', [$this, 'getEntityPath']),
+            new TwigFunction('domadmin_action_is_enabled', [$this, 'isActionEnabled']),
+            new TwigFunction('domadmin_action_is_enabled_for_*_view', [$this, 'isActionEnabled']),
+            new TwigFunction('domadmin_get_action', [$this, 'getActionConfiguration']),
+            new TwigFunction('domadmin_get_action_for_*_view', [$this, 'getActionConfiguration']),
+            new TwigFunction('domadmin_get_actions_for_*_item', [$this, 'getActionsForItem']),
+            new TwigFunction('domadmin_logout_path', [$this, 'getLogoutPath']),
+            new TwigFunction('domadmin_read_property', [$this, 'readProperty']),
         ];
     }
 
@@ -68,9 +68,9 @@ class EasyAdminTwigExtension extends AbstractExtension
     public function getFilters()
     {
         $filters = [
-            new TwigFilter('easyadmin_truncate', [$this, 'truncateText'], ['needs_environment' => true]),
-            new TwigFilter('easyadmin_urldecode', 'urldecode'),
-            new TwigFilter('easyadmin_form_hidden_params', [$this, 'getFormHiddenParams']),
+            new TwigFilter('domadmin_truncate', [$this, 'truncateText'], ['needs_environment' => true]),
+            new TwigFilter('domadmin_urldecode', 'urldecode'),
+            new TwigFilter('domadmin_form_hidden_params', [$this, 'getFormHiddenParams']),
         ];
 
         if (Kernel::VERSION_ID >= 40200) {

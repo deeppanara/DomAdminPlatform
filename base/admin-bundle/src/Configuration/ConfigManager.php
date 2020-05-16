@@ -8,7 +8,7 @@ use Symfony\Contracts\Cache\CacheInterface;
 
 final class ConfigManager
 {
-    private const CACHE_KEY = 'easyadmin.processed_config';
+    private const CACHE_KEY = 'domadmin.processed_config';
 
     /** @var array */
     private $backendConfig;

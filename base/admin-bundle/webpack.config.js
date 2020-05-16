@@ -3,7 +3,7 @@ var Encore = require('@symfony/webpack-encore');
 Encore
     .setOutputPath('./src/Resources/public/')
     .setPublicPath('./')
-    .setManifestKeyPrefix('bundles/easyadmin')
+    .setManifestKeyPrefix('bundles/domadmin')
 
     .cleanupOutputBeforeBuild()
     .enableSassLoader()

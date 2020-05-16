@@ -97,7 +97,7 @@ class DefaultConfigPass implements ConfigPassInterface
         // action of the first configured entity as the backend homepage
         if (null === $menuItemConfig = $backendConfig['default_menu_item']) {
             $defaultEntityName = $backendConfig['default_entity_name'];
-            $backendHomepage['route'] = 'easyadmin';
+            $backendHomepage['route'] = 'domadmin';
             $backendHomepage['params'] = ['action' => 'list', 'entity' => $defaultEntityName];
 
             // if the default entity defines a custom sorting, use it
@@ -112,7 +112,7 @@ class DefaultConfigPass implements ConfigPassInterface
             $routeParams = ['menuIndex' => $menuItemConfig['menu_index'], 'submenuIndex' => $menuItemConfig['submenu_index']];
 
             if ('entity' === $menuItemConfig['type']) {
-                $backendHomepage['route'] = 'easyadmin';
+                $backendHomepage['route'] = 'domadmin';
                 $backendHomepage['params'] = \array_merge(['action' => 'list', 'entity' => $menuItemConfig['entity']], $routeParams, $menuItemConfig['params']);
             } elseif ('route' === $menuItemConfig['type']) {
                 $backendHomepage['route'] = $menuItemConfig['route'];

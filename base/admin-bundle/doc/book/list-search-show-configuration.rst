@@ -11,19 +11,19 @@ List, Search and Show Views
 The **List View** displays the items that match the given criteria and provides
 automatic pagination and column sorting:
 
-.. image:: ../images/easyadmin-list-view.png
+.. image:: ../images/domadmin-list-view.png
    :alt: List view interface
 
 The **Search View** displays the results of any query performed by the user.
 It reuses most of the design and features of the ``list`` view to ensure a
 consistent user experience:
 
-.. image:: ../images/easyadmin-search-view.png
+.. image:: ../images/domadmin-search-view.png
    :alt: Search view interface
 
 The **Show View** displays the contents of a given entity:
 
-.. image:: ../images/easyadmin-show-view.png
+.. image:: ../images/domadmin-show-view.png
    :alt: Show view interface
 
 General Configuration
@@ -882,7 +882,7 @@ If an entity is editable, the ``list`` view applies the ``type: 'toggle'``
 option to all its boolean properties. This data type makes these properties be
 rendered as "flip switches" that allow to toggle their values very easily:
 
-.. image:: ../images/easyadmin-boolean-field-toggle.gif
+.. image:: ../images/domadmin-boolean-field-toggle.gif
    :alt: Advanced boolean fields
 
 When you change the value of any boolean property, an Ajax request is made to
@@ -890,7 +890,7 @@ actually change that value in the database. If something goes wrong, the switch
 automatically returns to its original value and it disables itself until the
 page is refreshed to avoid further issues:
 
-.. image:: ../images/easyadmin-boolean-field-toggle-error.gif
+.. image:: ../images/domadmin-boolean-field-toggle-error.gif
    :alt: Boolean field behavior when an error happens
 
 In you prefer to disable these "toggles", define the ``type`` of the property
@@ -912,7 +912,7 @@ explicitly as ``boolean``:
 Now the boolean value is rendered as a simple label and its value cannot be
 modified from the ``list`` view:
 
-.. image:: ../images/easyadmin-boolean-field-label.png
+.. image:: ../images/domadmin-boolean-field-label.png
    :alt: Boolean field displayed as a label
 
 Image Data Type

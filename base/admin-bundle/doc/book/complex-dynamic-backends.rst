@@ -109,7 +109,7 @@ can override in your own backends.
 
 The ``indexAction()`` method is the only "real controller" because it's the only
 method associated with a route (all the pages created with EasyAdmin use a
-single route called ``easyadmin``). It makes some checks and then it redirects to
+single route called ``domadmin``). It makes some checks and then it redirects to
 the actual executed method, such as ``listAction()``, ``showAction()``, etc.:
 
 .. code-block:: php
@@ -117,7 +117,7 @@ the actual executed method, such as ``listAction()``, ``showAction()``, etc.:
     // src/Controller/AdminController.php
     class AdminController extends Controller
     {
-        /** @Route("/", name="easyadmin") */
+        /** @Route("/", name="domadmin") */
         public function indexAction(Request $request)
         {
             // you can override this method to perform additional checks and to
@@ -594,7 +594,7 @@ apps can rely on its default values:
                 // the string used to generate the CSRF token. If you don't define
                 // this parameter, the login form won't include a CSRF token
                 'csrf_token_intention' => 'authenticate',
-                // the URL users are redirected to after the login (default: path('easyadmin'))
+                // the URL users are redirected to after the login (default: path('domadmin'))
                 'target_path' => $this->generateUrl('admin_dashboard'),
                 // the label displayed for the username form field (the |trans filter is applied to it)
                 'username_label' => 'Your username',

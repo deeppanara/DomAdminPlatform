@@ -45,10 +45,10 @@ body {
     }
 }
 
-body:not(.easyadmin-content-width-full) .wrapper {
+body:not(.domadmin-content-width-full) .wrapper {
     max-width: var(--body-max-width);
 }
-body.easyadmin-sidebar-width-compact .wrapper {
+body.domadmin-sidebar-width-compact .wrapper {
     @media(min-width: 992px) {
         grid-template-columns: 24px auto;
     }
@@ -116,7 +116,7 @@ body.easyadmin-sidebar-width-compact .wrapper {
         z-index: $zindex-modal-backdrop - 1;
     }
 }
-body.easyadmin-mobile-sidebar-visible .main-sidebar {
+body.domadmin-mobile-sidebar-visible .main-sidebar {
     left: 0;
 }
 

@@ -64,6 +64,6 @@ class EasyAdminFiltersFormType extends AbstractType
      */
     public function getBlockPrefix(): string
     {
-        return 'easyadmin_filters';
+        return 'domadmin_filters';
     }
 }

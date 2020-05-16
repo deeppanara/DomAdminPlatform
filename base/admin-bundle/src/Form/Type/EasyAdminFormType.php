@@ -68,7 +68,7 @@ class EasyAdminFormType extends AbstractType
             // to the form. Instead, consider it the current form group (this is
             // applied to the form fields defined after it) and store its details
             // in a property to get them in form template
-            if (\in_array($formFieldType, ['easyadmin_group', EasyAdminGroupType::class])) {
+            if (\in_array($formFieldType, ['domadmin_group', EasyAdminGroupType::class])) {
                 $metadata['form_tab'] = $currentFormTab ?: null;
                 $currentFormGroup = $metadata['fieldName'];
                 $formGroups[$currentFormGroup] = $metadata;
@@ -80,7 +80,7 @@ class EasyAdminFormType extends AbstractType
             // to the form. Instead, consider it the current form group (this is
             // applied to the form fields defined after it) and store its details
             // in a property to get them in form template
-            if (\in_array($formFieldType, ['easyadmin_tab', EasyAdminTabType::class])) {
+            if (\in_array($formFieldType, ['domadmin_tab', EasyAdminTabType::class])) {
                 // The first tab should be marked as active by default
                 $metadata['active'] = 0 === \count($formTabs);
                 $metadata['errors'] = 0;
@@ -95,20 +95,20 @@ class EasyAdminFormType extends AbstractType
 
             // 'section' is a 'fake' form field used to create the design elements of the
             // complex form layouts: define it as unmapped and non-required
-            if (0 === \strpos($metadata['property'], '_easyadmin_form_design_element_')) {
+            if (0 === \strpos($metadata['property'], '_domadmin_form_design_element_')) {
                 $formFieldOptions['mapped'] = false;
                 $formFieldOptions['required'] = false;
             }
 
             $formField = $builder->getFormFactory()->createNamedBuilder($name, $formFieldType, null, $formFieldOptions);
-            $formField->setAttribute('easyadmin_form_tab', $currentFormTab);
-            $formField->setAttribute('easyadmin_form_group', $currentFormGroup);
+            $formField->setAttribute('domadmin_form_tab', $currentFormTab);
+            $formField->setAttribute('domadmin_form_group', $currentFormGroup);
 
             $builder->add($formField);
         }
 
-        $builder->setAttribute('easyadmin_form_tabs', $formTabs);
-        $builder->setAttribute('easyadmin_form_groups', $formGroups);
+        $builder->setAttribute('domadmin_form_tabs', $formTabs);
+        $builder->setAttribute('domadmin_form_groups', $formGroups);
 
         if (\count($formTabs) > 0) {
             $builder->addEventSubscriber(new EasyAdminTabSubscriber());
@@ -120,8 +120,8 @@ class EasyAdminFormType extends AbstractType
      */
     public function finishView(FormView $view, FormInterface $form, array $options)
     {
-        $view->vars['easyadmin_form_tabs'] = $form->getConfig()->getAttribute('easyadmin_form_tabs');
-        $view->vars['easyadmin_form_groups'] = $form->getConfig()->getAttribute('easyadmin_form_groups');
+        $view->vars['domadmin_form_tabs'] = $form->getConfig()->getAttribute('domadmin_form_tabs');
+        $view->vars['domadmin_form_groups'] = $form->getConfig()->getAttribute('domadmin_form_groups');
     }
 
     /**
@@ -151,7 +151,7 @@ class EasyAdminFormType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'easyadmin';
+        return 'domadmin';
     }
 
     /**

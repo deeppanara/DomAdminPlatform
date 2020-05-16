@@ -45,7 +45,7 @@ class EasyAdminDataCollector extends DataCollector
      */
     public function collect(Request $request, Response $response, \Exception $exception = null)
     {
-        if ('easyadmin' !== $request->attributes->get('_route')) {
+        if ('domadmin' !== $request->attributes->get('_route')) {
             return;
         }
 
@@ -150,6 +150,6 @@ class EasyAdminDataCollector extends DataCollector
      */
     public function getName()
     {
-        return 'easyadmin';
+        return 'domadmin';
     }
 }

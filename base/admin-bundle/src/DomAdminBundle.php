@@ -20,7 +20,7 @@ class DomAdminBundle extends Bundle
     {
         $container->addCompilerPass(new EasyAdminFormTypePass(), PassConfig::TYPE_BEFORE_REMOVING);
         // this compiler pass must run earlier than FormPass to clear
-        // the 'form.type_guesser' tag for 'easyadmin.filter.type_guesser' services
+        // the 'form.type_guesser' tag for 'domadmin.filter.type_guesser' services
         $container->addCompilerPass(new FilterTypePass(), PassConfig::TYPE_BEFORE_OPTIMIZATION, 10);
         $container->addCompilerPass(new EasyAdminConfigPass());
     }

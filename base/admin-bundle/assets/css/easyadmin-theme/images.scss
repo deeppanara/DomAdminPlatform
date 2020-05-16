@@ -5,30 +5,30 @@
     border: 0;
     padding: 0;
 }
-.show .form-control .easyadmin-thumbnail img {
+.show .form-control .domadmin-thumbnail img {
     box-shadow: 0 0 0 4px var(--white), 0px 0px 8px 2px var(--gray-600);
     margin: 10px 7px;
     max-height: 300px;
     max-width: 400px;
 }
 
-.easyadmin-thumbnail img:hover {
+.domadmin-thumbnail img:hover {
     cursor: zoom-in;
 }
 
-.easyadmin-lightbox {
+.domadmin-lightbox {
     display: none;
 }
 
-.easyadmin-lightbox img {
+.domadmin-lightbox img {
     max-width: 100%;
     width: 100%;
 }
 
-.featherlight .easyadmin-lightbox {
+.featherlight .domadmin-lightbox {
     display: block;
 }
 
-.featherlight .easyadmin-lightbox:hover {
+.featherlight .domadmin-lightbox:hover {
     cursor: zoom-out;
 }

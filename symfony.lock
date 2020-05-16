@@ -96,7 +96,7 @@
     "doctrine/reflection": {
         "version": "v1.0.0"
     },
-    "easycorp/easyadmin-bundle": {
+    "easycorp/domadmin-bundle": {
         "version": "2.0",
         "recipe": {
             "repo": "github.com/symfony/recipes",

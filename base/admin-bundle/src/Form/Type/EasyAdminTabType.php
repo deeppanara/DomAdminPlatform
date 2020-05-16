@@ -16,6 +16,6 @@ class EasyAdminTabType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'easyadmin_tab';
+        return 'domadmin_tab';
     }
 }

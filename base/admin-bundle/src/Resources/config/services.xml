@@ -4,128 +4,128 @@
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <services>
-        <service id="cache.easyadmin" parent="cache.system" public="false">
+        <service id="cache.domadmin" parent="cache.system" public="false">
             <tag name="cache.pool" />
         </service>
 
-        <service id="easyadmin.config.manager" class="DomBase\DomAdminBundle\Configuration\ConfigManager" public="true">
-            <argument>%easyadmin.config%</argument>
+        <service id="domadmin.config.manager" class="DomBase\DomAdminBundle\Configuration\ConfigManager" public="true">
+            <argument>%domadmin.config%</argument>
             <argument>%kernel.debug%</argument>
             <argument type="service" id="property_accessor" />
-            <argument type="service" id="cache.easyadmin" />
+            <argument type="service" id="cache.domadmin" />
         </service>
 
-        <service id="easyadmin.query_builder" class="DomBase\DomAdminBundle\Search\QueryBuilder" public="true">
+        <service id="domadmin.query_builder" class="DomBase\DomAdminBundle\Search\QueryBuilder" public="true">
             <argument type="service" id="doctrine" />
         </service>
 
-        <service id="easyadmin.finder" class="DomBase\DomAdminBundle\Search\Finder" public="false">
-            <argument type="service" id="easyadmin.query_builder" />
-            <argument type="service" id="easyadmin.paginator" />
+        <service id="domadmin.finder" class="DomBase\DomAdminBundle\Search\Finder" public="false">
+            <argument type="service" id="domadmin.query_builder" />
+            <argument type="service" id="domadmin.paginator" />
         </service>
 
-        <service id="easyadmin.autocomplete" class="DomBase\DomAdminBundle\Search\Autocomplete" public="true">
-            <argument type="service" id="easyadmin.config.manager" />
-            <argument type="service" id="easyadmin.finder" />
+        <service id="domadmin.autocomplete" class="DomBase\DomAdminBundle\Search\Autocomplete" public="true">
+            <argument type="service" id="domadmin.config.manager" />
+            <argument type="service" id="domadmin.finder" />
             <argument type="service" id="property_accessor" />
         </service>
 
-        <service id="easyadmin.paginator" class="DomBase\DomAdminBundle\Search\Paginator" public="true">
+        <service id="domadmin.paginator" class="DomBase\DomAdminBundle\Search\Paginator" public="true">
         </service>
 
-        <service id="easyadmin.router" class="DomBase\DomAdminBundle\Router\EasyAdminRouter" public="true">
-            <argument id="easyadmin.config.manager" type="service" />
+        <service id="domadmin.router" class="DomBase\DomAdminBundle\Router\EasyAdminRouter" public="true">
+            <argument id="domadmin.config.manager" type="service" />
             <argument id="router" type="service" />
             <argument id="property_accessor" type="service" />
             <argument id="request_stack" type="service" on-invalid="null" />
         </service>
 
-        <service id="easyadmin.twig.extension" class="DomBase\DomAdminBundle\Twig\EasyAdminTwigExtension" public="false">
-            <argument type="service" id="easyadmin.config.manager" />
+        <service id="domadmin.twig.extension" class="DomBase\DomAdminBundle\Twig\EasyAdminTwigExtension" public="false">
+            <argument type="service" id="domadmin.config.manager" />
             <argument type="service" id="property_accessor" />
-            <argument type="service" id="easyadmin.router" />
+            <argument type="service" id="domadmin.router" />
             <argument>%kernel.debug%</argument>
             <argument type="service" id="security.logout_url_generator" on-invalid="null" />
             <argument type="service" id="translator" on-invalid="null" />
             <tag name="twig.extension" />
         </service>
 
-        <service id="easyadmin.listener.controller" class="DomBase\DomAdminBundle\EventListener\ControllerListener" public="true">
-            <argument type="service" id="easyadmin.config.manager" />
+        <service id="domadmin.listener.controller" class="DomBase\DomAdminBundle\EventListener\ControllerListener" public="true">
+            <argument type="service" id="domadmin.config.manager" />
             <argument type="service" id="controller_resolver" />
             <tag name="kernel.event_listener" event="kernel.controller" method="onKernelController" />
         </service>
 
-        <service id="easyadmin.listener.exception" class="DomBase\DomAdminBundle\EventListener\ExceptionListener" public="true">
+        <service id="domadmin.listener.exception" class="DomBase\DomAdminBundle\EventListener\ExceptionListener" public="true">
             <argument type="service" id="twig" />
-            <argument>%easyadmin.config%</argument>
+            <argument>%domadmin.config%</argument>
             <tag name="kernel.event_listener" event="kernel.exception" method="onKernelException" priority="-64" />
         </service>
 
-        <service id="easyadmin.listener.request_post_initialize" class="DomBase\DomAdminBundle\EventListener\RequestPostInitializeListener" public="true">
+        <service id="domadmin.listener.request_post_initialize" class="DomBase\DomAdminBundle\EventListener\RequestPostInitializeListener" public="true">
             <argument type="service" id="doctrine" />
             <argument type="service" id="request_stack" on-invalid="null" />
             <tag name="kernel.event_listener" event="easy_admin.post_initialize" method="initializeRequest" />
         </service>
 
-        <service id="easyadmin.data_collector" class="DomBase\DomAdminBundle\DataCollector\EasyAdminDataCollector" public="false">
-            <argument type="service" id="easyadmin.config.manager" />
-            <tag name="data_collector" template="@DomAdmin/data_collector/easyadmin.html.twig" id="easyadmin" />
+        <service id="domadmin.data_collector" class="DomBase\DomAdminBundle\DataCollector\EasyAdminDataCollector" public="false">
+            <argument type="service" id="domadmin.config.manager" />
+            <tag name="data_collector" template="@DomAdmin/data_collector/domadmin.html.twig" id="domadmin" />
         </service>
 
-        <service id="easyadmin.configuration.normalizer_config_pass" class="DomBase\DomAdminBundle\Configuration\NormalizerConfigPass" public="false">
+        <service id="domadmin.configuration.normalizer_config_pass" class="DomBase\DomAdminBundle\Configuration\NormalizerConfigPass" public="false">
             <argument type="service" id="service_container" />
-            <argument type="service" id="easyadmin.filter.registry" />
-            <tag name="easyadmin.config_pass" priority="90" />
+            <argument type="service" id="domadmin.filter.registry" />
+            <tag name="domadmin.config_pass" priority="90" />
         </service>
 
-        <service id="easyadmin.configuration.design_config_pass" class="DomBase\DomAdminBundle\Configuration\DesignConfigPass" public="false">
+        <service id="domadmin.configuration.design_config_pass" class="DomBase\DomAdminBundle\Configuration\DesignConfigPass" public="false">
             <argument>%kernel.default_locale%</argument>
-            <tag name="easyadmin.config_pass" priority="80" />
+            <tag name="domadmin.config_pass" priority="80" />
         </service>
 
-        <service id="easyadmin.configuration.menu_config_pass" class="DomBase\DomAdminBundle\Configuration\MenuConfigPass" public="false">
-            <tag name="easyadmin.config_pass" priority="70" />
+        <service id="domadmin.configuration.menu_config_pass" class="DomBase\DomAdminBundle\Configuration\MenuConfigPass" public="false">
+            <tag name="domadmin.config_pass" priority="70" />
         </service>
 
-        <service id="easyadmin.configuration.action_config_pass" class="DomBase\DomAdminBundle\Configuration\ActionConfigPass" public="false">
-            <tag name="easyadmin.config_pass" priority="60" />
+        <service id="domadmin.configuration.action_config_pass" class="DomBase\DomAdminBundle\Configuration\ActionConfigPass" public="false">
+            <tag name="domadmin.config_pass" priority="60" />
         </service>
 
-        <service id="easyadmin.configuration.metadata_config_pass" class="DomBase\DomAdminBundle\Configuration\MetadataConfigPass" public="false">
+        <service id="domadmin.configuration.metadata_config_pass" class="DomBase\DomAdminBundle\Configuration\MetadataConfigPass" public="false">
             <argument type="service" id="doctrine" />
-            <tag name="easyadmin.config_pass" priority="50" />
+            <tag name="domadmin.config_pass" priority="50" />
         </service>
 
-        <service id="easyadmin.configuration.property_config_pass" class="DomBase\DomAdminBundle\Configuration\PropertyConfigPass" public="false">
+        <service id="domadmin.configuration.property_config_pass" class="DomBase\DomAdminBundle\Configuration\PropertyConfigPass" public="false">
             <argument type="service" id="form.registry" />
-            <argument type="service" id="easyadmin.filter.registry" />
-            <tag name="easyadmin.config_pass" priority="40" />
+            <argument type="service" id="domadmin.filter.registry" />
+            <tag name="domadmin.config_pass" priority="40" />
         </service>
 
-        <service id="easyadmin.configuration.view_config_pass" class="DomBase\DomAdminBundle\Configuration\ViewConfigPass" public="false">
-            <tag name="easyadmin.config_pass" priority="30" />
+        <service id="domadmin.configuration.view_config_pass" class="DomBase\DomAdminBundle\Configuration\ViewConfigPass" public="false">
+            <tag name="domadmin.config_pass" priority="30" />
         </service>
 
-        <service id="easyadmin.configuration.template_config_pass" class="DomBase\DomAdminBundle\Configuration\TemplateConfigPass" public="false">
+        <service id="domadmin.configuration.template_config_pass" class="DomBase\DomAdminBundle\Configuration\TemplateConfigPass" public="false">
             <argument type="service" id="twig.loader.filesystem" />
-            <tag name="easyadmin.config_pass" priority="20" />
+            <tag name="domadmin.config_pass" priority="20" />
         </service>
 
-        <service id="easyadmin.configuration.default_config_pass" class="DomBase\DomAdminBundle\Configuration\DefaultConfigPass" public="false">
-            <tag name="easyadmin.config_pass" priority="10" />
+        <service id="domadmin.configuration.default_config_pass" class="DomBase\DomAdminBundle\Configuration\DefaultConfigPass" public="false">
+            <tag name="domadmin.config_pass" priority="10" />
         </service>
 
-        <service id="easyadmin.property_accessor" alias="property_accessor" public="true" />
+        <service id="domadmin.property_accessor" alias="property_accessor" public="true" />
 
         <service id="DomBase\DomAdminBundle\Controller\EasyAdminController" class="DomBase\DomAdminBundle\Controller\EasyAdminController" public="true" autowire="true">
             <tag name="container.service_subscriber" />
         </service>
 
         <!-- aliases needed for the service locator of the AbstractAdminController -->
-        <service id="DomBase\DomAdminBundle\Configuration\ConfigManager" alias="easyadmin.config.manager" />
-        <service id="DomBase\DomAdminBundle\Search\QueryBuilder" alias="easyadmin.query_builder" />
-        <service id="DomBase\DomAdminBundle\Search\Paginator" alias="easyadmin.paginator" />
-        <service id="DomBase\DomAdminBundle\Search\Autocomplete" alias="easyadmin.autocomplete" />
+        <service id="DomBase\DomAdminBundle\Configuration\ConfigManager" alias="domadmin.config.manager" />
+        <service id="DomBase\DomAdminBundle\Search\QueryBuilder" alias="domadmin.query_builder" />
+        <service id="DomBase\DomAdminBundle\Search\Paginator" alias="domadmin.paginator" />
+        <service id="DomBase\DomAdminBundle\Search\Autocomplete" alias="domadmin.autocomplete" />
     </services>
 </container>

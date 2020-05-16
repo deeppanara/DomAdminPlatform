@@ -23,12 +23,12 @@ class EasyAdminController extends AbstractController
     public static function getSubscribedServices(): array
     {
         return parent::getSubscribedServices() + [
-            'easyadmin.autocomplete' => Autocomplete::class,
-            'easyadmin.config.manager' => ConfigManager::class,
-            'easyadmin.paginator' => Paginator::class,
-            'easyadmin.query_builder' => QueryBuilder::class,
-            'easyadmin.property_accessor' => PropertyAccessorInterface::class,
-            'easyadmin.filter.registry' => FilterRegistry::class,
+            'domadmin.autocomplete' => Autocomplete::class,
+            'domadmin.config.manager' => ConfigManager::class,
+            'domadmin.paginator' => Paginator::class,
+            'domadmin.query_builder' => QueryBuilder::class,
+            'domadmin.property_accessor' => PropertyAccessorInterface::class,
+            'domadmin.filter.registry' => FilterRegistry::class,
             'event_dispatcher' => EventDispatcherInterface::class,
         ];
     }

@@ -1,4 +1,4 @@
-{% set _entity_config = easyadmin_entity(app.request.query.get('entity')) %}
+{% set _entity_config = domadmin_entity(app.request.query.get('entity')) %}
 {# the empty string concatenation is needed when the primary key is an object (e.g. an Uuid object) #}
 {% set _entity_id = '' ~ attribute(entity, _entity_config.primary_key_field_name) %}
 {% trans_default_domain _entity_config.translation_domain %}
@@ -6,7 +6,7 @@
 
 {% extends _entity_config.templates.layout %}
 
-{% block body_id 'easyadmin-show-' ~ _entity_config.name ~ '-' ~ _entity_id %}
+{% block body_id 'domadmin-show-' ~ _entity_config.name ~ '-' ~ _entity_id %}
 {% block body_class 'show show-' ~ _entity_config.name|lower %}
 
 {% block content_title %}
@@ -29,7 +29,7 @@
                         </label>
                         <div class="form-widget">
                             <div class="form-control">
-                                {{ easyadmin_render_field_for_show_view(_entity_config.name, entity, metadata) }}
+                                {{ domadmin_render_field_for_show_view(_entity_config.name, entity, metadata) }}
                             </div>
 
                             {% if metadata.help|default('') != '' %}
@@ -45,7 +45,7 @@
     <section class="content-footer">
         <div class="form-actions">
             {% block item_actions %}
-                {% set _show_actions = easyadmin_get_actions_for_show_item(_entity_config.name) %}
+                {% set _show_actions = domadmin_get_actions_for_show_item(_entity_config.name) %}
                 {% set _request_parameters = app.request.query.all %}
 
                 {{ include('@DomAdmin/default/includes/_actions.html.twig', {

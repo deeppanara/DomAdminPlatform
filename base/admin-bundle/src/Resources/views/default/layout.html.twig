@@ -10,37 +10,37 @@
         <title>{% block page_title %}{{ block('content_title')|striptags|raw }}{% endblock %}</title>
 
         {% block head_stylesheets %}
-            <link rel="stylesheet" href="{{ asset('bundles/easyadmin/app.css') }}">
+            <link rel="stylesheet" href="{{ asset('bundles/domadmin/app.css') }}">
         {% endblock %}
 
-        {% for css_asset in easyadmin_config('design.assets.css') %}
+        {% for css_asset in domadmin_config('design.assets.css') %}
             <link rel="stylesheet" href="{{ asset(css_asset) }}">
         {% endfor %}
 
         <style>
-            :root { --color-primary: {{ easyadmin_config('design.brand_color') }}; }
+            :root { --color-primary: {{ domadmin_config('design.brand_color') }}; }
         </style>
 
         {% block head_favicon %}
-            {% set favicon = easyadmin_config('design.assets.favicon') %}
+            {% set favicon = domadmin_config('design.assets.favicon') %}
             <link rel="icon" type="{{ favicon.mime_type }}" href="{{ asset(favicon.path) }}" />
         {% endblock %}
 
         {% block head_javascript %}
-            <script src="{{ asset('bundles/easyadmin/app.js') }}"></script>
+            <script src="{{ asset('bundles/domadmin/app.js') }}"></script>
         {% endblock head_javascript %}
 
-        {% if easyadmin_config('design.rtl') %}
-            <link rel="stylesheet" href="{{ asset('bundles/easyadmin/app-rtl.css') }}">
+        {% if domadmin_config('design.rtl') %}
+            <link rel="stylesheet" href="{{ asset('bundles/domadmin/app-rtl.css') }}">
         {% endif %}
     </head>
 
     {% block body %}
-    <body id="{% block body_id %}{% endblock %}" class="easyadmin {% block body_class %}{% endblock %}">
+    <body id="{% block body_id %}{% endblock %}" class="domadmin {% block body_class %}{% endblock %}">
         <script>
             document.body.classList.add(
-                'easyadmin-content-width-' + (localStorage.getItem('easyadmin/content/width') || 'normal'),
-                'easyadmin-sidebar-width-' + (localStorage.getItem('easyadmin/sidebar/width') || 'normal')
+                'domadmin-content-width-' + (localStorage.getItem('domadmin/content/width') || 'normal'),
+                'domadmin-sidebar-width-' + (localStorage.getItem('domadmin/sidebar/width') || 'normal')
             );
         </script>
 
@@ -56,15 +56,15 @@
 
                         <div id="header-logo">
                             {% block header_logo %}
-                                <a class="logo {{ easyadmin_config('site_name')|length > 14 ? 'logo-long' }}" title="{{ easyadmin_config('site_name')|striptags }}" href="{{ path('easyadmin') }}">
-                                    {{ easyadmin_config('site_name')|raw }}
+                                <a class="logo {{ domadmin_config('site_name')|length > 14 ? 'logo-long' }}" title="{{ domadmin_config('site_name')|striptags }}" href="{{ path('domadmin') }}">
+                                    {{ domadmin_config('site_name')|raw }}
                                 </a>
                             {% endblock header_logo %}
                         </div>
                     </nav>
 
-                    {% set _user_name = easyadmin_read_property(app.user, easyadmin_config('user.name_property_path'))|default('user.unnamed'|trans(domain = 'DomAdminBundle')) %}
-                    {% set _logout_path = easyadmin_logout_path() %}
+                    {% set _user_name = domadmin_read_property(app.user, domadmin_config('user.name_property_path'))|default('user.unnamed'|trans(domain = 'DomAdminBundle')) %}
+                    {% set _logout_path = domadmin_logout_path() %}
                     {% set _user_has_logout = _logout_path is not empty %}
                     {% set _user_is_impersonated = is_granted('ROLE_PREVIOUS_ADMIN') %}
                     {% set _user_menu_content %}
@@ -96,15 +96,15 @@
                     <div class="content-top navbar-custom-menu">
                         {% block header_custom_menu %}
                             <div class="user user-menu-wrapper {{ _user_is_impersonated ? 'user-is-impersonated' }}" data-toggle="popover" data-placement="bottom" data-container=".user-menu-wrapper" data-content="{{ _user_menu_content|e('html_attr') }}" data-html="true">
-                                {% if easyadmin_config('user.display_avatar') %}
-                                    {% set _avatar_image_path = easyadmin_read_property(app.user, easyadmin_config('user.avatar_property_path')) %}
+                                {% if domadmin_config('user.display_avatar') %}
+                                    {% set _avatar_image_path = domadmin_read_property(app.user, domadmin_config('user.avatar_property_path')) %}
                                     {% if null == _avatar_image_path %}
                                         <i class="fa fa-fw {{ app.user is not null ? 'fa-user-circle' : 'fa-user-times' }} user-avatar"></i>
                                     {% else %}
                                         <img class="user-avatar" src="{{ _avatar_image_path }}" />
                                     {% endif %}
                                 {% endif %}
-                                {% if easyadmin_config('user.display_name') %}
+                                {% if domadmin_config('user.display_name') %}
                                     <span class="user-name">{{ _user_name }}</span>
                                 {% endif %}
                             </div>
@@ -119,7 +119,7 @@
                     {% block main_menu_wrapper %}
                         {{ include([
                             _entity_config is defined ? _entity_config.templates.menu,
-                            easyadmin_config('design.templates.menu'),
+                            domadmin_config('design.templates.menu'),
                             '@DomAdmin/default/menu.html.twig'
                         ]) }}
                     {% endblock main_menu_wrapper %}
@@ -182,7 +182,7 @@
 
         {% block body_javascript %}{% endblock body_javascript %}
 
-        {% for js_asset in easyadmin_config('design.assets.js') %}
+        {% for js_asset in domadmin_config('design.assets.js') %}
             <script src="{{ asset(js_asset) }}"></script>
         {% endfor %}
     </body>

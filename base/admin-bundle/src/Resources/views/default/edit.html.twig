@@ -1,13 +1,13 @@
-{% form_theme form with easyadmin_config('design.form_theme') %}
+{% form_theme form with domadmin_config('design.form_theme') %}
 
-{% set _entity_config = easyadmin_entity(app.request.query.get('entity')) %}
+{% set _entity_config = domadmin_entity(app.request.query.get('entity')) %}
 {% set _entity_id = attribute(entity, _entity_config.primary_key_field_name) %}
 {% trans_default_domain _entity_config.translation_domain %}
 {% set _trans_parameters = { '%entity_name%': _entity_config.name|trans, '%entity_label%': _entity_config.label|trans, '%entity_id%': _entity_id } %}
 
 {% extends _entity_config.templates.layout %}
 
-{% block body_id 'easyadmin-edit-' ~ _entity_config.name ~ '-' ~ _entity_id %}
+{% block body_id 'domadmin-edit-' ~ _entity_config.name ~ '-' ~ _entity_id %}
 {% block body_class 'edit edit-' ~ _entity_config.name|lower %}
 
 {% block content_title %}

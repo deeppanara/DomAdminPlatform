@@ -74,13 +74,13 @@ Now you can define the ``restockAction()`` method in your own controller:
             $this->em->flush();
 
             // redirect to the 'list' view of the given entity ...
-            return $this->redirectToRoute('easyadmin', array(
+            return $this->redirectToRoute('domadmin', array(
                 'action' => 'list',
                 'entity' => $this->request->query->get('entity'),
             ));
 
             // ... or redirect to the 'edit' view of the given entity item
-            return $this->redirectToRoute('easyadmin', array(
+            return $this->redirectToRoute('domadmin', array(
                 'action' => 'edit',
                 'id' => $id,
                 'entity' => $this->request->query->get('entity'),
@@ -142,7 +142,7 @@ add a ``type`` option with the ``route`` value:
             # ...
 
 Route based actions are displayed as regular links or buttons, but they don't
-link to the usual ``easyadmin`` route but to the route configured by the action.
+link to the usual ``domadmin`` route but to the route configured by the action.
 In addition, the route is passed two parameters in the query string: ``entity``
 (the name of the entity) and, when available, the ``id`` of the related entity.
 
@@ -177,13 +177,13 @@ would look as follows:
             $em->flush();
 
             // redirect to the 'list' view of the given entity ...
-            return $this->redirectToRoute('easyadmin', array(
+            return $this->redirectToRoute('domadmin', array(
                 'action' => 'list',
                 'entity' => $request->query->get('entity'),
             ));
 
             // ... or redirect to the 'edit' view of the given entity item
-            return $this->redirectToRoute('easyadmin', array(
+            return $this->redirectToRoute('domadmin', array(
                 'action' => 'edit',
                 'id' => $id,
                 'entity' => $request->query->get('entity'),

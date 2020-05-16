@@ -207,7 +207,7 @@ class NormalizerConfigPass implements ConfigPassInterface
                     }
 
                     // fields that don't define the 'property' name are special form design elements
-                    $fieldName = $fieldConfig['property'] ?? '_easyadmin_form_design_element_'.$designElementIndex;
+                    $fieldName = $fieldConfig['property'] ?? '_domadmin_form_design_element_'.$designElementIndex;
                     $fields[$fieldName] = $fieldConfig;
                     ++$designElementIndex;
                 }
@@ -243,7 +243,7 @@ class NormalizerConfigPass implements ConfigPassInterface
                     if ($isFormDesignElement && 'tab' === $fieldConfig['type']) {
                         if ($fieldNumber > 1) {
                             $backendConfig['entities'][$entityName][$view]['fields'] = \array_merge(
-                                ['_easyadmin_form_design_element_forced_first_tab' => ['type' => 'tab']],
+                                ['_domadmin_form_design_element_forced_first_tab' => ['type' => 'tab']],
                                 $backendConfig['entities'][$entityName][$view]['fields']
                             );
                         }
@@ -266,7 +266,7 @@ class NormalizerConfigPass implements ConfigPassInterface
                         if ($isTheFirstGroupElement && -1 === $previousTabFieldNumber && $fieldNumber > 1) {
                             // if no tab is used, insert the group at the beginning of the array
                             $backendConfig['entities'][$entityName][$view]['fields'] = \array_merge(
-                                ['_easyadmin_form_design_element_forced_first_group' => ['type' => 'group']],
+                                ['_domadmin_form_design_element_forced_first_group' => ['type' => 'group']],
                                 $backendConfig['entities'][$entityName][$view]['fields']
                             );
                             break;
@@ -274,7 +274,7 @@ class NormalizerConfigPass implements ConfigPassInterface
                             // if tabs are used, we insert the group after the previous tab field into the array
                             $backendConfig['entities'][$entityName][$view]['fields'] = \array_merge(
                                 \array_slice($backendConfig['entities'][$entityName][$view]['fields'], 0, $previousTabFieldNumber, true),
-                                ['_easyadmin_form_design_element_forced_group_'.$fieldNumber => ['type' => 'group']],
+                                ['_domadmin_form_design_element_forced_group_'.$fieldNumber => ['type' => 'group']],
                                 \array_slice($backendConfig['entities'][$entityName][$view]['fields'], $previousTabFieldNumber, null, true)
                             );
                         }
@@ -295,12 +295,12 @@ class NormalizerConfigPass implements ConfigPassInterface
                         $fieldConfig['property'] = $fieldName;
 
                         if ('tab' === $fieldConfig['type'] && empty($fieldConfig['id'])) {
-                            // ensures unique IDs like '_easyadmin_form_design_element_0'
+                            // ensures unique IDs like '_domadmin_form_design_element_0'
                             $fieldConfig['id'] = $fieldConfig['property'];
                         }
 
                         // transform the form type shortcuts into the real form type short names
-                        $fieldConfig['type'] = 'easyadmin_'.$fieldConfig['type'];
+                        $fieldConfig['type'] = 'domadmin_'.$fieldConfig['type'];
                     }
 
                     $backendConfig['entities'][$entityName][$view]['fields'][$fieldName] = $fieldConfig;

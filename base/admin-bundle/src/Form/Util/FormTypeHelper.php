@@ -94,11 +94,11 @@ final class FormTypeHelper
         'timezone' => TimezoneType::class,
         'url' => UrlType::class,
         // EasyAdmin custom types
-        'easyadmin' => EasyAdminFormType::class,
-        'easyadmin_autocomplete' => EasyAdminAutocompleteType::class,
-        'easyadmin_divider' => EasyAdminDividerType::class,
-        'easyadmin_group' => EasyAdminGroupType::class,
-        'easyadmin_section' => EasyAdminSectionType::class,
+        'domadmin' => EasyAdminFormType::class,
+        'domadmin_autocomplete' => EasyAdminAutocompleteType::class,
+        'domadmin_divider' => EasyAdminDividerType::class,
+        'domadmin_group' => EasyAdminGroupType::class,
+        'domadmin_section' => EasyAdminSectionType::class,
         // Popular third-party bundles types
         'ckeditor' => 'Ivory\\CKEditorBundle\\Form\\Type\\CKEditorType',
         'fos_ckeditor' => 'FOS\\CKEditorBundle\\Form\\Type\\CKEditorType',

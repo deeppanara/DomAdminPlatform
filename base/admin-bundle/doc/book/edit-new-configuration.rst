@@ -12,7 +12,7 @@ The **Edit View** is displayed when modifying the contents of any existing
 entity. The **New View** is used when creating new items of the given entity.
 The design of both views is almost identical:
 
-.. image:: ../images/easyadmin-edit-view.png
+.. image:: ../images/domadmin-edit-view.png
    :alt: Edit view interface
 
 The Special ``form`` View
@@ -384,7 +384,7 @@ These are the options that you can define for each field:
   done internally by the bundle). The allowed values are:
 
   * Any of the `Symfony Form types`_.
-  * Any of the custom EasyAdmin form types: ``easyadmin_autocomplete`` (they are
+  * Any of the custom EasyAdmin form types: ``domadmin_autocomplete`` (they are
     explained later in this chapter).
 * ``type_options`` (optional), a hash with the options passed to the Symfony
   Form type used to render the field.
@@ -514,17 +514,17 @@ records:
                 class: App\Entity\Product
                 form:
                     fields:
-                        - { property: 'category', type: 'easyadmin_autocomplete' }
+                        - { property: 'category', type: 'domadmin_autocomplete' }
                         # ...
         # ...
 
-The ``easyadmin_autocomplete`` type configures the class of the related entity
+The ``domadmin_autocomplete`` type configures the class of the related entity
 automatically. If you prefer to define it explicitly, do it in the type options:
 
 .. code-block:: yaml
 
     # ...
-    - { property: 'category', type: 'easyadmin_autocomplete', type_options: { class: 'App\Entity\Category' } }
+    - { property: 'category', type: 'domadmin_autocomplete', type_options: { class: 'App\Entity\Category' } }
 
 When the user types in an autocomplete field, EasyAdmin performs a fuzzy search
 on all the properties of the related entity. This is the same behavior applied
@@ -566,7 +566,7 @@ Selecting the Form Theme
 By default, forms are displayed using a proprietary form theme compatible with
 the Bootstrap 4 CSS framework.
 
-.. image:: ../images/easyadmin-new-view.png
+.. image:: ../images/domadmin-new-view.png
    :alt: Default form style
 
 The form style can be changed with the ``form_theme`` design option:
@@ -689,7 +689,7 @@ A form that includes sections is still displayed as a single form that spans
 the entire available width. Multi-column forms are created with "groups"
 as explained below.
 
-.. image:: ../images/easyadmin-form-section.png
+.. image:: ../images/domadmin-form-section.png
    :alt: A form using sections to separate its fields
 
 Form Groups
@@ -717,7 +717,7 @@ elements of type ``group``:
                         - email
                         - phoneNumber
 
-.. image:: ../images/easyadmin-form-group.png
+.. image:: ../images/domadmin-form-group.png
    :alt: A form using groups to separate its fields
 
 The configurable options of this element are:
@@ -773,7 +773,7 @@ are defined with elements of type ``tab``:
                         - email
                         - phone
 
-.. image:: ../images/easyadmin-form-tabs.png
+.. image:: ../images/domadmin-form-tabs.png
    :alt: A form using tabs to separate its fields
 
 The configurable options of this element are:
@@ -789,7 +789,7 @@ The configurable options of this element are:
 Design elements can be combined to display sections inside groups and create
 advanced layouts:
 
-.. image:: ../images/easyadmin-form-complex-layout.png
+.. image:: ../images/domadmin-form-complex-layout.png
    :alt: A complex form layout combining sections and groups
 
 Advanced Design Configuration

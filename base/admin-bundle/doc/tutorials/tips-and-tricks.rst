@@ -94,14 +94,14 @@ globally for the entire application thanks to a request listener:
 When using global Doctrine filters, you probably don't want to apply them in the
 backend. Otherwise you won't see unpublished items or deleted comments in the
 listings. Given that all EasyAdmin URLs are generated with a single route called
-``easyadmin``, you can add the following to disable the Doctrine filters in the
+``domadmin``, you can add the following to disable the Doctrine filters in the
 backend:
 
 .. code-block:: php
 
     public function onKernelRequest(GetResponseEvent $event)
     {
-        if ('easyadmin' === $event->getRequest()->attributes->get('_route')) {
+        if ('domadmin' === $event->getRequest()->attributes->get('_route')) {
             return;
         }
 

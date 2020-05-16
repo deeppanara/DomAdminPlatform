@@ -8,7 +8,7 @@
                         {% if link_parameters is defined %}
                             {# the empty string concatenation is needed when the primary key is an object (e.g. an Uuid object) #}
                             {% set primary_key_value = '' ~ attribute(item, link_parameters.primary_key_name) %}
-                            <a href="{{ path('easyadmin', link_parameters|merge({ id: primary_key_value, referer: '' })) }}">{{ item }}</a>
+                            <a href="{{ path('domadmin', link_parameters|merge({ id: primary_key_value, referer: '' })) }}">{{ item }}</a>
                         {% else %}
                             {{ item }}
                         {% endif %}
@@ -30,7 +30,7 @@
     {% endif %}
 {# a simple *-to-one value associated with an entity managed by this backend #}
 {% elseif link_parameters is defined %}
-    <a href="{{ path('easyadmin', link_parameters|merge({ referer: '' })) }}">{{ value|easyadmin_truncate }}</a>
+    <a href="{{ path('domadmin', link_parameters|merge({ referer: '' })) }}">{{ value|domadmin_truncate }}</a>
 {% else %}
-    {{ value|easyadmin_truncate }}
+    {{ value|domadmin_truncate }}
 {% endif %}

@@ -77,6 +77,6 @@ class EasyAdminBatchFormType extends AbstractType
      */
     public function getBlockPrefix(): string
     {
-        return 'easyadmin_batch';
+        return 'domadmin_batch';
     }
 }

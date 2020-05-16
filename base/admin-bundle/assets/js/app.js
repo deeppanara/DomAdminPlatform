@@ -25,7 +25,7 @@ window.addEventListener('load', function() {
     $('.collapse').collapse();
     createNullableControls();
     createAutoCompleteFields();
-    $(document).on('easyadmin.collection.item-added', createAutoCompleteFields);
+    $(document).on('domadmin.collection.item-added', createAutoCompleteFields);
     createContentResizer();
     createNavigationToggler();
 });
@@ -50,11 +50,11 @@ function createNullableControls() {
 }
 
 function createAutoCompleteFields() {
-    var autocompleteFields = $('[data-easyadmin-autocomplete-url]');
+    var autocompleteFields = $('[data-domadmin-autocomplete-url]');
 
     autocompleteFields.each(function () {
         var $this = $(this),
-            url = $this.data('easyadmin-autocomplete-url');
+            url = $this.data('domadmin-autocomplete-url');
 
         $this.select2({
             theme: 'bootstrap',
@@ -89,30 +89,30 @@ function createContentResizer() {
 
     if (null !== sidebarResizerHandler) {
         sidebarResizerHandler.addEventListener('click', function() {
-            const oldValue = localStorage.getItem('easyadmin/sidebar/width') || 'normal';
+            const oldValue = localStorage.getItem('domadmin/sidebar/width') || 'normal';
             const newValue = 'normal' == oldValue ? 'compact' : 'normal';
 
-            document.querySelector('body').classList.remove('easyadmin-sidebar-width-' + oldValue);
-            document.querySelector('body').classList.add('easyadmin-sidebar-width-' + newValue);
-            localStorage.setItem('easyadmin/sidebar/width', newValue);
+            document.querySelector('body').classList.remove('domadmin-sidebar-width-' + oldValue);
+            document.querySelector('body').classList.add('domadmin-sidebar-width-' + newValue);
+            localStorage.setItem('domadmin/sidebar/width', newValue);
         });
     }
 
     if (null !== contentResizerHandler) {
         contentResizerHandler.addEventListener('click', function() {
-            const oldValue = localStorage.getItem('easyadmin/content/width') || 'normal';
+            const oldValue = localStorage.getItem('domadmin/content/width') || 'normal';
             const newValue = 'normal' == oldValue ? 'full' : 'normal';
 
-            document.querySelector('body').classList.remove('easyadmin-content-width-' + oldValue);
-            document.querySelector('body').classList.add('easyadmin-content-width-' + newValue);
-            localStorage.setItem('easyadmin/content/width', newValue);
+            document.querySelector('body').classList.remove('domadmin-content-width-' + oldValue);
+            document.querySelector('body').classList.add('domadmin-content-width-' + newValue);
+            localStorage.setItem('domadmin/content/width', newValue);
         });
     }
 }
 
 function createNavigationToggler() {
     const toggler = document.getElementById('navigation-toggler');
-    const cssClassName = 'easyadmin-mobile-sidebar-visible';
+    const cssClassName = 'domadmin-mobile-sidebar-visible';
     let modalBackdrop;
 
     if (null === toggler) {

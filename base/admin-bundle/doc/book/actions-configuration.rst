@@ -9,7 +9,7 @@ Views include one or more **actions** to perform operations on the items
 displayed in that view. For example, the default ``list`` view interface
 includes four actions as buttons or links:
 
-.. image:: ../images/easyadmin-list-view-actions.png
+.. image:: ../images/domadmin-list-view-actions.png
    :alt: List view interface
 
 These are the built-in actions included by default in each view:
@@ -257,7 +257,7 @@ Removing Action Labels and Displaying Just Icons
 By default, the actions showed in the ``list`` view only display their label
 (``Edit``, ``Show``, etc.):
 
-.. image:: ../images/easyadmin-listing-actions-label-only.png
+.. image:: ../images/domadmin-listing-actions-label-only.png
    :alt: Action Labels in Entity Listing
 
 This is configurable thanks to the ``icon``, ``label`` and ``title`` options:

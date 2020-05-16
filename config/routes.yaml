@@ -2,7 +2,7 @@ homepage:
     path: /
     defaults:
         _controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController::redirectAction
-        route: easyadmin
+        route: domadmin
         permanent: true
 
 #backend:

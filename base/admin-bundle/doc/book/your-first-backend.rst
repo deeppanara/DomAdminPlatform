@@ -24,7 +24,7 @@ add the following configuration:
 Browse the ``/admin`` URL in your Symfony application and you'll get access to
 the admin backend:
 
-.. image:: ../images/easyadmin-default-backend.png
+.. image:: ../images/domadmin-default-backend.png
    :alt: Default EasyAdmin Backend interface
 
 .. note::

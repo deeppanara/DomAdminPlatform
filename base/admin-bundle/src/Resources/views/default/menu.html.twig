@@ -6,7 +6,7 @@
         {% set path =
             item.type == 'link' ? item.url :
             item.type == 'route' ? path(item.route, item.params) :
-            item.type == 'entity' ? path('easyadmin', { entity: item.entity, action: 'list' }|merge(menu_params)|merge(item.params)) :
+            item.type == 'entity' ? path('domadmin', { entity: item.entity, action: 'list' }|merge(menu_params)|merge(item.params)) :
             item.type == 'empty' ? '#' : ''
         %}
 
@@ -14,7 +14,7 @@
            the URL to include the menu_params to display the selected menu item
            (this is checked comparing the beginning of the route URL with the backend homepage URL)
         #}
-        {% if item.type == 'route' and (path starts with path('easyadmin')) %}
+        {% if item.type == 'route' and (path starts with path('domadmin')) %}
             {% set path = path(item.route, menu_params|merge(item.params)) %}
         {% endif %}
 
@@ -33,9 +33,9 @@
 
 {% block main_menu_before %}{% endblock %}
 
-{% set _translation_domain = (_entity_config.translation_domain)|default(easyadmin_config('translation_domain'))|default('messages') %}
+{% set _translation_domain = (_entity_config.translation_domain)|default(domadmin_config('translation_domain'))|default('messages') %}
 <ul class="sidebar-menu" data-widget="tree" data-animation-speed="250">
-    {% set _menu_items = easyadmin_config('design.menu') %}
+    {% set _menu_items = domadmin_config('design.menu') %}
 
     {% block main_menu %}
         {% for item in _menu_items %}
