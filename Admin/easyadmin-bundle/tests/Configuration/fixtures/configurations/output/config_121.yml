@@ -1,0 +1,6 @@
+easy_admin:
+    design:
+        assets:
+            favicon:
+                path: favicon.ico
+                mime_type: image/vnd.microsoft.icon

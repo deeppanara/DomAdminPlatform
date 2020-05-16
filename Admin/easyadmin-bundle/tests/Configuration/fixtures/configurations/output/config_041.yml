@@ -1,0 +1,8 @@
+easy_admin:
+    entities:
+        Category:
+            list:
+                fields:
+                    field1:
+                        type: image
+                        base_path: /field_path/

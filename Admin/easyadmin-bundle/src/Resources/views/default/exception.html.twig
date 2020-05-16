@@ -1,0 +1,12 @@
+{% extends layout_template_path %}
+
+{% block body_class 'error' %}
+{% block page_title %}{{ 'errors'|transchoice(1, {}, 'DomAdminBundle') }}{% endblock %}
+
+{% block content_header '' %}
+{% block main %}
+    <div class="error-message">
+        <h1><i class="fa fa-fw fa-exclamation-circle"></i> {{ block('page_title') }}</h1>
+        {{ exception.publicMessage|trans(exception.translationParameters, 'DomAdminBundle') }}
+    </div>
+{% endblock %}

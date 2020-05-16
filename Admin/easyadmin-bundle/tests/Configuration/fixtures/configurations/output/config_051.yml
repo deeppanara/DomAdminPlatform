@@ -1,0 +1,5 @@
+easy_admin:
+    entities:
+        Category:
+            show:
+                actions: {  }

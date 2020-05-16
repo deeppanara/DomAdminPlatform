@@ -1,0 +1,6 @@
+easy_admin:
+    design:
+        assets:
+            favicon:
+                path: favicon.gif
+                mime_type: image/gif

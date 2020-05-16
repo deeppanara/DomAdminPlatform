@@ -1,0 +1,12 @@
+easy_admin:
+    entities:
+        Category:
+            class: AppTestBundle\Entity\UnitTests\Category
+            search:
+                fields:
+                    field1:
+                        label: Field1
+                    field2:
+                        label: Field2
+                    field3:
+                        label: Field3

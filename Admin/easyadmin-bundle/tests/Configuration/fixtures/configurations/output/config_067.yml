@@ -1,0 +1,6 @@
+easy_admin:
+    formats:
+        date: 'j F Y'
+        time: 'H:i A'
+        datetime: 'd/m/Y H:i:s'
+        number: '%6.2f'
