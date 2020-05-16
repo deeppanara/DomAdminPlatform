@@ -2,7 +2,7 @@
 
 namespace App\Controller\Admin;
 
-use EasyCorp\Bundle\DomAdminBundle\Controller\EasyAdminController;
+use DomBase\DomAdminBundle\Controller\EasyAdminController;
 
 /**
  * This is an example of how to use a custom controller for a backend entity.

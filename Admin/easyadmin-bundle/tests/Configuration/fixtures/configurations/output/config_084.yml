@@ -1,4 +1,0 @@
-easy_admin:
-    design:
-        form_theme:
-            - '@DomAdmin/form/bootstrap_4.html.twig'
