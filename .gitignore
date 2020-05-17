@@ -18,3 +18,4 @@
 ###< symfony/web-server-bundle ###
 
 .idea/
+base/admin-bundle/node_modules/

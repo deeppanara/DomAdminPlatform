@@ -1,5 +1,6 @@
 // Forms
 // ----------------------------------------------------------------------------
+@import "./variables.scss";
 
 .content-body form,
 .content-body .form-horizontal {
@@ -18,7 +19,7 @@
 .form-group label,
 .form-group legend.col-form-label {
     align-self: self-start;
-    color: var(--text-color);
+    color: $text-color;
     flex: 30% 0 0;
     font-size: var(--font-size-base);
     font-weight: 400;
@@ -32,7 +33,7 @@
 .form-group label.required:after,
 .form-group .col-form-label.required:after {
     bottom: 4px;
-    color: var(--color-danger);
+    color: $color-danger;
     content: "\2022"; // \2022 = &bull; (bullet)
     filter: opacity(75%);
     position: relative;
@@ -48,7 +49,7 @@
 }
 
 .form-widget .form-help {
-    color: var(--text-muted);
+    color: $text-muted;
     display: inline-block;
     font-size: var(--font-size-sm);
     margin-bottom: 0;
@@ -224,7 +225,7 @@ fieldset .form-group .nullable-control label {
 
 // Form tabs
 .form-tabs .nav-tabs {
-    background: var(--white);
+    background: $white;
     margin: -20px -20px 20px;
     padding-left: 20px;
 }
@@ -235,7 +236,7 @@ fieldset .form-group .nullable-control label {
 }
 
 .form-tabs .nav-tabs .fa {
-    color: var(--text-muted);
+    color: $text-muted;
     font-size: var(--font-size-lg);
     margin-right: 4px;
 }
@@ -257,8 +258,8 @@ fieldset .form-group .nullable-control label {
 // Form fieldsets (used for the "from groups" feature)
 fieldset {
     background: var(--fieldset-bg);
-    border: var(--border-width) var(--border-style) var(--border-color);
-    border-radius: var(--border-radius);
+    border: $border-width $border-style $border-color;
+    border-radius: $border-radius;
     margin: 10px 0;
     padding: 10px 20px 15px;
 }
@@ -273,7 +274,7 @@ fieldset > legend {
     width: auto;
 }
 fieldset > legend .fa {
-    color: var(--text-muted);
+    color: $text-muted;
     font-size: var(--font-size-lg);
     margin-right: 4px;
 }
@@ -315,7 +316,7 @@ fieldset .field-collection-action .btn {
 }
 
 fieldset .legend-help {
-    color: var(--text-muted);
+    color: $text-muted;
     font-size: var(--font-size-sm);
     margin-bottom: 15px;
     margin-top: -5px;
@@ -341,15 +342,15 @@ fieldset .legend-help {
 }
 
 .form-section h2 span {
-    border-bottom: var(--border-width) var(--border-style) var(--border-color);
+    border-bottom: $border-width $border-style $border-color;
     flex: 1;
     padding-bottom: 7px;
 }
 
 .form-section h2 .fa {
-    background-color: var(--body-bg);
-    border-radius: var(--border-radius);
-    color: var(--text-muted);
+    background-color: $body-bg;
+    border-radius: $border-radius;
+    color: $text-muted;
     display: inline-block;
     font-size: var(--font-size-base);
     height: 24px;
@@ -360,7 +361,7 @@ fieldset .legend-help {
 }
 
 .form-section-help {
-    color: var(--text-muted);
+    color: $text-muted;
     font-size: var(--font-size-sm);
     margin-bottom: 0;
     margin-top: -4px;
@@ -393,7 +394,7 @@ fieldset .legend-help {
 }
 
 form .invalid-feedback {
-    color: var(--color-danger);
+    color: $color-danger;
     font-weight: 500;
     padding-top: 6px;
 }
@@ -408,7 +409,7 @@ form .invalid-feedback > .d-block + .d-block {
 
 // Image/file uploads
 .domadmin-vich-image img {
-    box-shadow: 0 0 0 4px var(--white), 0px 0px 4px 3px var(--gray-600);
+    box-shadow: 0 0 0 4px $white, 0px 0px 4px 3px var(--gray-600);
     margin: 6px 4px 12px;
     max-height: 300px;
     max-width: 100%;

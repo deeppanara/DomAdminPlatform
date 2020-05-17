@@ -1,8 +1,10 @@
+@import "./variables.scss";
+
 .select2-container--bootstrap .select2-selection {
     border: 0;
-    border-radius: var(--border-radius);
+    border-radius: $border-radius;
     box-shadow: 0 0 0 1px rgba(43, 45, 80, .16), 0 0 0 1px rgba(6, 122, 184, 0), 0 0 0 2px rgba(6, 122, 184, 0), 0 1px 1px rgba(0, 0, 0, .08);
-    color: var(--text-color);
+    color: $text-color;
     max-width: 350px;
     transition: box-shadow .08s ease-in, color .08s ease-in;
 }
@@ -39,7 +41,7 @@
 }
 
 .select2-container--bootstrap .select2-selection--single .select2-selection__rendered {
-    color: var(--text-color);
+    color: $text-color;
 }
 
 .select2-container--bootstrap .select2-selection--multiple .select2-selection__choice {
@@ -51,13 +53,13 @@
 }
 
 .select2-container--bootstrap .select2-results__option[aria-selected=true] {
-    background-color: var(--body-bg);
+    background-color: $body-bg;
     font-weight: 500;
 }
 
 .select2-container--bootstrap .select2-results__option--highlighted[aria-selected] {
-    background-color: var(--body-bg);
-    color: var(--text-color);
+    background-color: $body-bg;
+    color: $text-color;
 }
 
 .select2-container--bootstrap .select2-selection--multiple {
@@ -65,11 +67,11 @@
 }
 
 .select2-container--bootstrap .select2-selection--multiple .select2-selection__choice {
-    color: var(--text-color);
+    color: $text-color;
 }
 
 .select2-container--bootstrap .select2-selection--multiple .select2-selection__choice__remove {
-    color: var(--text-color);
+    color: $text-color;
     font-weight: 500;
     position: relative;
     top: -1px;
@@ -77,7 +79,7 @@
 
 .select2-container--bootstrap .select2-search--dropdown .select2-search__field {
     border: 0;
-    border-radius: var(--border-radius);
+    border-radius: $border-radius;
     box-shadow: 0 0 0 1px rgba(43, 45, 80, 0.16), 0 0 0 1px rgba(6, 122, 184, 0), 0 0 0 2px rgba(6, 122, 184, 0), 0 1px 1px rgba(0, 0, 0, 0.08);
     height: 30px;
     margin: 5px;

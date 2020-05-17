@@ -2,6 +2,8 @@
    ========================================================================= */
 /* make the Symfony Web Toolbar look nice by neutralizing the aliasing applied
   globally by the AdminLTE template styles */
+@import "./variables.scss";
+
 .sf-toolbarreset {
     -webkit-font-smoothing: subpixel-antialiased;
     -moz-osx-font-smoothing: auto;
@@ -72,7 +74,7 @@ body.domadmin-sidebar-width-compact .wrapper {
     margin: 0;
 }
 .main-header #header-logo a {
-    color: var(--text-color);
+    color: $text-color;
 }
 .main-header #header-logo img,
 .main-header #header-logo svg {
@@ -82,7 +84,7 @@ body.domadmin-sidebar-width-compact .wrapper {
 #navigation-toggler {
     background: transparent;
     border: 0;
-    color: var(--text-color-dark);
+    color: $text-color-dark;
     cursor: pointer;
     filter: opacity(50%);
     font-size: 17px;
@@ -96,7 +98,7 @@ body.domadmin-sidebar-width-compact .wrapper {
 }
 
 .main-sidebar {
-    background: var(--body-bg);
+    background: $body-bg;
     height: 100vh;
     left: calc(0px - 2 * 20px - var(--sidebar-width));
     overflow-x: hidden;
@@ -123,7 +125,7 @@ body.domadmin-mobile-sidebar-visible .main-sidebar {
 // Content bar at the top of the page (e.g. user menu)
 .navbar-custom-menu .user {
     align-items: center;
-    color: var(--text-color-light);
+    color: $text-color-light;
     cursor: pointer;
     display: flex;
 }
@@ -139,7 +141,7 @@ body.domadmin-mobile-sidebar-visible .main-sidebar {
 }
 
 .navbar-custom-menu .user.user-is-impersonated {
-    color: var(--color-danger);
+    color: $color-danger;
 }
 
 .user-details .user-details-name {
@@ -154,7 +156,7 @@ body.domadmin-mobile-sidebar-visible .main-sidebar {
     padding: 12px;
 }
 .user-menu-wrapper .popover-content-section + .popover-content-section {
-    border-top: var(--border-width) var(--border-style) var(--border-color);
+    border-top: $border-width $border-style $border-color;
     padding-top: 12px;
 }
 .user-menu .user-action {
@@ -182,8 +184,8 @@ body.domadmin-mobile-sidebar-visible .main-sidebar {
 }
 
 .content {
-    background-color: var(--white);
-    border-radius: var(--border-radius);
+    background-color: $white;
+    border-radius: $border-radius;
     box-shadow: var(--box-shadow-lg);
 }
 
@@ -203,16 +205,16 @@ body.domadmin-mobile-sidebar-visible .main-sidebar {
     }
 }
 .resizer-handler-left {
-    border-bottom-left-radius: var(--border-radius);
-    border-top-left-radius: var(--border-radius);
+    border-bottom-left-radius: $border-radius;
+    border-top-left-radius: $border-radius;
 }
 .resizer-handler-right {
-    border-bottom-right-radius: var(--border-radius);
-    border-top-right-radius: var(--border-radius);
+    border-bottom-right-radius: $border-radius;
+    border-top-right-radius: $border-radius;
 }
 
 .content-header {
-    border-bottom: var(--border-width) var(--border-style) var(--border-color);
+    border-bottom: $border-width $border-style $border-color;
     display: flex;
     flex-direction: column;
     padding: 15px 17px 15px 20px;
@@ -263,7 +265,7 @@ body.domadmin-mobile-sidebar-visible .main-sidebar {
 }
 
 .form-action-search input[type="search"].form-control {
-    background-color: var(--white);
+    background-color: $white;
     background-image: url('data:image/svg+xml;utf8,<svg viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg"><path fill="%23aaa" d="M1216 832q0-185-131.5-316.5t-316.5-131.5-316.5 131.5-131.5 316.5 131.5 316.5 316.5 131.5 316.5-131.5 131.5-316.5zm512 832q0 52-38 90t-90 38q-54 0-90-38l-343-342q-179 124-399 124-143 0-273.5-55.5t-225-150-150-225-55.5-273.5 55.5-273.5 150-225 225-150 273.5-55.5 273.5 55.5 225 150 150 225 55.5 273.5q0 220-124 399l343 343q37 37 37 90z"/></svg>');
     background-repeat: no-repeat;
     background-size: 13px 13px;
@@ -273,22 +275,22 @@ body.domadmin-mobile-sidebar-visible .main-sidebar {
 }
 
 .content-header-help {
-    color: var(--text-muted);
+    color: $text-muted;
     font-size: var(--font-size-sm);
     margin-top: 12px;
 }
 
 .content-footer {
-    background: var(--white);
-    border-top: var(--border-width) var(--border-style) var(--border-color);
-    border-bottom-left-radius: var(--border-radius);
-    border-bottom-right-radius: var(--border-radius);
+    background: $white;
+    border-top: $border-width $border-style $border-color;
+    border-bottom-left-radius: $border-radius;
+    border-bottom-right-radius: $border-radius;
     padding: 15px 20px;
 }
 
 .content-body form {
-    border-bottom-left-radius: var(--border-radius);
-    border-bottom-right-radius: var(--border-radius);
+    border-bottom-left-radius: $border-radius;
+    border-bottom-right-radius: $border-radius;
 }
 
 .content-body table {
@@ -328,7 +330,7 @@ form .content-footer {
 }
 
 .modal-footer {
-    background: var(--white);
+    background: $white;
 }
 
 // Boolean labels (not switches/toggles)
@@ -346,7 +348,7 @@ body.show .form-horizontal .control-label {
 }
 
 body.show .form-control {
-    border: var(--border-width) var(--border-style) var(--border-color);
+    border: $border-width $border-style $border-color;
     box-shadow: none;
     height: auto;
     min-height: 30px;

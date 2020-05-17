@@ -2,6 +2,8 @@
 // ----------------------------------------------------------------------------
 // The following styles have been adapted from https://jsfiddle.net/yeyene/42p6s7ps/
 
+@import "./variables.scss";
+
 .checkbox-switch {
     position: relative;
 }
@@ -48,7 +50,7 @@
 }
 
 .checkbox-switch input + span:after {
-    background: var(--white);
+    background: $white;
     content: "";
     display: block;
     height: 20px;
@@ -79,7 +81,7 @@
 }
 
 .checkbox-switch input + span:after {
-    background: var(--white);
+    background: $white;
     border: solid transparent 2px;
     border-radius: 20px;
     content: "";
@@ -100,11 +102,11 @@
 }
 
 .checkbox-switch input:checked + span:before {
-    background: var(--color-success);
+    background: $color-success;
 }
 
 .checkbox-switch input:not(checked) + span:before {
-    background: var(--color-danger);
+    background: $color-danger;
 }
 
 .checkbox-switch input + span:before {

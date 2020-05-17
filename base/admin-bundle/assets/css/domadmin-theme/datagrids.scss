@@ -1,5 +1,6 @@
 // Datagrid tables
 // ----------------------------------------------------------------------------
+@import "./variables.scss";
 
 table.datagrid {
   border-spacing: 0;
@@ -12,7 +13,7 @@ table.datagrid {
   padding: 0;
 }
 .datagrid thead a, .datagrid thead span {
-  color: var(--text-color-dark);
+  color: $text-color-dark;
   display: block;
   font-weight: 500;
   line-height: 1.357;
@@ -33,14 +34,14 @@ table.datagrid {
   font-weight: 700;
 }
 .datagrid thead i {
-  color: var(--text-muted);
+  color: $text-muted;
   margin-left: 2px;
 }
 .datagrid thead .sorted i {
-  color: var(--color-primary);
+  color: $color-primary;
 }
 .datagrid th, .datagrid td {
-  border-bottom: var(--border-width) var(--border-style) var(--border-color);
+  border-bottom: $border-width $border-style $border-color;
   vertical-align: middle;
 }
 .datagrid tr:last-child > td {
@@ -66,7 +67,7 @@ table.datagrid {
 }
 .datagrid .actions-dropdown .dropdown-toggle {
   background: transparent !important;
-  border: var(--border-width) solid transparent;
+  border: $border-width solid transparent;
   box-shadow: none !important;
   padding: 1px 8px 0 8px;
 }
@@ -89,9 +90,9 @@ table.datagrid {
   cursor: pointer;
 
   .dropdown-toggle {
-    background: var(--white) !important;
-    border: var(--border-width) solid var(--border-color);
-    border-bottom-color: var(--white);
+    background: $white !important;
+    border: $border-width solid $border-color;
+    border-bottom-color: $white;
     z-index: $zindex-dropdown + 1;
     position: relative;
     border-bottom-left-radius: 0;
@@ -104,7 +105,7 @@ table.datagrid {
 }
 
 .datagrid .domadmin-thumbnail img {
-  box-shadow: 0 0 0 2px var(--white), 0 0 4px 1px var(--gray-600);
+  box-shadow: 0 0 0 2px $white, 0 0 4px 1px var(--gray-600);
   margin-bottom: 2px;
   margin-top: 2px;
   max-height: 50px;
@@ -129,7 +130,7 @@ table.datagrid {
 }
 
 .datagrid .highlight {
-    border-radius: var(--border-radius);
+    border-radius: $border-radius;
     background: var(--highlight-bg);
     padding: 1px;
 }
@@ -146,7 +147,7 @@ table.datagrid {
   max-width: 400px;
 }
 #modal-filters .modal-content {
-  background: var(--white);
+  background: $white;
 }
 #modal-filters .modal-header {
   background: var(--gray-50);
@@ -162,16 +163,16 @@ table.datagrid {
   padding: 15px;
 }
 .action-filters-button i {
-  color: var(--text-color-light);
+  color: $text-color-light;
 }
 .action-filters-button.action-filters-applied i {
-  color: var(--color-primary);
+  color: $color-primary;
 }
 .action-filters-button span {
   font-weight: 600;
 }
 .action-filters-reset i {
-  color: var(--text-color-light);
+  color: $text-color-light;
 }
 .filter-heading {
   align-items: center;

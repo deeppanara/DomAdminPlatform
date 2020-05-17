@@ -1,29 +1,7 @@
 @import "./domadmin-theme/variables.css";
 @import "./domadmin-theme/variables.scss";
 
-// Imports only the Bootstrap styles used by default in the backend.
-// If you develop features that need other Bootstrap components, check out the
-// bootstrap-all.css file that provides the rest of the Bootstrap styles
-@import "~bootstrap/scss/functions";
-@import "~bootstrap/scss/variables";
-@import "~bootstrap/scss/mixins";
-@import "~bootstrap/scss/reboot";
-@import "~bootstrap/scss/type";
-@import "~bootstrap/scss/grid";
-@import "~bootstrap/scss/forms";
-@import "~bootstrap/scss/buttons";
-@import "~bootstrap/scss/button-group";
-@import "~bootstrap/scss/transitions";
-@import "~bootstrap/scss/dropdown";
-@import "~bootstrap/scss/input-group";
-@import "~bootstrap/scss/nav";
-@import "~bootstrap/scss/badge";
-@import "~bootstrap/scss/alert";
-@import "~bootstrap/scss/close";
-@import "~bootstrap/scss/modal";
-@import "~bootstrap/scss/tooltip";
-@import "~bootstrap/scss/popover";
-@import "~bootstrap/scss/utilities";
+@import "~bootstrap/scss/bootstrap.scss";
 
 @import "~@fortawesome/fontawesome-free/css/all.css";
 @import "~@fortawesome/fontawesome-free/css/v4-shims.css";
@@ -42,3 +20,5 @@
 @import "./domadmin-theme/select2.scss";
 @import "./domadmin-theme/errors.scss";
 @import "./domadmin-theme/pages.scss";
+
+//@import "./sb-admin/scss/styles.scss";

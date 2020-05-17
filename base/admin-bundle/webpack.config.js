@@ -13,8 +13,8 @@ Encore
     .autoProvidejQuery()
 
     // needed to avoid this bug: https://github.com/symfony/webpack-encore/issues/436
-    .configureCssLoader(options => { options.minimize = false; })
-    .enablePostCssLoader()
+    // .configureCssLoader(options => { options.minimize = false; })
+    // .enablePostCssLoader()
 
     // copy select2 i18n files
     .copyFiles({

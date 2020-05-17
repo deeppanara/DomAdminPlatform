@@ -1,12 +1,14 @@
 // Error pages (shown when exceptions are triggered in production)
 // ----------------------------------------------------------------------------
+@import "./variables.scss";
+
 body.error .error-message {
   max-width: 500px;
   min-height: 400px;
   padding: 45px;
 }
 body.error .error-message h1 {
-  color: var(--color-danger);
+  color: $color-danger;
   font-size: var(--font-size-lg);
   font-weight: 600;
 }
