@@ -27,23 +27,23 @@ body {
 
 .wrapper {
     display: grid;
-    grid-row-gap: 20px;
+    //grid-row-gap: 20px;
     grid-template-areas:
         "header"
         "content-wrapper"
     ;
-    margin: 20px 15px;
+    //margin: 0px 15px;
 
     @media(min-width: 992px) {
         grid-template-columns: var(--sidebar-width) auto;
-        grid-column-gap: 15px;
+        //grid-column-gap: 15px;
         grid-template-areas:
             "header   header"
             "sidebar  content-wrapper"
         ;
-        margin-left: auto;
-        margin-right: auto;
-        width: calc(100% - 2 * 20px);
+        //margin-left: auto;
+        //margin-right: auto;
+        //width: calc(100% - 2 * 20px);
     }
 }
 

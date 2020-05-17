@@ -38,146 +38,132 @@
     </head>
 
     {% block body %}
-    <body id="{% block body_id %}{% endblock %}" class="domadmin {% block body_class %}{% endblock %}">
-        <script>
-            document.body.classList.add(
-                'domadmin-content-width-' + (localStorage.getItem('domadmin/content/width') || 'normal'),
-                'domadmin-sidebar-width-' + (localStorage.getItem('domadmin/sidebar/width') || 'normal')
-            );
-        </script>
+    <body id="{% block body_id %}{% endblock %}" class="domadmin domadmin-content-width-full {% block body_class %}{% endblock %}">
+        {% block header %}
+        <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+
+            {% block header_logo %}
+            <a class="navbar-brand logo {{ domadmin_config('site_name')|length > 14 ? 'logo-long' }}" title="{{ domadmin_config('site_name')|striptags }}" href="{{ path('domadmin') }}">
+                {{ domadmin_config('site_name')|raw }}
+            </a>
+            {% endblock header_logo %}
+
+
+            {% set _user_name = domadmin_read_property(app.user, domadmin_config('user.name_property_path'))|default('user.unnamed'|trans(domain = 'DomAdminBundle')) %}
+            {% set _logout_path = domadmin_logout_path() %}
+            {% set _user_has_logout = _logout_path is not empty %}
+            {% set _user_is_impersonated = is_granted('ROLE_PREVIOUS_ADMIN') %}
+
+            <button class="btn btn-link btn-sm order-1 order-lg-0" id="sidebarToggle" href="#"><i class="fas fa-bars"></i></button>
+            <ul class="navbar-nav d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" id="userDropdown" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
+                        <div class="dropdown-item active" disabled="disabled" href="#">
+                            {% if app.user|default(false) == false %}
+                                {{ 'user.anonymous'|trans(domain = 'DomAdminBundle') }}
+                            {% else %}
+                                {{ _user_name }}
+                            {% endif %}
+                        </div>
+                        <div class="dropdown-divider"></div>
+                        {% if _user_has_logout %}
+                            <a class="user-action user-action-logout" href="{{ _logout_path }}">{{ 'user.signout'|trans(domain = 'DomAdminBundle') }}</a>
+                        {% endif %}
+                        {% if _user_is_impersonated %}
+                            <a class="user-action user-action-exit-impersonation" href="?_switch_user=_exit">{{ 'user.exit_impersonation'|trans(domain = 'DomAdminBundle') }}</a>
+                        {% endif %}
+                    </div>
+                </li>
+            </ul>
+        </nav>
+        {% endblock header %}
 
         {% block wrapper_wrapper %}
         <div class="wrapper">
         {% block wrapper %}
-            <header class="main-header">
-                {% block header %}
-                    <nav class="navbar" role="navigation">
-                        <button id="navigation-toggler" type="button" aria-label="Toggle navigation">
-                            <i class="fa fa-fw fa-bars"></i>
-                        </button>
+                {% block sidebar %}
 
-                        <div id="header-logo">
-                            {% block header_logo %}
-                                <a class="logo {{ domadmin_config('site_name')|length > 14 ? 'logo-long' }}" title="{{ domadmin_config('site_name')|striptags }}" href="{{ path('domadmin') }}">
-                                    {{ domadmin_config('site_name')|raw }}
-                                </a>
-                            {% endblock header_logo %}
-                        </div>
-                    </nav>
+                    <section class="sidebar">
+                        {% block main_menu_wrapper %}
+                            {{ include([
+                                _entity_config is defined ? _entity_config.templates.menu,
+                                domadmin_config('design.templates.menu'),
+                                '@DomAdmin/default/menu.html.twig'
+                            ]) }}
+                        {% endblock main_menu_wrapper %}
+                    </section>
 
-                    {% set _user_name = domadmin_read_property(app.user, domadmin_config('user.name_property_path'))|default('user.unnamed'|trans(domain = 'DomAdminBundle')) %}
-                    {% set _logout_path = domadmin_logout_path() %}
-                    {% set _user_has_logout = _logout_path is not empty %}
-                    {% set _user_is_impersonated = is_granted('ROLE_PREVIOUS_ADMIN') %}
-                    {% set _user_menu_content %}
-                        <div class="popover-content-section user-details {{ _user_has_logout or _user_is_impersonated ? 'user-has-actions' }}">
-                            <p class="small text-muted mb-0">{{ 'user.logged_in_as'|trans(domain = 'DomAdminBundle') }}</p>
-                            <p class="user-details-name">
-                                {% if app.user|default(false) == false %}
-                                    {{ 'user.anonymous'|trans(domain = 'DomAdminBundle') }}
-                                {% else %}
-                                    {{ _user_name }}
-                                {% endif %}
-                            </p>
-                        </div>
+                {% endblock sidebar %}
+                <main>
+                    <div class="container-fluid">
+                        <h1 class="mt-4">Dashboard</h1>
+                        <ol class="breadcrumb mb-4">
+                            <li class="breadcrumb-item active">Dashboard</li>
+                        </ol>
 
-                        {% block user_menu %}
-                            {% if _user_has_logout or _user_is_impersonated %}
-                                <div class="popover-content-section user-menu">
-                                    {% if _user_has_logout %}
-                                        <a class="user-action user-action-logout" href="{{ _logout_path }}">{{ 'user.signout'|trans(domain = 'DomAdminBundle') }}</a>
-                                    {% endif %}
-                                    {% if _user_is_impersonated %}
-                                        <a class="user-action user-action-exit-impersonation" href="?_switch_user=_exit">{{ 'user.exit_impersonation'|trans(domain = 'DomAdminBundle') }}</a>
-                                    {% endif %}
-                                </div>
-                            {% endif %}
-                        {% endblock user_menu %}
-                    {% endset %}
+                        {% block flash_messages %}
+                            {{ include(_entity_config is defined ? _entity_config.templates.flash_messages : '@DomAdmin/default/flash_messages.html.twig') }}
+                        {% endblock flash_messages %}
 
-                    <div class="content-top navbar-custom-menu">
-                        {% block header_custom_menu %}
-                            <div class="user user-menu-wrapper {{ _user_is_impersonated ? 'user-is-impersonated' }}" data-toggle="popover" data-placement="bottom" data-container=".user-menu-wrapper" data-content="{{ _user_menu_content|e('html_attr') }}" data-html="true">
-                                {% if domadmin_config('user.display_avatar') %}
-                                    {% set _avatar_image_path = domadmin_read_property(app.user, domadmin_config('user.avatar_property_path')) %}
-                                    {% if null == _avatar_image_path %}
-                                        <i class="fa fa-fw {{ app.user is not null ? 'fa-user-circle' : 'fa-user-times' }} user-avatar"></i>
-                                    {% else %}
-                                        <img class="user-avatar" src="{{ _avatar_image_path }}" />
-                                    {% endif %}
-                                {% endif %}
-                                {% if domadmin_config('user.display_name') %}
-                                    <span class="user-name">{{ _user_name }}</span>
-                                {% endif %}
+                        <div id="sidebar-resizer-handler" class="resizer-handler resizer-handler-left"></div>
+
+                        {% block content %}
+                            <div class="content">
+                                {% block content_header_wrapper %}
+                                    {% set _has_content_help = _entity_config is defined and _entity_config[app.request.query.get('action')]['help']|default(false) %}
+                                    <section class="content-header {{ _has_content_help ? 'has-content-help' }}">
+                                        {% block content_header %}
+                                            <div class="d-flex flex-row justify-content-between align-content-center w-100">
+                                                <div class="content-header-title">
+                                                    <h1 class="title">{% block content_title %}{% endblock %}</h1>
+                                                </div>
+
+                                                {% block global_actions_wrapper %}
+                                                    <div class="global-actions">{% block global_actions %}{% endblock %}</div>
+                                                {% endblock %}
+                                            </div>
+
+                                            {% block content_help %}
+                                                {% if _entity_config is defined and _entity_config[app.request.query.get('action')]['help']|default(false) %}
+                                                    <div class="content-header-help">
+                                                        {{ _entity_config[app.request.query.get('action')]['help']|trans(domain = _entity_config.translation_domain)|raw }}
+                                                    </div>
+                                                {% endif %}
+                                            {% endblock content_help %}
+                                        {% endblock content_header %}
+                                    </section>
+                                {% endblock content_header_wrapper %}
+
+                                <section id="main" class="content-body">
+                                    {% block main %}{% endblock %}
+                                </section>
+
+                                {% block content_footer_wrapper %}
+                                    <section class="content-footer">
+                                        {% block content_footer %}
+                                            <footer class="py-4 bg-light mt-auto">
+                                                <div class="container-fluid">
+                                                    <div class="d-flex align-items-center justify-content-between small">
+                                                        <div class="text-muted">Copyright &copy; Your Website 2019</div>
+                                                        <div>
+                                                            <a href="#">Privacy Policy</a>
+                                                            &middot;
+                                                            <a href="#">Terms &amp; Conditions</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </footer>
+                                        {% endblock %}
+                                    </section>
+                                {% endblock %}
                             </div>
-                        {% endblock header_custom_menu %}
+                        {% endblock content %}
+
+                        <div id="content-resizer-handler" class="resizer-handler resizer-handler-right"></div>
+
                     </div>
-                {% endblock header %}
-            </header>
-
-            <aside class="main-sidebar">
-            {% block sidebar %}
-                <section class="sidebar">
-                    {% block main_menu_wrapper %}
-                        {{ include([
-                            _entity_config is defined ? _entity_config.templates.menu,
-                            domadmin_config('design.templates.menu'),
-                            '@DomAdmin/default/menu.html.twig'
-                        ]) }}
-                    {% endblock main_menu_wrapper %}
-                </section>
-
-            {% endblock sidebar %}
-            </aside>
-
-            <div class="content-wrapper">
-                {% block flash_messages %}
-                    {{ include(_entity_config is defined ? _entity_config.templates.flash_messages : '@DomAdmin/default/flash_messages.html.twig') }}
-                {% endblock flash_messages %}
-
-                <div id="sidebar-resizer-handler" class="resizer-handler resizer-handler-left"></div>
-
-                {% block content %}
-                    <div class="content">
-                        {% block content_header_wrapper %}
-                        {% set _has_content_help = _entity_config is defined and _entity_config[app.request.query.get('action')]['help']|default(false) %}
-                        <section class="content-header {{ _has_content_help ? 'has-content-help' }}">
-                            {% block content_header %}
-                                <div class="d-flex flex-row justify-content-between align-content-center w-100">
-                                    <div class="content-header-title">
-                                        <h1 class="title">{% block content_title %}{% endblock %}</h1>
-                                    </div>
-
-                                    {% block global_actions_wrapper %}
-                                        <div class="global-actions">{% block global_actions %}{% endblock %}</div>
-                                    {% endblock %}
-                                </div>
-
-                                {% block content_help %}
-                                    {% if _entity_config is defined and _entity_config[app.request.query.get('action')]['help']|default(false) %}
-                                        <div class="content-header-help">
-                                            {{ _entity_config[app.request.query.get('action')]['help']|trans(domain = _entity_config.translation_domain)|raw }}
-                                        </div>
-                                    {% endif %}
-                                {% endblock content_help %}
-                            {% endblock content_header %}
-                        </section>
-                        {% endblock content_header_wrapper %}
-
-                        <section id="main" class="content-body">
-                            {% block main %}{% endblock %}
-                        </section>
-
-                        {% block content_footer_wrapper %}
-                            <section class="content-footer">
-                                {% block content_footer %}{% endblock %}
-                            </section>
-                        {% endblock %}
-                    </div>
-                {% endblock content %}
-
-                <div id="content-resizer-handler" class="resizer-handler resizer-handler-right"></div>
-            </div>
+                </main>
         {% endblock wrapper %}
         </div>
         {% endblock wrapper_wrapper %}
