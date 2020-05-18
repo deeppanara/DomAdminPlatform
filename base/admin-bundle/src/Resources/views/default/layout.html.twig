@@ -54,7 +54,6 @@
             {% set _user_has_logout = _logout_path is not empty %}
             {% set _user_is_impersonated = is_granted('ROLE_PREVIOUS_ADMIN') %}
 
-            <button class="btn btn-link btn-sm order-1 order-lg-0" id="sidebarToggle" href="#"><i class="fas fa-bars"></i></button>
             <ul class="navbar-nav d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" id="userDropdown" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
@@ -97,11 +96,11 @@
                 {% endblock sidebar %}
                 <main>
                     <div class="container-fluid">
-                        <h1 class="mt-4">Dashboard</h1>
-                        <ol class="breadcrumb mb-4">
-                            <li class="breadcrumb-item active">Dashboard</li>
-                        </ol>
-
+                        <div class="content">
+                            <div class="breadcrumb mb-2 mt-4">
+                                <h5 class="m-0">{% block content_title %}{% endblock %}</h5>
+                            </div>
+                        </div>
                         {% block flash_messages %}
                             {{ include(_entity_config is defined ? _entity_config.templates.flash_messages : '@DomAdmin/default/flash_messages.html.twig') }}
                         {% endblock flash_messages %}
@@ -116,7 +115,7 @@
                                         {% block content_header %}
                                             <div class="d-flex flex-row justify-content-between align-content-center w-100">
                                                 <div class="content-header-title">
-                                                    <h1 class="title">{% block content_title %}{% endblock %}</h1>
+                                                    <h1 class="title"></h1>
                                                 </div>
 
                                                 {% block global_actions_wrapper %}
@@ -142,18 +141,7 @@
                                 {% block content_footer_wrapper %}
                                     <section class="content-footer">
                                         {% block content_footer %}
-                                            <footer class="py-4 bg-light mt-auto">
-                                                <div class="container-fluid">
-                                                    <div class="d-flex align-items-center justify-content-between small">
-                                                        <div class="text-muted">Copyright &copy; Your Website 2019</div>
-                                                        <div>
-                                                            <a href="#">Privacy Policy</a>
-                                                            &middot;
-                                                            <a href="#">Terms &amp; Conditions</a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </footer>
+
                                         {% endblock %}
                                     </section>
                                 {% endblock %}
@@ -163,7 +151,20 @@
                         <div id="content-resizer-handler" class="resizer-handler resizer-handler-right"></div>
 
                     </div>
+                    <footer class="py-4 bg-light mt-4">
+                        <div class="container-fluid">
+                            <div class="d-flex align-items-center justify-content-between small">
+                                <div class="text-muted">Copyright &copy; Your Website 2019</div>
+                                <div>
+                                    <a href="#">Privacy Policy</a>
+                                    &middot;
+                                    <a href="#">Terms &amp; Conditions</a>
+                                </div>
+                            </div>
+                        </div>
+                    </footer>
                 </main>
+
         {% endblock wrapper %}
         </div>
         {% endblock wrapper_wrapper %}

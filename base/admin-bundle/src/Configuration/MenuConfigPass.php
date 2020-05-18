@@ -87,6 +87,11 @@ class MenuConfigPass implements ConfigPassInterface
                 $itemConfig['children'] = [];
             }
 
+            // normalize id configuration
+            if (!\array_key_exists('id', $itemConfig) && \array_key_exists('children', $itemConfig)) {
+                $itemConfig['id'] = 'collapse.'.$itemConfig['label'];
+            }
+
             // normalize 'default' option, which sets the menu item used as the backend index
             if (!\array_key_exists('default', $itemConfig)) {
                 $itemConfig['default'] = false;

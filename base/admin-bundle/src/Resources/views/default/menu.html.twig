@@ -1,6 +1,6 @@
 {% macro render_menu_item(item, translation_domain) %}
     {% if item.type == 'divider' %}
-        {{ item.label|trans(domain = translation_domain) }}
+        <div class="sb-sidenav-menu-heading">{{ item.label|trans(domain = translation_domain) }}</div>
     {% else %}
         {% set menu_params = { menuIndex: item.menu_index, submenuIndex: item.submenu_index } %}
         {% set path =
@@ -10,21 +10,25 @@
             item.type == 'empty' ? '#' : ''
         %}
 
-        {# if the URL generated for the route belongs to the backend, regenerate
-           the URL to include the menu_params to display the selected menu item
-           (this is checked comparing the beginning of the route URL with the backend homepage URL)
-        #}
+        {% set is_selected_menu = app.request.query.get('menuIndex')|default(-1) == item.menu_index %}
+        {% set is_selected_submenu = is_selected_menu and app.request.query.get('submenuIndex')|default(-1) == item.submenu_index %}
+
         {% if item.type == 'route' and (path starts with path('domadmin')) %}
             {% set path = path(item.route, menu_params|merge(item.params)) %}
         {% endif %}
 
         <a href="{{ path }}"
-           class="{{ item.css_class|default('') }}"
-           {% if item.target|default(false) %}target="{{ item.target }}"{% endif %}
-           {% if item.rel|default(false) %}rel="{{ item.rel }}"{% endif %}>
-            {% if item.icon is not empty %}<i class="fa fa-fw {{ item.icon }}"></i>{% endif %}
+            class="nav-link {{ item.css_class|default('') }} {{ (is_selected_submenu) ? 'active' : '' }}"
+            {% if item.target|default(false) %}target="{{ item.target }}"{% endif %}
+            {% if item.children|default([]) is not empty %}
+                data-toggle="collapse" data-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts"
+            {% endif %}
+            {% if item.rel|default(false) %}rel="{{ item.rel }}"{% endif %}>
+            <div class="sb-nav-link-icon">{% if item.icon is not empty %}<i class="fa fa-fw {{ item.icon }}"></i>{% endif %}</div>
             <span>{{ item.label|trans(domain = translation_domain) }}</span>
-            {% if item.children|default([]) is not empty %}<i class="fa fa-fw fa-angle-right treeview-icon"></i>{% endif %}
+            {% if item.children|default([]) is not empty %}
+                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+            {% endif %}
         </a>
     {% endif %}
 {% endmacro %}
@@ -34,83 +38,42 @@
 {% block main_menu_before %}{% endblock %}
 
 {% set _translation_domain = (_entity_config.translation_domain)|default(domadmin_config('translation_domain'))|default('messages') %}
-<ul class="sidebar-menu" data-widget="tree" data-animation-speed="250">
-    {% set _menu_items = domadmin_config('design.menu') %}
-
-    {% block main_menu %}
-        {% for item in _menu_items %}
-            {% block menu_item %}
-                {% set is_selected_menu = app.request.query.get('menuIndex')|default(-1) == loop.index0 %}
-                {% set is_selected_submenu = is_selected_menu and app.request.query.get('submenuIndex')|default(-1) != -1 %}
-                <li class="{{ item.type == 'divider' ? 'header' }} {{ item.children is not empty ? 'treeview' }} {{ is_selected_menu ? 'active' }} {{ is_selected_submenu ? 'submenu-active' }}">
-                    {{ helper.render_menu_item(item, _translation_domain) }}
-
-                    {% if item.children|default([]) is not empty %}
-                        <ul class="treeview-menu">
-                            {% for subitem in item.children %}
-                                {% block menu_subitem %}
-                                    <li class="{{ subitem.type == 'divider' ? 'header' }} {{ is_selected_menu and app.request.query.get('submenuIndex')|default(-1) == loop.index0 ? 'active' }}">
-                                        {{ helper.render_menu_item(subitem, _translation_domain) }}
-                                    </li>
-                                {% endblock menu_subitem %}
-                            {% endfor %}
-                        </ul>
-                    {% endif %}
-                </li>
-            {% endblock menu_item %}
-        {% endfor %}
-    {% endblock main_menu %}
-</ul>
-
-{% block main_menu_after %}{% endblock %}
-
 <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
     <div class="sb-sidenav-menu">
         <div class="nav">
-            <div class="sb-sidenav-menu-heading">Core</div>
-            <a class="nav-link" href="index.html"><div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                Dashboard
-            </a>
-            <div class="sb-sidenav-menu-heading">Interface</div>
-            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts"
-            ><div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
-                Layouts
-                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div
-                ></a>
-            <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
-                <nav class="sb-sidenav-menu-nested nav"><a class="nav-link" href="layout-static.html">Static Navigation</a><a class="nav-link" href="layout-sidenav-light.html">Light Sidenav</a></nav>
-            </div>
-            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages"
-            ><div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
-                Pages
-                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div
-                ></a>
-            <div class="collapse" id="collapsePages" aria-labelledby="headingTwo" data-parent="#sidenavAccordion">
-                <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
-                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#pagesCollapseAuth" aria-expanded="false" aria-controls="pagesCollapseAuth"
-                    >Authentication
-                        <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div
-                        ></a>
-                    <div class="collapse" id="pagesCollapseAuth" aria-labelledby="headingOne" data-parent="#sidenavAccordionPages">
-                        <nav class="sb-sidenav-menu-nested nav"><a class="nav-link" href="login.html">Login</a><a class="nav-link" href="register.html">Register</a><a class="nav-link" href="password.html">Forgot Password</a></nav>
-                    </div>
-                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#pagesCollapseError" aria-expanded="false" aria-controls="pagesCollapseError"
-                    >Error
-                        <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div
-                        ></a>
-                    <div class="collapse" id="pagesCollapseError" aria-labelledby="headingOne" data-parent="#sidenavAccordionPages">
-                        <nav class="sb-sidenav-menu-nested nav"><a class="nav-link" href="401.html">401 Page</a><a class="nav-link" href="404.html">404 Page</a><a class="nav-link" href="500.html">500 Page</a></nav>
-                    </div>
-                </nav>
-            </div>
-            <div class="sb-sidenav-menu-heading">Addons</div>
-            <a class="nav-link" href="charts.html"
-            ><div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
-                Charts</a
-            ><a class="nav-link" href="tables.html"
-            ><div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
-                Tables</a
-            >
+            {% set _menu_items = domadmin_config('design.menu') %}
+
+            {% block main_menu %}
+                {% for item in _menu_items %}
+                    {% block menu_item %}
+                        {% set is_selected_menu = app.request.query.get('menuIndex')|default(-1) == loop.index0 %}
+                        {% set is_selected_submenu = is_selected_menu and app.request.query.get('submenuIndex')|default(-1) != -1 %}
+
+                        {{ helper.render_menu_item(item, _translation_domain) }}
+
+                        {% if item.children|default([]) is not empty %}
+         
+                            <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
+                                <nav class="sb-sidenav-menu-nested nav">
+                                    {% for subitem in item.children %}
+                                        {{ helper.render_menu_item(subitem, _translation_domain) }}
+                                    {% endfor %}
+                                </nav>
+                            </div>
+{#                            <ul class="treeview-menu">#}
+{#                                {% for subitem in item.children %}#}
+{#                                    {% block menu_subitem %}#}
+{#                                        <li class="{{ subitem.type == 'divider' ? 'header' }} {{ is_selected_menu and app.request.query.get('submenuIndex')|default(-1) == loop.index0 ? 'active' }}">#}
+{#                                            {{ helper.render_menu_item(subitem, _translation_domain) }}#}
+{#                                        </li>#}
+{#                                    {% endblock menu_subitem %}#}
+{#                                {% endfor %}#}
+{#                            </ul>#}
+                        {% endif %}
+
+                    {% endblock menu_item %}
+                {% endfor %}
+            {% endblock main_menu %}
         </div>
     </div>
     <div class="sb-sidenav-footer">
@@ -118,3 +81,59 @@
         Start Bootstrap
     </div>
 </nav>
+
+{% block main_menu_after %}{% endblock %}
+{#
+<nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+    <div class="sb-sidenav-menu">
+        <div class="nav">
+
+            <a class="nav-link" href="index.html"><div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                Dashboard
+            </a>
+            <div class="sb-sidenav-menu-heading">Interface</div>
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
+                <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                Layouts
+                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+            </a>
+            <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
+                <nav class="sb-sidenav-menu-nested nav">
+                    <a class="nav-link" href="layout-static.html">Static Navigation</a>
+                    <a class="nav-link" href="layout-sidenav-light.html">Light Sidenav</a>
+                </nav>
+            </div>
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages"><div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
+                Pages
+                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+            </a>
+            <div class="collapse" id="collapsePages" aria-labelledby="headingTwo" data-parent="#sidenavAccordion">
+                <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#pagesCollapseAuth" aria-expanded="false" aria-controls="pagesCollapseAuth">Authentication
+                        <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                    </a>
+                    <div class="collapse" id="pagesCollapseAuth" aria-labelledby="headingOne" data-parent="#sidenavAccordionPages">
+                        <nav class="sb-sidenav-menu-nested nav"><a class="nav-link" href="login.html">Login</a><a class="nav-link" href="register.html">Register</a><a class="nav-link" href="password.html">Forgot Password</a></nav>
+                    </div>
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#pagesCollapseError" aria-expanded="false" aria-controls="pagesCollapseError">Error
+                        <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                    </a>
+                    <div class="collapse" id="pagesCollapseError" aria-labelledby="headingOne" data-parent="#sidenavAccordionPages">
+                        <nav class="sb-sidenav-menu-nested nav"><a class="nav-link" href="401.html">401 Page</a><a class="nav-link" href="404.html">404 Page</a><a class="nav-link" href="500.html">500 Page</a></nav>
+                    </div>
+                </nav>
+            </div>
+            <div class="sb-sidenav-menu-heading">Addons</div>
+
+            <a class="nav-link" href="tables.html">
+                <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
+                Tables
+            </a>
+        </div>
+    </div>
+    <div class="sb-sidenav-footer">
+        <div class="small">Logged in as:</div>
+        Start Bootstrap
+    </div>
+</nav>
+#}

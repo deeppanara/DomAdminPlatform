@@ -8,7 +8,7 @@
 $enable-print-styles: false;
 $enable-gradients: false;
 
-$body-bg: hsl(220, 20%, 91%);
+$body-bg: hsl(0, 0%, 96%);
 $body-color: hsl(225, 15%, 35%);
 $text-color: hsl(225, 15%, 35%);
 $text-color-dark: hsl(229, 24%, 21%);
@@ -92,7 +92,7 @@ $font-size-h4: calc(var(--font-size-base) * 1.25);
 $font-size-h5: var(--font-size-base);
 $font-size-h6: calc(var(--font-size-base) * 0.85);
 
-$border-radius: 4px;
+$border-radius: 1px;
 $border-width: 1px;
 $border-style: solid;
 $border-color: hsl(213, 24%, 91%);

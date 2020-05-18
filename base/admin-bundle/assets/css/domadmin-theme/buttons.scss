@@ -60,7 +60,7 @@
 .btn.disabled:focus, .btn:disabled:focus,
 .btn.disabled:active, .btn:disabled:active,
 .btn.disabled:active:focus, .btn:disabled:active:focus {
-    box-shadow: none;
+    //box-shadow: none;
     cursor: not-allowed;
 }
 a.btn.disabled, fieldset:disabled a.btn {
