@@ -24,9 +24,9 @@ table.datagrid {
 .datagrid th:first-child a, .datagrid th:first-child span, .datagrid td:first-child {
   padding-left: 20px;
 }
-.datagrid th:last-child a, .datagrid th:last-child span, .datagrid td:last-child {
-  padding-right: 20px;
-}
+//.datagrid th:last-child a, .datagrid th:last-child span, .datagrid td:last-child {
+//  padding-right: 20px;
+//}
 .datagrid td {
   padding: 8px;
 }
@@ -40,12 +40,13 @@ table.datagrid {
 .datagrid thead .sorted i {
   color: $color-primary;
 }
-.datagrid th, .datagrid td {
-  border-bottom: $border-width $border-style $border-color;
+.datagrid th {
+  border: $border-width $border-style $gray-100;
   vertical-align: middle;
 }
-.datagrid tr:last-child > td {
-  border: 0;
+.datagrid td {
+  border: $border-width $border-style $border-color;
+  vertical-align: middle;
 }
 .datagrid tbody tr:hover td, .datagrid tbody tr:hover th {
   background: var(--form-bg);

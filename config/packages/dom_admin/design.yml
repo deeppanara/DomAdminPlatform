@@ -10,6 +10,14 @@
 # which is published at https://github.com/javiereguiluz/DomAdminBundle
 dom_admin:
     site_name: 'ACME Backend'
+    translator:
+        # defines the locales you want to manage
+        locales:
+            - fr
+            - en
+        # defines the directories in which you want to extract translations files
+        paths:
+            - '%kernel.project_dir%/translations'
     design:
         assets:
             css:

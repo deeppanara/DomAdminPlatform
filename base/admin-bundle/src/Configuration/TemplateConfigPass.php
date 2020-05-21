@@ -76,6 +76,7 @@ class TemplateConfigPass implements ConfigPassInterface
         $backendConfig = $this->processDefaultTemplates($backendConfig);
         $backendConfig = $this->processFieldTemplates($backendConfig);
         $backendConfig = $this->processActionTemplates($backendConfig);
+        $backendConfig = $this->processExportTemplates($backendConfig);
 
         $this->existingTemplates = [];
 
@@ -281,5 +282,57 @@ class TemplateConfigPass implements ConfigPassInterface
                 return $templatePath;
             }
         }
+    }
+
+    /**
+     * Determines the template used to render each backend element. This is not
+     * trivial because templates can depend on the entity displayed and they
+     * define an advanced override mechanism.
+     *
+     * @param array $backendConfig
+     *
+     * @return array
+     */
+    private function processExportTemplates(array $backendConfig)
+    {
+        foreach ($backendConfig['entities'] as $entityName => $entityConfig) {
+            foreach (array('export') as $view) {
+                if (!array_key_exists($view, $backendConfig['entities'][$entityName])){
+                    continue;
+                }
+                foreach ($entityConfig[$view]['fields'] as $fieldName => $fieldMetadata) {
+                    if (null !== $fieldMetadata['template']) {
+                        continue;
+                    }
+
+                    // needed to add support for immutable datetime/date/time fields
+                    // (which are rendered using the same templates as their non immutable counterparts)
+                    if ('_immutable' === substr($fieldMetadata['dataType'], -10)) {
+                        $fieldTemplateName = 'field_'.substr($fieldMetadata['dataType'], 0, -10);
+                    } else {
+                        $fieldTemplateName = 'field_'.$fieldMetadata['dataType'];
+                    }
+
+                    // primary key values are displayed unmodified to prevent common issues
+                    // such as formatting its values as numbers (e.g. `1,234` instead of `1234`)
+                    if ($entityConfig['primary_key_field_name'] === $fieldName) {
+                        $template = $entityConfig['templates']['field_id'];
+                        // easyadminplus overrides
+                    } elseif (file_exists('../vendor/lle/easyadmin-plus-bundle/src/Resources/views/templates/field_' . $fieldMetadata['dataType'] . '.html.twig')) {
+                        $template = '@LleEasyAdminPlus/templates/field_' . $fieldMetadata['dataType'] . '.html.twig';
+                    } elseif (array_key_exists($fieldTemplateName, $entityConfig['templates'])) {
+                        $template = $entityConfig['templates'][$fieldTemplateName];
+                    } else {
+                        $template = '@LleEasyAdminPlus/templates/label_null.html.twig';
+                    }
+
+                    $entityConfig[$view]['fields'][$fieldName]['template'] = $template;
+                }
+            }
+
+            $backendConfig['entities'][$entityName] = $entityConfig;
+        }
+
+        return $backendConfig;
     }
 }

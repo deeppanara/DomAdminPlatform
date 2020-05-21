@@ -1,0 +1,62 @@
+menu:
+    category: Categories
+    product: Products
+    product.list: 'List Products'
+    product.add: 'Add Product'
+    customer: Customers
+    purchase: Purchases
+    about: 'About EasyAdmin'
+    about.home: 'Project Home'
+    about.docs: Documentation
+    about.issues: 'Report Issues'
+Categories: Categories
+Category: Category
+Customers: Customers
+Product: Product
+Products: Products
+User: User
+Attachments: Attachments
+'Billing address': 'Billing address'
+Buyer: Buyer
+Contract: Contract
+'Created at': 'Created at'
+'Delivery date': 'Delivery date'
+'Delivery hour': 'Delivery hour'
+Description: Description
+EAN-13: EAN-13
+Ean: EAN-13
+Email: Email
+Enabled: Enabled
+Features: Features
+Guid: GUID
+ID: ID
+'Image file': 'Image file'
+Image: Image
+'Is active': 'Is active'
+Label: Label
+Name: Name
+'Parent category': 'Parent category'
+Price: Price
+Published: Published
+Purchase: Purchase
+'Purchased items': 'Purchased items'
+Purchases: Purchases
+Shipping: Shipping
+Tags: Tags
+Total: Total
+Username: Username
+'EAN-13 valid code':
+    ' Leave empty if unknown':
+        '': 'EAN-13 valid code. Leave empty if unknown.'
+'Reserved for administrators use': 'Reserved for administrators use'
+'Product %entity_label%': 'Product %entity_label%'
+'Account Information': 'Account Information'
+'Advanced Settings': 'Advanced Settings'
+'Basic information': 'Basic information'
+'Contact Information': 'Contact Information'
+'Contract file': 'Contract file'
+'Delivery Details': 'Delivery Details'
+'Legal Information': 'Legal Information'
+'Product Details': 'Product Details'
+'Purchase Details': 'Purchase Details'
+'Transactions History': 'Transactions History'

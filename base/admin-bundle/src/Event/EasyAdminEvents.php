@@ -58,4 +58,16 @@ final class EasyAdminEvents
     public const POST_LIST_QUERY_BUILDER = 'easy_admin.post_list_query_builder';
     /** @Event("Symfony\Component\EventDispatcher\GenericEvent") */
     public const POST_SEARCH_QUERY_BUILDER = 'easy_admin.post_search_query_builder';
+
+    // Events related to backend views
+    /** @Event("Symfony\Component\EventDispatcher\GenericEvent") */
+    public const PRE_EXPORT = 'easy_admin.pre_export';
+    /** @Event("Symfony\Component\EventDispatcher\GenericEvent") */
+    public const POST_EXPORT = 'easy_admin.post_export';
+
+    // Events related to custom action
+    /** @Event("Symfony\Component\EventDispatcher\GenericEvent") */
+    const PRE_TRANSLATE = 'easy_admin.pre_translate';
+    /** @Event("Symfony\Component\EventDispatcher\GenericEvent") */
+    const POST_TRANSLATE = 'easy_admin.post_translate';
 }

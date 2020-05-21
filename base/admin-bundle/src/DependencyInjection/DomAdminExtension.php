@@ -2,9 +2,11 @@
 
 namespace DomBase\DomAdminBundle\DependencyInjection;
 
+use DomBase\DomAdminBundle\Search\Exporter\ExporterInterface;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
+use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
 /**
@@ -26,10 +28,18 @@ class DomAdminExtension extends Extension
         $backendConfig = $this->processConfiguration(new Configuration(), $configs);
         $container->setParameter('domadmin.config', $backendConfig);
 
+        $container->registerForAutoconfiguration(ExporterInterface::class)->addTag('domadmin.exporter');
+
+        $configs = $this->processConfigTranslator($configs, $container);
+
         // load bundle's services
         $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.xml');
         $loader->load('form.xml');
+
+        // load bundle's services
+        $loader = new YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+        $loader->load('services.yaml');
 
         if ($container->getParameter('kernel.debug')) {
             // in 'dev', use the built-in Symfony exception listener
@@ -40,6 +50,24 @@ class DomAdminExtension extends Extension
             $container->getDefinition('domadmin.configuration.design_config_pass')
                 ->replaceArgument(0, $container->getParameter('locale'));
         }
+    }
+    private function processConfigTranslator(array $config, ContainerBuilder $container): array
+    {
+        if (empty($config['translator']['paths'])) {
+            $config['translator']['paths'] = [
+                $container->getParameter('kernel.project_dir').'/translations',
+            ];
+        }
+        if (empty($config['translator']['locales'])) {
+            if($container->hasParameter('locale') && $container->getParameter('locale')){
+                $config['translator']['locales'] = [$container->getParameter('locale')];
+            }else{
+                $config['translator']['locales'] = [$container->getParameter('kernel.default_locale')];
+                $container->setParameter('locale', $container->getParameter('kernel.default_locale'));
+            }
+        }
+
+        return $config;
     }
 
     /**

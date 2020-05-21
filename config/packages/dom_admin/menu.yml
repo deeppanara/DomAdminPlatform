@@ -19,7 +19,10 @@ dom_admin:
                   - { entity: 'Product', icon: 'plus-circle', label: 'menu.product.add', params: { action: 'new' } }
             - { label: 'menu.customer', entity: 'User', icon: 'users' }
             - { label: 'menu.purchase', entity: 'Purchase', icon: 'credit-card', params: { sortField: 'deliveryDate' } }
+            - { label: 'menu.admin.config' }
+            - { route: 'dom_admin_translations', label: 'Translations', icon: 'globe' }
             - { label: 'menu.about' }
             - { label: 'menu.about.home', url: 'https://github.com/EasyCorp/DomAdminBundle', icon: 'home', target: '_blank' }
             - { label: 'menu.about.docs', url: 'https://symfony.com/doc/current/bundles/DomAdminBundle', icon: 'book', target: '_blank' }
             - { label: 'menu.about.issues', url: 'https://github.com/EasyCorp/DomAdminBundle/issues', icon: 'github', target: '_blank' }
+            - { label: 'Icon', url: 'https://fontawesome.com/v4.7.0/icons/', icon: 'github', target: '_blank' }

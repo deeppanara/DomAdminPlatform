@@ -346,12 +346,11 @@
 {% endblock domadmin_rest %}
 
 {% block item_actions %}
-    {% set _translation_domain = domadmin.entity.translation_domain %}
     {% set _trans_parameters = { '%entity_name%':  domadmin.entity.name|trans, '%entity_label%': domadmin.entity.label|trans } %}
 
     {# the 'save' action is hardcoded for the 'edit' and 'new' views #}
     <button type="submit" class="btn btn-primary action-save">
-        <span class="btn-label">{{ 'action.save'|trans(_trans_parameters, _translation_domain) }}</span>
+        <span class="btn-label">{{ 'action.save'|trans(_trans_parameters, 'DomAdminBundle') }}</span>
     </button>
 
     {% set _entity_actions = (domadmin.view == 'new')
@@ -369,7 +368,7 @@
         entity_config: domadmin.entity,
         request_parameters: _request_parameters,
         translation_domain: _translation_domain,
-        trans_parameters: _trans_parameters,
+        trans_parameters: 'DomAdminBundle',
         item_id: _entity_id,
         item: domadmin.item
     }, with_context = false) }}
@@ -493,19 +492,22 @@
 
 {# EasyAdminBatch form type #}
 {% block domadmin_batch_widget %}
-    {% set _translation_domain = domadmin.entity.translation_domain %}
     {% set _trans_parameters = { '%entity_name%':  domadmin.entity.name|trans, '%entity_label%': domadmin.entity.label|trans } %}
 
     {{ form_widget(form.ids) }}
-    <button type="button" class="btn btn-link deselect-batch-button">{{ 'action.deselect'|trans(_trans_parameters, _translation_domain) }}</button>
-    {% for action in batch_actions %}
-        <button type="submit" class="btn {{ action.css_class|default('btn-secondary') }}" title="{{ action.title|default('') is empty ? '' : action.title|trans(_trans_parameters) }}" name="{{ form.name.vars.full_name }}" value="{{ action.name }}">
-            {%- if action.icon %}<i class="fa fa-fw fa-{{ action.icon }}"></i> {% endif -%}
-            {%- if action.label is defined and not action.label is empty -%}
-                {{ action.label|trans }}
-            {%- endif -%}
-        </button>
-    {% endfor %}
+    <div class="w-100">
+        <div class="text-right">
+            {% for action in batch_actions %}
+                <button type="submit" class="btn {{ action.css_class|default('btn-secondary') }}" title="{{ action.title|default('') is empty ? '' : action.title|trans(_trans_parameters) }}" name="{{ form.name.vars.full_name }}" value="{{ action.name }}">
+                    {%- if action.icon %}<i class="fa fa-fw fa-{{ action.icon }}"></i> {% endif -%}
+                    {%- if action.label is defined and not action.label is empty -%}
+                        {{ action.label|trans }}
+                    {%- endif -%}
+                </button>
+            {% endfor %}
+            <button type="button" class="btn btn-outline-primary deselect-batch-button">{{ 'action.deselect'|trans(_trans_parameters, 'DomAdminBundle') }}</button>
+        </div>
+    </div>
 {% endblock domadmin_batch_widget %}
 
 {# EasyAdminFilters form type #}
@@ -516,9 +518,12 @@
     {% for field in form %}
         <div class="filter-field {% if not loop.last %}border-bottom{% endif %} py-1 px-3 {% if loop.last %}pb-2{% endif %}">
             <div class="filter-heading" id="filter-heading-{{ loop.index }}">
-                <input type="checkbox" class="filter-checkbox" {% if field.vars.name in applied_filters %}checked{% endif %}>
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input filter-checkbox large" id="{{ field.vars.id }}" {% if field.vars.name in applied_filters %}checked{% endif %}>
+                    <label class="custom-control-label" for="{{ field.vars.id }}"> {{ field.vars.label|default(field.vars.name|humanize)|trans(domain = _translation_domain) }}</label>
+                </div>
                 <a data-toggle="collapse" href="#filter-content-{{ loop.index }}" aria-expanded="{{ field.vars.name in applied_filters ? 'true' : 'false' }}" aria-controls="filter-content-{{ loop.index }}">
-                    {{ field.vars.label|default(field.vars.name|humanize)|trans(domain = _translation_domain) }}
+                   &nbsp;
                 </a>
             </div>
             <div id="filter-content-{{ loop.index }}" class="filter-content collapse {% if field.vars.name in applied_filters %}show{% endif %}" aria-labelledby="filter-heading-{{ loop.index }}">
@@ -559,3 +564,17 @@
 
     {{ include('@DomAdmin/default/includes/_select2_widget.html.twig') }}
 {% endblock domadmin_filters_widget %}
+
+{% block checkbox_widget -%}
+    {%- set parent_label_class = parent_label_class|default(label_attr.class|default('')) -%}
+    {%- set attr = attr|merge({class: (attr.class|default('') ~ ' custom-control-input')|trim}) -%}
+    {%- set label_attr = label_attr|merge({for: id}) -%}
+
+    <div class="custom-control custom-checkbox">
+        <input type="checkbox" {{ block('widget_attributes') }}{% if value is defined %} value="{{ value }}"{% endif %}{% if checked %} checked="checked"{% endif %} />
+        <label class="custom-control-label" {% with { attr: label_attr } %}{{ block('attributes') }}{% endwith %}>
+            {{- label is not same as(false) ? (translation_domain is same as(false) ? label : label|trans({}, translation_domain)) -}}
+        </label>
+    </div>
+
+{%- endblock checkbox_widget %}

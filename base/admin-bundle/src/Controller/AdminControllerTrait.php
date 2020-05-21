@@ -14,6 +14,8 @@ use DomBase\DomAdminBundle\Form\Filter\FilterRegistry;
 use DomBase\DomAdminBundle\Form\Type\EasyAdminBatchFormType;
 use DomBase\DomAdminBundle\Form\Type\EasyAdminFiltersFormType;
 use DomBase\DomAdminBundle\Form\Type\EasyAdminFormType;
+use Lle\EasyAdminPlusBundle\Translator\Event\EasyAdminPlusTranslatorEvents;
+use Pagerfanta\Exception\OutOfRangeCurrentPageException;
 use Pagerfanta\Pagerfanta;
 use Symfony\Component\EventDispatcher\GenericEvent;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
@@ -421,6 +423,57 @@ trait AdminControllerTrait
         }
 
         return $this->redirectToReferrer();
+    }
+
+    /**
+     * export action.
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function exportAction()
+    {
+        $entityName = $this->entity['name'];
+        $user = $this->getUser();
+
+        $this->dispatch(EasyAdminEvents::PRE_EXPORT, [
+            'user' => [
+                'username' => $user ? $user->getUsername() : null,
+                'roles' => $user ? $user->getRoles() : [],
+            ],
+        ]);
+
+        // no export configuration? > take all the entity fields
+        if (!array_key_exists('export', $this->config['entities'][$entityName]) ||
+            empty($this->config['entities'][$entityName]['export']) ||
+            !array_key_exists('fields', $this->config['entities'][$entityName]['export']) ||
+            empty($this->config['entities'][$entityName]['export']['fields'])) {
+            $this->config['entities'][$entityName]['export']['fields'] = $this->config['entities'][$entityName]['properties'];
+        }
+
+        $this->dispatch(EasyAdminEvents::PRE_LIST);
+        $paginator = $this->findFiltered(
+            $this->entity, $this->entity['class'],
+            1,
+            PHP_INT_MAX, $this->request->query->get('sortField'),
+            $this->request->query->get('sortDirection'),
+            $this->entity['list']['dql_filter']);
+
+        $fields = $this->entity['list']['fields'];
+        $this->dispatch(EasyAdminEvents::POST_LIST, [
+            'fields' => $fields,
+            'paginator' => $paginator,
+        ]);
+
+        $this->dispatch(EasyAdminEvents::POST_EXPORT, [
+            'user' => [
+                'username' => $user ? $user->getUsername() : null,
+                'roles' => $user ? $user->getRoles() : [],
+            ],
+        ]);
+
+        $exportManager = $this->get('domadmin.export_service');
+        $filename = sprintf('export-%s-%s', strtolower($this->entity['name']), date('Ymd_His'));
+        return $exportManager->generateResponse($paginator, $this->config['entities'][$entityName]['export']['fields'], $filename, $this->request->get('format'));
     }
 
     protected function createBatchForm(string $entityName): FormInterface
@@ -925,4 +978,150 @@ trait AdminControllerTrait
     {
         return $this->render($templatePath, $parameters);
     }
+
+    /**
+     * Performs a database query to get all the records related to the given
+     * entity. It supports pagination and field sorting.
+     *
+     * @param string $entityConfig
+     * @param string $entityClass
+     * @param int $page
+     * @param int $maxPerPage
+     * @param string|null $sortField
+     * @param string|null $sortDirection
+     * @param string|null $dqlFilter
+     *
+     * @return Pagerfanta The paginated query results
+     */
+    protected function findFiltered($entity, $entityClass, $page = 1, $maxPerPage = 50, $sortField = null, $sortDirection = null, $dqlFilter = null)
+    {
+        if (empty($sortDirection) || !in_array(strtoupper($sortDirection), array('ASC', 'DESC'))) {
+            $sortDirection = 'DESC';
+        }
+
+        $queryBuilder = $this->executeDynamicMethod('create<EntityName>ListQueryBuilder', array($entityClass, $sortDirection, $sortField, $dqlFilter));
+
+        if ($entity['tree'] ?? false) {
+            $queryBuilder->orderBy($queryBuilder->getRootAlias().'.root');
+            $queryBuilder->addOrderBy($queryBuilder->getRootAlias().'.lft');
+        }
+
+
+        $this->dispatch(EasyAdminEvents::POST_LIST_QUERY_BUILDER, array(
+            'query_builder' => $queryBuilder,
+            'sort_field' => $sortField,
+            'sort_direction' => $sortDirection,
+        ));
+        $page = ($this->request->request->has('filter'))? 1:$page;
+        try {
+            return $this->get('domadmin.paginator')->createOrmPaginator($queryBuilder, $page, $maxPerPage);
+        }catch(OutOfRangeCurrentPageException $e){
+            return $this->get('domadmin.paginator')->createOrmPaginator($queryBuilder, 1, $maxPerPage);
+        }
+    }
+
+    /**
+     * Manage translations.
+     *
+     * @param Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     *
+     * @throws \Exception
+     */
+    public function translationsAction(Request $request)
+    {
+        $translator = $this->get('lle.easy_admin_plus.translator');
+        $domain = $request->request->get('domain') ?? $request->query->get('domain');
+        $locale = $this->container->getParameter('locale') ?? $this->container->getParameter('kernel.default_locale');
+        $user = $this->getUser();
+
+        // submit
+        if ('save' == $request->request->get('submit')) {
+            // save files
+            $nbWrittenFiles = $translator->writeDictionaries($request->request->get('dictionaries') ?? [], $locale);
+
+            // put flash
+//            $this->addFlash('success', $this->get('translator')->transChoice('translator.flash.success', $nbWrittenFiles, ['%nbFiles%' => $nbWrittenFiles], 'EasyAdminPlusBundle'));
+
+            // clear cache
+            $translator->clearTranslationsCache();
+
+            // dispatch event
+            $fileNames = [];
+            $locales = $translator->getLocales();
+            foreach (array_keys($request->request->get('dictionaries')[$domain]) as $fileName) {
+                if (!preg_match('/^(.*)\/([^\.]+)\.([^\.]+)$/', $fileName, $match)) {
+                    continue;
+                }
+                foreach ($locales as $locale) {
+                    $fileNames[] = $match[1] . '/' . $match[2] . '.' . $locale . '.' . $match[3];
+                }
+            }
+            $this->get('event_dispatcher')->dispatch(EasyAdminEvents::POST_TRANSLATE,
+                new GenericEvent($domain, [
+                    'domain' => $domain,
+                    'files' => $fileNames,
+                    'user' => [
+                        'username' => $user ? $user->getUsername() : null,
+                        'roles' => $user ? $user->getRoles() : [],
+                    ],
+                ])
+            );
+
+            // forward on GET
+            $this->redirectToRoute('lle_easy_admin_plus_translations', ['domain' => $domain]);
+        }
+
+        // get locales
+        $locales = $translator->getLocales();
+        if (empty($locales)) {
+            throw new \Exception('No locale to manage.');
+        }
+
+        // get files
+        $files = $translator->getFiles();
+        if (empty($files)) {
+            throw new \Exception('No translation files found.');
+        }
+
+        // get all translations in files
+        $translations = $translator->getTranslations($files);
+
+        // extract different domains & choose the domain to manage
+        $domains = array_keys($translations);
+        $domain = (null == $domain && !empty($domains)) ? $domains[0] : $domain;
+        if (!$domain) {
+            throw new \Exception('No domain found.');
+        }
+
+        // prepare translations (add missing files in other locale and clone missing translation keys)
+        $dictionaries = [];
+        $translations = $translator->prepareTranslations($translations, $dictionaries);
+
+        // format dictionaries for front-end
+        $dictionaries = $translator->formatDictionaries($translations, $dictionaries);
+
+        // dispatch event
+        $this->get('event_dispatcher')->dispatch(EasyAdminEvents::PRE_TRANSLATE,
+            new GenericEvent($domain, [
+                'domain' => $domain,
+                'user' => [
+                    'username' => $user ? $user->getUsername() : null,
+                    'roles' => $user ? $user->getRoles() : [],
+                ],
+            ])
+        );
+
+        return $this->render('@DomAdmin/page/translations.html.twig', [
+                'domains' => $domains,
+                'domain' => $domain,
+                'dictionaries' => $dictionaries,
+                'locales' => $locales,
+                'locale' => $locale,
+                'config' => $this->getParameter('domadmin.config'),
+            ]
+        );
+    }
+
 }

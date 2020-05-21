@@ -23,8 +23,56 @@ class Configuration implements ConfigurationInterface
         $this->addDesignSection($rootNode);
         $this->addViewsSection($rootNode);
         $this->addEntitiesSection($rootNode);
+        $this->addTranslatorSection($rootNode);
 
         return $treeBuilder;
+    }
+
+    private function addTranslatorSection(ArrayNodeDefinition $rootNode)
+    {
+        $rootNode
+            ->children()
+            ->arrayNode('translator')
+            ->addDefaultsIfNotSet()
+            ->children()
+
+            ->variableNode('locales')
+            ->info('The user\'s locales to manage.')
+            ->defaultValue(array())
+            ->validate()
+            ->ifTrue(function ($v) {
+                return false === is_array($v);
+            })
+            ->thenInvalid('The locales option must be an array of user locale.')
+            ->end()
+            ->end()
+
+            ->variableNode('paths')
+            ->info('The translations\' paths.')
+            ->defaultValue(array())
+            ->validate()
+            ->ifTrue(function ($v) {
+                return false === is_array($v);
+            })
+            ->thenInvalid('The paths option must be an array of user paths.')
+            ->end()
+            ->end()
+
+            ->variableNode('excluded_domains')
+            ->info('The domains to exclude.')
+            ->defaultValue(array())
+            ->validate()
+            ->ifTrue(function ($v) {
+                return false === is_array($v);
+            })
+            ->thenInvalid('The excluded_domains option must be an array of user excluded domains.')
+            ->end()
+            ->end()
+
+            ->end()
+            ->end()
+            ->end()
+        ;
     }
 
     private function addGlobalOptionsSection(ArrayNodeDefinition $rootNode)

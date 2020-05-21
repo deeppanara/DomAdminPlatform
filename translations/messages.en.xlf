@@ -5,46 +5,6 @@
       <tool tool-id="symfony" tool-name="Symfony"/>
     </header>
     <body>
-      <trans-unit id="81Bv6kN" resname="menu.category">
-        <source>menu.category</source>
-        <target>Categories</target>
-      </trans-unit>
-      <trans-unit id="0u9iaa6" resname="menu.product">
-        <source>menu.product</source>
-        <target>Products</target>
-      </trans-unit>
-      <trans-unit id="kwaf_XK" resname="menu.product.list">
-        <source>menu.product.list</source>
-        <target>List Products</target>
-      </trans-unit>
-      <trans-unit id="W1DU5LA" resname="menu.product.add">
-        <source>menu.product.add</source>
-        <target>Add Product</target>
-      </trans-unit>
-      <trans-unit id="w3E8jwU" resname="menu.customer">
-        <source>menu.customer</source>
-        <target>Customers</target>
-      </trans-unit>
-      <trans-unit id="H5leDZ2" resname="menu.purchase">
-        <source>menu.purchase</source>
-        <target>Purchases</target>
-      </trans-unit>
-      <trans-unit id="PBKgpKb" resname="menu.about">
-        <source>menu.about</source>
-        <target>About EasyAdmin</target>
-      </trans-unit>
-      <trans-unit id="SedVgK8" resname="menu.about.home">
-        <source>menu.about.home</source>
-        <target>Project Home</target>
-      </trans-unit>
-      <trans-unit id="jFol0Rw" resname="menu.about.docs">
-        <source>menu.about.docs</source>
-        <target>Documentation</target>
-      </trans-unit>
-      <trans-unit id="j45MC8O" resname="menu.about.issues">
-        <source>menu.about.issues</source>
-        <target>Report Issues</target>
-      </trans-unit>
       <trans-unit id="uLHYlMa" resname="Categories">
         <source>Categories</source>
         <target>Categories</target>
@@ -189,10 +149,6 @@
         <source>Username</source>
         <target>Username</target>
       </trans-unit>
-      <trans-unit id="qQ57fB2" resname="EAN-13 valid code. Leave empty if unknown.">
-        <source>EAN-13 valid code. Leave empty if unknown.</source>
-        <target>EAN-13 valid code. Leave empty if unknown.</target>
-      </trans-unit>
       <trans-unit id="kTr2RUH" resname="Reserved for administrators use">
         <source>Reserved for administrators use</source>
         <target>Reserved for administrators use</target>
@@ -240,6 +196,94 @@
       <trans-unit id="w1flN5G" resname="Transactions History">
         <source>Transactions History</source>
         <target>Transactions History</target>
+      </trans-unit>
+      <trans-unit id="81Bv6kN" resname="menu.category">
+        <source>menu.category</source>
+        <target>Categories</target>
+      </trans-unit>
+      <trans-unit id="0u9iaa6" resname="menu.product">
+        <source>menu.product</source>
+        <target>Products</target>
+      </trans-unit>
+      <trans-unit id="kwaf_XK" resname="menu.product.list">
+        <source>menu.product.list</source>
+        <target>List Products</target>
+      </trans-unit>
+      <trans-unit id="W1DU5LA" resname="menu.product.add">
+        <source>menu.product.add</source>
+        <target>Add Product</target>
+      </trans-unit>
+      <trans-unit id="w3E8jwU" resname="menu.customer">
+        <source>menu.customer</source>
+        <target>Customers</target>
+      </trans-unit>
+      <trans-unit id="H5leDZ2" resname="menu.purchase">
+        <source>menu.purchase</source>
+        <target>Purchases</target>
+      </trans-unit>
+      <trans-unit id="PBKgpKb" resname="menu.about">
+        <source>menu.about</source>
+        <target>About EasyAdmin</target>
+      </trans-unit>
+      <trans-unit id="SedVgK8" resname="menu.about.home">
+        <source>menu.about.home</source>
+        <target>Project Home</target>
+      </trans-unit>
+      <trans-unit id="jFol0Rw" resname="menu.about.docs">
+        <source>menu.about.docs</source>
+        <target>Documentation</target>
+      </trans-unit>
+      <trans-unit id="j45MC8O" resname="menu.about.issues">
+        <source>menu.about.issues</source>
+        <target>Report Issues</target>
+      </trans-unit>
+      <trans-unit id="qQ57fB2" resname="EAN-13 valid code. Leave empty if unknown.">
+        <source>EAN-13 valid code. Leave empty if unknown.</source>
+        <target>EAN-13 valid code. Leave empty if unknown.</target>
+      </trans-unit>
+      <trans-unit id="f.rvF6y" resname="action.new">
+        <source>action.new</source>
+        <target>Add %entity_label%</target>
+      </trans-unit>
+      <trans-unit id="Ffi98jp" resname="action.show">
+        <source>action.show</source>
+        <target>Show</target>
+      </trans-unit>
+      <trans-unit id="ovKkXwU" resname="action.edit">
+        <source>action.edit</source>
+        <target>Edit</target>
+      </trans-unit>
+      <trans-unit id="odDw0du" resname="action.search">
+        <source>action.search</source>
+        <target>Search</target>
+      </trans-unit>
+      <trans-unit id="hTKWQ6g" resname="action.delete">
+        <source>action.delete</source>
+        <target>Delete</target>
+      </trans-unit>
+      <trans-unit id="HLtdhYw" resname="action.save">
+        <source>action.save</source>
+        <target>Save changes</target>
+      </trans-unit>
+      <trans-unit id="Qj1ElaL" resname="action.cancel">
+        <source>action.cancel</source>
+        <target>Cancel</target>
+      </trans-unit>
+      <trans-unit id="8IveD6W" resname="action.list">
+        <source>action.list</source>
+        <target>Back to listing</target>
+      </trans-unit>
+      <trans-unit id="vqP80DT" resname="action.deselect">
+        <source>action.deselect</source>
+        <target>Deselect</target>
+      </trans-unit>
+      <trans-unit id="rSWmi1r" resname="label.form.empty_value">
+        <source>label.form.empty_value</source>
+        <target>None</target>
+      </trans-unit>
+      <trans-unit id="le023yQ" resname="__name__label__">
+        <source>__name__label__</source>
+        <target>__name__label__</target>
       </trans-unit>
     </body>
   </file>

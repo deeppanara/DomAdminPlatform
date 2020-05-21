@@ -16,6 +16,7 @@ dom_admin:
             class: App\Entity\Product
             label: 'Products'
             list:
+                collapse_actions: true
                 fields:
                     - id
                     - enabled
@@ -26,10 +27,11 @@ dom_admin:
                     - { property: 'createdAt', format: 'j / M / Y' }
                     - tags
                 filters: ['enabled', 'name', 'price']
+                batch_actions: ['delete']
                 actions:
-                    - { name: 'show', label: '', icon: 'search' }
-                    - { name: 'edit', label: '', icon: 'edit' }
-                    - { name: 'delete', label: '', icon: 'trash' }
+                    - { name: 'show', label: 'Show', icon: 'search' }
+                    - { name: 'edit', label: 'Edit', icon: 'edit' }
+                    - { name: 'delete', label: 'Delete', icon: 'trash' }
             show:
                 fields:
                     - id
@@ -62,3 +64,14 @@ dom_admin:
                     - { property: 'tags' }
                     - { type: 'group', css_class: 'col-sm-4', label: 'Attachments', icon: 'paperclip' }
                     - { property: 'imageFile', type: 'vich_image', type_options: { required: true } }
+
+            export:
+                formats: ['csv','xlsx']
+                fields:
+                    - { property: 'id', label: 'ID' }
+                    - { property: 'name', label: 'Titre' }
+#                    - { property: 'slug', label: 'Slug', template: 'easy_admin/product_slug.html.twig' }
+#                    - { property: 'content', label: 'Contenu', type: 'raw' }
+#                    - { property: 'image', label: 'Image', type: 'image', base_path: "%article_path%" }
+#                    - { property: 'category', label: 'Catégorie' }
+#                    - { property: 'createdAt', label: 'Date de création', type: 'datetime' }

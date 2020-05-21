@@ -10,5 +10,13 @@ framework:
     #    handler_id: ~
     #esi: ~
     #fragments: ~
+    translator:
+        fallbacks:
+            - en
+        enabled: true
+        logging: false
+        formatter: translator.formatter.default
+        default_path: '%kernel.project_dir%/translations'
+
     php_errors:
         log: true

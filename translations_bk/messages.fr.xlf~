@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="fr" datatype="plaintext" original="file.ext">
+    <header>
+      <tool tool-id="symfony" tool-name="Symfony"/>
+    </header>
+    <body>
+      <trans-unit id="81Bv6kN" resname="menu.category">
+        <source>menu.category</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="0u9iaa6" resname="menu.product">
+        <source>menu.product</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="kwaf_XK" resname="menu.product.list">
+        <source>menu.product.list</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="W1DU5LA" resname="menu.product.add">
+        <source>menu.product.add</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="w3E8jwU" resname="menu.customer">
+        <source>menu.customer</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="H5leDZ2" resname="menu.purchase">
+        <source>menu.purchase</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="PBKgpKb" resname="menu.about">
+        <source>menu.about</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="SedVgK8" resname="menu.about.home">
+        <source>menu.about.home</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="jFol0Rw" resname="menu.about.docs">
+        <source>menu.about.docs</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="j45MC8O" resname="menu.about.issues">
+        <source>menu.about.issues</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="uLHYlMa" resname="Categories">
+        <source>Categories</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="KSwG8AR" resname="Category">
+        <source>Category</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="qr528fT" resname="Customers">
+        <source>Customers</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="_574lBd" resname="Product">
+        <source>Product</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="TtyL_vx" resname="Products">
+        <source>Products</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="tRLZfny" resname="User">
+        <source>User</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="Y03hFHd" resname="Attachments">
+        <source>Attachments</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="H1FqzEm" resname="Billing address">
+        <source>Billing address</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="oqVNZox" resname="Buyer">
+        <source>Buyer</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="pvWw5ZL" resname="Contract">
+        <source>Contract</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="d1tb_WR" resname="Created at">
+        <source>Created at</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id=".qdfTRy" resname="Delivery date">
+        <source>Delivery date</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="B9PKTrH" resname="Delivery hour">
+        <source>Delivery hour</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="Um4Ah8w" resname="Description">
+        <source>Description</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="dPXWlVo" resname="EAN-13">
+        <source>EAN-13</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="LNP4Dum" resname="Ean">
+        <source>Ean</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="lpzL089" resname="Email">
+        <source>Email</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="ksHN.fT" resname="Enabled">
+        <source>Enabled</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="VpfQPa7" resname="Features">
+        <source>Features</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="H.s6h1q" resname="Guid">
+        <source>Guid</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="OEOXHc." resname="ID">
+        <source>ID</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="G1mronO" resname="Image file">
+        <source>Image file</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="GqTLC8y" resname="Image">
+        <source>Image</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="6S3XAUJ" resname="Is active">
+        <source>Is active</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="DmY3P0X" resname="Label">
+        <source>Label</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="3NHVIj9" resname="Name">
+        <source>Name</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="aMxkFHg" resname="Parent category">
+        <source>Parent category</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="k8kchR5" resname="Price">
+        <source>Price</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="LvQuwh2" resname="Published">
+        <source>Published</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="W16cZbQ" resname="Purchase">
+        <source>Purchase</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="POqLw2c" resname="Purchased items">
+        <source>Purchased items</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="oHGO_OQ" resname="Purchases">
+        <source>Purchases</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="rVdRQw4" resname="Shipping">
+        <source>Shipping</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="EzEnW8U" resname="Tags">
+        <source>Tags</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="ybPDgkf" resname="Total">
+        <source>Total</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="47ienTP" resname="Username">
+        <source>Username</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="qQ57fB2" resname="EAN-13 valid code. Leave empty if unknown.">
+        <source>EAN-13 valid code. Leave empty if unknown.</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="kTr2RUH" resname="Reserved for administrators use">
+        <source>Reserved for administrators use</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="H7qg5c3" resname="Product %entity_label%">
+        <source>Product %entity_label%</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="Tlm2xy9" resname="Account Information">
+        <source>Account Information</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="ItT2CIt" resname="Advanced Settings">
+        <source>Advanced Settings</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="bAksnKA" resname="Basic information">
+        <source>Basic information</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="fAGuw7H" resname="Contact Information">
+        <source>Contact Information</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="K16zMUc" resname="Contract file">
+        <source>Contract file</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="XTmHWWI" resname="Delivery Details">
+        <source>Delivery Details</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="ytIIEPw" resname="Legal Information">
+        <source>Legal Information</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="IdPwl17" resname="Product Details">
+        <source>Product Details</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="vyGId6o" resname="Purchase Details">
+        <source>Purchase Details</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="w1flN5G" resname="Transactions History">
+        <source>Transactions History</source>
+        <target></target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

@@ -41,6 +41,20 @@
     {% endapply %}
 {% endblock %}
 
+{% block global_actions_new %}
+    {% if domadmin_action_is_enabled_for_list_view('new', _entity_config.name) %}
+        {% set _action = domadmin_get_action_for_list_view('new', _entity_config.name) %}
+        {% block new_action %}
+            <div class="button-action ml-2 ">
+                <a class="{{ _action.css_class|default('') }}" href="{{ path('domadmin', _request_parameters|merge({ action: _action.name })) }}" target="{{ _action.target }}">
+                    {% if _action.icon %}<i class="fa fa-fw fa-{{ _action.icon }}"></i>{% endif %}
+                    {{ _action.label is defined and not _action.label is empty ? _action.label|trans(_trans_parameters) }}
+                </a>
+            </div>
+        {% endblock new_action %}
+    {% endif %}
+{% endblock %}
+
 {% block global_actions %}
     {% if domadmin_action_is_enabled_for_list_view('search', _entity_config.name) %}
         {% set _action = domadmin_get_action_for_list_view('search', _entity_config.name) %}
@@ -95,16 +109,29 @@
         {% endblock filters_action %}
     {% endif %}
 
-    {% if domadmin_action_is_enabled_for_list_view('new', _entity_config.name) %}
-        {% set _action = domadmin_get_action_for_list_view('new', _entity_config.name) %}
-        {% block new_action %}
-            <div class="button-action">
-                <a class="{{ _action.css_class|default('') }}" href="{{ path('domadmin', _request_parameters|merge({ action: _action.name })) }}" target="{{ _action.target }}">
-                    {% if _action.icon %}<i class="fa fa-fw fa-{{ _action.icon }}"></i>{% endif %}
-                    {{ _action.label is defined and not _action.label is empty ? _action.label|trans(_trans_parameters) }}
-                </a>
+    {# EXPORT #}
+    {% if _entity_config.export is defined %}
+        {% set referer = app.request.server.get('http-referer')|default('/') %}
+
+        <div class="dropdown btn-group">
+            <button type="button" class=" btn btn-secondary btn-labeled btn-labeled-right dropdown-toggle" data-toggle="dropdown">
+                <i class="fa fa-download fa-fw"></i> {{ 'export.title'|trans({}, 'DomAdminBundle') }}
+            </button>
+            <div class="dropdown-menu">
+                {%  for format in _entity_config.export.formats %}
+                    <a class="dropdown-item"
+                        {% if _entity_config.export.max is defined and paginator.nbResults > _entity_config.export.max %}
+                            {% set message =  'action.export.confirm.maxLines' | trans({'%max%': paginator.nbResults}, 'DomAdminBundle') %}
+                            onclick="return confirmExport('{{ path('domadmin', app.request.query|merge({ action: "export", format: format })) }}','{{ message }}')"
+                        {% endif %}
+                        target="_blank"
+                        href="{{ path('domadmin', app.request.query|merge({ action: "export", format: format })) }}" >
+                        <i class="fa fa-download"></i>
+                        {{ 'exporter.export %format%'|trans({'%format%':format}, 'DomAdminBundle') }}
+                    </a>
+                {%  endfor %}
             </div>
-        {% endblock new_action %}
+        </div>
     {% endif %}
 {% endblock global_actions %}
 
@@ -132,10 +159,6 @@
         <thead>
         {% block table_head %}
             <tr>
-                {% if _has_batch_actions %}
-                    <th width="1px"><span><input type="checkbox" class="form-batch-checkbox-all"></span></th>
-                {% endif %}
-
                 {% for field, metadata in fields %}
                     {% set isSortingField = (metadata.property == app.request.get('sortField')) or ('association' == metadata.type and app.request.get('sortField') starts with metadata.property ~ '.') %}
                     {% set nextSortDirection = isSortingField ? (app.request.get('sortDirection') == 'DESC' ? 'ASC' : 'DESC') : 'DESC' %}
@@ -158,6 +181,15 @@
                         <span class="sr-only">{{ 'list.row_actions'|trans(_trans_parameters, 'DomAdminBundle') }}</span>
                     </th>
                 {% endif %}
+
+                {% if _has_batch_actions %}
+                    <th width="1px" class="text-center">
+                        <div class="custom-control custom-checkbox ml-1 mb-1">
+                            <input id="id-form-batch-checkbox-all" type="checkbox" class="custom-control-input form-batch-checkbox-all">
+                            <label class="custom-control-label" for="id-form-batch-checkbox-all"></label>
+                        </div>
+                    </th>
+                {% endif %}
             </tr>
         {% endblock table_head %}
         </thead>
@@ -168,11 +200,7 @@
                 {# the empty string concatenation is needed when the primary key is an object (e.g. an Uuid object) #}
                 {% set _item_id = '' ~ attribute(item, _entity_config.primary_key_field_name) %}
                 <tr data-id="{{ _item_id }}">
-                    {% if _has_batch_actions %}
-                        <td><input type="checkbox" class="form-batch-checkbox" value="{{ _item_id }}"></td>
-                    {% endif %}
-
-                    {% for field, metadata in fields %}
+                      {% for field, metadata in fields %}
                         {% set isSortingField = metadata.property == app.request.get('sortField') %}
                         {% set _column_label =  (metadata.label ?: field|humanize)|trans(_trans_parameters)  %}
 
@@ -201,6 +229,16 @@
                         {% endblock item_actions %}
                         </td>
                     {% endif %}
+
+                    {% if _has_batch_actions %}
+                        <td width="1px" class="text-center">
+                            <div class="text-center custom-control custom-checkbox ml-1 mr-0" >
+                                <input id="id-form-batch-checkbox-{{ _item_id }}" type="checkbox" class="custom-control-input form-batch-checkbox" value="{{ _item_id }}">
+                                <label class="custom-control-label" for="id-form-batch-checkbox-{{ _item_id }}"></label>
+                            </div>
+                        </td>
+                    {% endif %}
+
                 </tr>
             {% else %}
                 <tr>

@@ -95,17 +95,25 @@
 
                 {% endblock sidebar %}
                 <main>
-                    <div class="container-fluid">
-                        <div class="content">
-                            <div class="breadcrumb mb-2 mt-4">
-                                <h5 class="m-0">{% block content_title %}{% endblock %}</h5>
+                    <div class="content">
+                        <div class="p-4 mb-4 ui-widget-shadow">
+                            <div class="d-flex flex-row justify-content-between align-content-center w-100">
+                                <div class="page-title d-flex">
+                                    <h4><i class="fa fa-fw fa-cog mr-2"></i> <span class="font-weight-semibold">Editors</span> - {% block content_title %}{% endblock %}</h4>
+                                </div>
+                                <div class="page-title d-flex">
+                                    {% block global_actions_new %}
+                                    {% endblock %}
+                                </div>
                             </div>
                         </div>
+                    </div>
+
+                    <div class="container-fluid">
                         {% block flash_messages %}
                             {{ include(_entity_config is defined ? _entity_config.templates.flash_messages : '@DomAdmin/default/flash_messages.html.twig') }}
                         {% endblock flash_messages %}
-
-                        <div id="sidebar-resizer-handler" class="resizer-handler resizer-handler-left"></div>
+{#                        <div id="sidebar-resizer-handler" class="resizer-handler resizer-handler-left"></div>#}
 
                         {% block content %}
                             <div class="content">

@@ -27,8 +27,8 @@ Encore
 
     // copy flag images for country type
     .copyFiles({
-        from: './assets/images/flags/',
-        to: 'images/flags/[path][name].[ext]',
+        from: './assets/images/',
+        to: 'images/[path][name].[ext]',
         pattern: /\.png$/
     })
 

@@ -73,6 +73,7 @@ class PropertyConfigPass implements ConfigPassInterface
         $backendConfig = $this->processMetadataConfig($backendConfig);
         $backendConfig = $this->processFieldConfig($backendConfig);
         $backendConfig = $this->processFilterConfig($backendConfig);
+        $backendConfig = $this->processExportConfig($backendConfig);
 
         return $backendConfig;
     }
@@ -265,6 +266,60 @@ class PropertyConfigPass implements ConfigPassInterface
                 }
 
                 $backendConfig['entities'][$entityName]['list']['filters'][$propertyName] = $filterConfig;
+            }
+        }
+
+        return $backendConfig;
+    }
+
+    /**
+     * Completes the configuration of each field/property with the metadata
+     * provided by Doctrine for each entity property.
+     *
+     * @param array $backendConfig
+     *
+     * @return array
+     */
+    private function processExportConfig(array $backendConfig)
+    {
+        foreach ($backendConfig['entities'] as $entityName => $entityConfig) {
+            foreach (array('export') as $view) {
+                if (!array_key_exists($view, $backendConfig['entities'][$entityName])){
+                    continue;
+                }
+                if(!array_key_exists('formats', $backendConfig['entities'][$entityName]['export'])){
+                    $backendConfig['entities'][$entityName]['export']['formats'] = ['csv'];
+                }
+                foreach ($entityConfig[$view]['fields'] as $fieldName => $fieldConfig) {
+
+                    if (array_key_exists($fieldName, $entityConfig['properties'])) {
+                        $fieldMetadata = array_merge(
+                            $entityConfig['properties'][$fieldName],
+                            array('virtual' => false)
+                        );
+                    } else {
+                        // this is a virtual field which doesn't exist as a property of
+                        // the related entity. That's why Doctrine can't provide metadata for it
+                        $fieldMetadata = array_merge(
+                            $this->defaultVirtualFieldMetadata,
+                            array('columnName' => $fieldName, 'fieldName' => $fieldName)
+                        );
+                    }
+
+                    $normalizedConfig = array_replace_recursive(
+                        $this->defaultEntityFieldConfig,
+                        $fieldMetadata,
+                        $fieldConfig
+                    );
+
+                    $normalizedConfig['dataType'] = $normalizedConfig['type'];
+
+                    if (null === $normalizedConfig['format']) {
+                        $normalizedConfig['format'] = $this->getFieldFormat($normalizedConfig['type'], $backendConfig);
+                    }
+
+                    $backendConfig['entities'][$entityName][$view]['fields'][$fieldName] = $normalizedConfig;
+                }
             }
         }
 

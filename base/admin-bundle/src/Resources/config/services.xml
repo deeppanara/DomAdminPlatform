@@ -30,6 +30,21 @@
             <argument type="service" id="property_accessor" />
         </service>
 
+        <service id="domadmin.export.xlsx_exporter" class="DomBase\DomAdminBundle\Search\Exporter\XlsxExporter">
+            <tag name="domadmin.exporter"/>
+        </service>
+
+        <service id="domadmin.export.csv_exporter" class="DomBase\DomAdminBundle\Search\Exporter\CsvExporter">
+            <tag name="domadmin.exporter"/>
+        </service>
+
+        <service id="domadmin.export_service" class="DomBase\DomAdminBundle\Search\Exporter" public="true">
+            <argument type="service" id="domadmin.config.manager" />
+            <argument type="service" id="property_accessor" />
+            <argument type="service" id="translator" />
+            <argument type="tagged" tag="domadmin.exporter" />
+        </service>
+
         <service id="domadmin.paginator" class="DomBase\DomAdminBundle\Search\Paginator" public="true">
         </service>
 
