@@ -121,11 +121,17 @@
             "config/packages/fos_ckeditor.yaml"
         ]
     },
+    "gedmo/doctrine-extensions": {
+        "version": "v2.4.41"
+    },
     "jdorn/sql-formatter": {
         "version": "v1.2.17"
     },
     "jms/metadata": {
         "version": "1.7.0"
+    },
+    "jwage/easy-csv": {
+        "version": "0.0.6"
     },
     "monolog/monolog": {
         "version": "1.24.0"
@@ -135,6 +141,9 @@
     },
     "pagerfanta/pagerfanta": {
         "version": "v2.1.2"
+    },
+    "php": {
+        "version": "7.1.3"
     },
     "psr/cache": {
         "version": "1.0.1"

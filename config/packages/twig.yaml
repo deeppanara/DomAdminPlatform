@@ -1,6 +1,6 @@
-twig:
-    paths:
-        '%kernel.project_dir%/templates/dom_admin': dom_admin
-
-    debug: '%kernel.debug%'
-    strict_variables: '%kernel.debug%'
+#twig:
+#    paths:
+#        '%kernel.project_dir%/templates/dom_admin': dom_admin
+#
+#    debug: '%kernel.debug%'
+#    strict_variables: '%kernel.debug%'

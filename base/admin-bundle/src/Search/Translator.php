@@ -2,6 +2,7 @@
 
 namespace DomBase\DomAdminBundle\Search;
 
+use DomBase\DomAdminBundle\Configuration\ConfigManager;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
 use Symfony\Component\Translation\Dumper\FileDumper;
@@ -23,9 +24,13 @@ class Translator
      *
      * @throws \Exception
      */
-    public function __construct(array $config, string $cacheDir)
+    public function __construct(
+        ConfigManager $configManager,
+        string $cacheDir
+    )
     {
-        $this->parseConfig($config);
+        $backendConfig = $configManager->getBackendConfig();
+        $this->parseConfig($backendConfig);
         $this->cacheDir = $cacheDir;
 
         if (!is_dir($this->cacheDir)) {

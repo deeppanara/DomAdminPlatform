@@ -24,6 +24,12 @@
     {% endblock entity_form %}
 {% endblock %}
 
+{% block content_sub_title %}
+    {% if entity.parent is defined and entity.parent.name is defined %}
+        {{ 'new.add_child %patent name%'|trans({'%patent name%': entity.parent.name}, 'DomAdminBundle') }}
+    {% endif %}
+{% endblock %}
+
 {% block body_javascript %}
     {{ parent() }}
 

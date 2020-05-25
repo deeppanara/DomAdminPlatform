@@ -45,6 +45,11 @@
             <argument type="tagged" tag="domadmin.exporter" />
         </service>
 
+        <service id="domadmin.translator" class="DomBase\DomAdminBundle\Search\Translator" public="true">
+            <argument type="service" id="domadmin.config.manager" />
+            <argument>%kernel.cache_dir%</argument>
+        </service>
+
         <service id="domadmin.paginator" class="DomBase\DomAdminBundle\Search\Paginator" public="true">
         </service>
 
@@ -142,5 +147,7 @@
         <service id="DomBase\DomAdminBundle\Search\QueryBuilder" alias="domadmin.query_builder" />
         <service id="DomBase\DomAdminBundle\Search\Paginator" alias="domadmin.paginator" />
         <service id="DomBase\DomAdminBundle\Search\Autocomplete" alias="domadmin.autocomplete" />
+        <service id="DomBase\DomAdminBundle\Search\Exporter" alias="domadmin.export_service" />
+        <service id="DomBase\DomAdminBundle\Search\Translator" alias="domadmin.translator" />
     </services>
 </container>

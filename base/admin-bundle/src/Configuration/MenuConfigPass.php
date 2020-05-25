@@ -32,6 +32,7 @@ class MenuConfigPass implements ConfigPassInterface
             $backendConfig['design']['menu'][$i]['children'] = $submenuConfig;
         }
 
+        $backendConfig = $this->processStaticMenu($backendConfig, $i);
         return $backendConfig;
     }
 
@@ -142,6 +143,7 @@ class MenuConfigPass implements ConfigPassInterface
                 if (!isset($itemConfig['params'])) {
                     $itemConfig['params'] = [];
                 }
+
             }
 
             // 2nd level priority: if 'url' is defined, link to the given absolute/relative URL
@@ -184,5 +186,56 @@ class MenuConfigPass implements ConfigPassInterface
         }
 
         return $menuConfig;
+    }
+
+    /**
+     * @param array $backendConfig
+     * @param $i
+     * @return array
+     */
+    protected function processStaticMenu(array $backendConfig, $i): array
+    {
+        $backendConfig['design']['menu'][++$i] = [
+            "label" => "menu.admin.config",
+            "icon" => "fa-folder-open",
+            "id" => "collapse.menu.admin.config",
+            "default" => false,
+            "target" => false,
+            "rel" => false,
+            "menu_index" => end($backendConfig['design']['menu'])['menu_index'] + 1,
+            "submenu_index" => -1,
+            "type" => "divider",
+        ];
+        $backendConfig['design']['menu'][++$i] = [
+            "route" => "dom_admin_translations",
+            "label" => "Translations",
+            "icon" => "fa-globe",
+            "css_class" => "",
+            "children" => [],
+            "id" => "collapse.Translations",
+            "default" => false,
+            "target" => false,
+            "rel" => false,
+            "menu_index" => end($backendConfig['design']['menu'])['menu_index'] + 1,
+            "submenu_index" => -1,
+            "type" => "route",
+            "params" => [],
+        ];
+        $backendConfig['design']['menu'][++$i] = [
+            "route" => "dom_admin_change_log",
+            "label" => "Change History",
+            "icon" => "fa-log",
+            "css_class" => "",
+            "children" => [],
+            "id" => "collapse.Change.History",
+            "default" => false,
+            "target" => false,
+            "rel" => false,
+            "menu_index" => end($backendConfig['design']['menu'])['menu_index'] + 1,
+            "submenu_index" => -1,
+            "type" => "route",
+            "params" => [],
+        ];
+        return $backendConfig;
     }
 }

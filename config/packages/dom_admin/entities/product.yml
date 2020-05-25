@@ -47,6 +47,7 @@ dom_admin:
                     - tags
             form:
                 fields:
+                    - { type: 'tab', label: 'Tab 1', icon: 'pencil' }
                     - { type: 'group', css_class: 'col-sm-6', label: 'Basic information', icon: 'pencil' }
                     - { property: 'name', css_class: 'large' }
                     - { property: 'description', type: 'fos_ckeditor' }
@@ -58,6 +59,7 @@ dom_admin:
                     - { type: 'section', label: 'Advanced Settings', icon: 'warning', help: 'Reserved for administrators use' }
                     - { property: 'enabled', label: 'Published' }
                     - { property: 'createdAt' }
+                    - { type: 'tab', label: 'Tab 2', icon: 'pencil' }
                     - { type: 'group', css_class: 'col-sm-8 new-row' }
                     - { property: 'features' }
                     - { type: 'group', css_class: 'col-sm-4' }

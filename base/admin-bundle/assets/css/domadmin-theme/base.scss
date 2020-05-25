@@ -13,6 +13,7 @@ body {
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: auto;
     -moz-osx-font-smoothing: unset;
+    height: 100vh;
 }
 
 /* Layout
@@ -340,7 +341,7 @@ form .content-footer {
 }
 
 body.show .form-horizontal {
-    background: var(--form-bg);
+    background: $form-bg;
 }
 
 body.show .form-horizontal .control-label {

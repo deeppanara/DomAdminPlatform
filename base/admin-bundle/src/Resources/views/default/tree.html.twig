@@ -1,0 +1,113 @@
+{% set _entity_config = domadmin_entity(app.request.query.get('entity')) %}
+{% trans_default_domain _entity_config.translation_domain %}
+{% set _trans_parameters = { '%entity_name%': _entity_config.name|trans, '%entity_label%': _entity_config.label|trans } %}
+
+{% extends _entity_config.templates.layout %}
+
+{% set _request_parameters = app.request.query.all|merge(_request_parameters|default({}))|merge({
+    action: app.request.get('action'),
+    entity: _entity_config.name,
+    menuIndex: app.request.get('menuIndex'),
+    submenuIndex: app.request.get('submenuIndex'),
+    sortField: app.request.get('sortField'),
+    sortDirection: app.request.get('sortDirection'),
+    page: app.request.get('page', 1),
+    filters: app.request.get('filters', []),
+    referer: null
+}) %}
+
+{% if 'search' == app.request.get('action') %}
+    {% set _request_parameters = _request_parameters|merge({
+        query: app.request.get('query')|default(''),
+    }) %}
+{% endif %}
+
+{% set _request_parameters = _request_parameters|merge({ referer: path('domadmin', _request_parameters)|url_encode }) %}
+{% set _has_batch_actions = batch_form is defined and batch_form.vars.batch_actions|length > 0 %}
+{% set _has_filters = _entity_config.list.filters|default(false) %}
+
+{% block body_id 'domadmin-list-' ~ _entity_config.name %}
+{% block body_class 'list list-' ~ _entity_config.name|lower %}
+
+{% block head_stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('bundles/domadmin/jquery-js-tree.css') }}">
+{% endblock %}
+
+{% block content_title %}
+    {% apply spaceless %}
+        {% if 'search' == app.request.get('action') %}
+            {% set _default_title = 'search.page_title'|transchoice(paginator.nbResults, {}, 'DomAdminBundle') %}
+            {{ (_entity_config.search.title is defined ? _entity_config.search.title|transchoice(paginator.nbResults) : _default_title)|raw }}
+        {% else %}
+            {% set _default_title = 'list.page_title'|trans(_trans_parameters, 'DomAdminBundle') %}
+            {{ (_entity_config.list.title is defined ? _entity_config.list.title|trans(_trans_parameters) : _default_title)|raw }}
+        {% endif %}
+    {% endapply %}
+{% endblock %}
+
+{% block content_header %}
+    {{ parent() }}
+{% endblock content_header %}
+
+{% block content %}
+{#    {{ dump(_request_parameters) }}#}
+    <div class="card h-100">
+        <div id="code-category-container" class="card-body overflow-hidden p-lg-6">
+
+        </div>
+    </div>
+{% endblock content %}
+
+{% block body_javascript %}
+    <script src="{{ asset('/bundles/domadmin/jquery-js-tree.js') }}"></script>
+    <script>
+        $(function() {
+
+            $('#code-category-container').jstree(
+                {
+                    "core": {
+                        "check_callback": true,
+                        "data": {
+                            'url': "{{ path('domadmin', {entity: _request_parameters.entity,action: 'getChildren'})|raw }}",
+                            'data': function (node) {
+                                console.log(node);
+                                return {'id': node.id}
+                            }
+                        }
+                    },
+                    "plugins": ["wholerow", "state", "contextmenu"],
+                    "contextmenu": {
+                        "items": customMenu
+                    }
+                }
+            );
+
+            function customMenu(node) {
+                console.log(node);
+                var tree = $('#code-category-container').jstree(true);
+                var items = {
+                    "Create": {
+                        "separator_before": false,
+                        "separator_after": false,
+                        "label": "{{ 'tree.add_child'|trans(_trans_parameters, 'DomAdminBundle') }}",
+                        "action": function (obj) {
+                            var $node = tree.create_node(node);
+                            window.open("{{ path('domadmin', _request_parameters|merge({ action: 'newChild' })) | raw }}&parent_id=" + node.id, "_self");
+                        }
+                    },
+
+                    "Edit": {
+                        "separator_before": false,
+                        "separator_after": false,
+                        "label": "{{ 'tree.edit'|trans(_trans_parameters, 'DomAdminBundle') }}",
+                        "action": function (obj) {
+                            window.open("{{ path('domadmin', _request_parameters|merge({ action: 'edit' })) | raw }}&id=" + node.id, "_self");
+                        }
+                    },
+                };
+                return items;
+            }
+        });
+    </script>
+{% endblock %}

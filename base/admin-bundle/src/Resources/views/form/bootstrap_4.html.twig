@@ -346,6 +346,7 @@
 {% endblock domadmin_rest %}
 
 {% block item_actions %}
+    {% set _translation_domain = domadmin.entity.translation_domain %}
     {% set _trans_parameters = { '%entity_name%':  domadmin.entity.name|trans, '%entity_label%': domadmin.entity.label|trans } %}
 
     {# the 'save' action is hardcoded for the 'edit' and 'new' views #}
@@ -368,7 +369,7 @@
         entity_config: domadmin.entity,
         request_parameters: _request_parameters,
         translation_domain: _translation_domain,
-        trans_parameters: 'DomAdminBundle',
+        trans_parameters: _trans_parameters,
         item_id: _entity_id,
         item: domadmin.item
     }, with_context = false) }}

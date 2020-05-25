@@ -35,6 +35,7 @@ Encore
     .addEntry('app', './assets/js/app.js')
     .addEntry('app-rtl', './assets/js/app-rtl.js')
     .addEntry('bootstrap-all', './assets/js/bootstrap-all.js')
+    .addEntry('jquery-js-tree', './assets/js/jquery-js-tree.js')
 ;
 
 module.exports = Encore.getWebpackConfig();

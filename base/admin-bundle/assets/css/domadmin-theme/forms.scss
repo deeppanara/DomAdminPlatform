@@ -4,7 +4,7 @@
 
 .content-body form,
 .content-body .form-horizontal {
-    background: var(--form-bg);
+    background: $form-bg;
     padding: 18px 20px;
 }
 
@@ -257,7 +257,7 @@ fieldset .form-group .nullable-control label {
 
 // Form fieldsets (used for the "from groups" feature)
 fieldset {
-    background: var(--fieldset-bg);
+    background: $fieldset-bg;
     border: $border-width $border-style $border-color;
     border-radius: $border-radius;
     margin: 10px 0;

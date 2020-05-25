@@ -19,9 +19,21 @@ services:
 #    DomBase\DomAdminBundle\Search\Exporter: '@domadmin.service.export_manager'
 
 
-    lle.easy_admin_plus.translator:
-        class: DomBase\DomAdminBundle\Search\Translator
-        public: true
-        arguments:
-            - '%domadmin.config%'
-            - '%kernel.cache_dir%'
+#    domadmin.translator:
+#        class: DomBase\DomAdminBundle\Search\Translator
+#        public: true
+#        arguments:
+#            - '%domadmin.config%'
+#            - '%kernel.cache_dir%'
+
+    gedmo.listener.tree:
+        class: Gedmo\Tree\TreeListener
+        tags:
+            - { name: doctrine.event_subscriber, connection: default }
+        calls:
+            - [ setAnnotationReader, [ '@annotation_reader' ] ]
+
+    gedmo.listener.loggable:
+        class: Gedmo\Loggable\LoggableListener
+        tags:
+            - { name: doctrine.event_subscriber, connection: default }

@@ -2,6 +2,7 @@
 
 namespace DomBase\DomAdminBundle\Controller;
 
+use App\Entity\CategoryTree;
 use Doctrine\DBAL\Exception\ForeignKeyConstraintViolationException;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\QueryBuilder;
@@ -14,6 +15,7 @@ use DomBase\DomAdminBundle\Form\Filter\FilterRegistry;
 use DomBase\DomAdminBundle\Form\Type\EasyAdminBatchFormType;
 use DomBase\DomAdminBundle\Form\Type\EasyAdminFiltersFormType;
 use DomBase\DomAdminBundle\Form\Type\EasyAdminFormType;
+use http\Exception\RuntimeException;
 use Lle\EasyAdminPlusBundle\Translator\Event\EasyAdminPlusTranslatorEvents;
 use Pagerfanta\Exception\OutOfRangeCurrentPageException;
 use Pagerfanta\Pagerfanta;
@@ -167,26 +169,43 @@ trait AdminControllerTrait
     {
         $this->dispatch(EasyAdminEvents::PRE_LIST);
 
-        $fields = $this->entity['list']['fields'];
-        $paginator = $this->findAll(
-            $this->entity['class'],
-            $this->request->query->get('page', 1),
-            $this->entity['list']['max_results'],
-            $this->request->query->get('sortField'),
-            $this->request->query->get('sortDirection'),
-            $this->entity['list']['dql_filter']
-        );
+        if(isset($this->entity['tree']) && $this->entity['tree'] == true) {
+            $fields = $this->entity['list']['fields'];
 
-        $this->dispatch(EasyAdminEvents::POST_LIST, ['paginator' => $paginator]);
+            $repo = $this->getDoctrine()->getRepository($this->entity['class']);
+            $repo->setChildrenIndex('children');
+            $tree = $repo->childrenHierarchy();
 
-        $parameters = [
-            'paginator' => $paginator,
-            'fields' => $fields,
-            'batch_form' => $this->createBatchForm($this->entity['name'])->createView(),
-            'delete_form_template' => $this->createDeleteForm($this->entity['name'], '__id__')->createView(),
-        ];
+            $parameters = [
+                'tree' => $tree,
+                'fields' => $fields,
+                'batch_form' => $this->createBatchForm($this->entity['name'])->createView(),
+                'delete_form_template' => $this->createDeleteForm($this->entity['name'], '__id__')->createView(),
+            ];
 
-        return $this->executeDynamicMethod('render<EntityName>Template', ['list', $this->entity['templates']['list'], $parameters]);
+            return $this->executeDynamicMethod('render<EntityName>Template', ['tree', $this->entity['templates']['tree'], $parameters]);
+        } else {
+            $fields = $this->entity['list']['fields'];
+            $paginator = $this->findAll(
+                $this->entity['class'],
+                $this->request->query->get('page', 1),
+                $this->entity['list']['max_results'],
+                $this->request->query->get('sortField'),
+                $this->request->query->get('sortDirection'),
+                $this->entity['list']['dql_filter']
+            );
+
+            $this->dispatch(EasyAdminEvents::POST_LIST, ['paginator' => $paginator]);
+
+            $parameters = [
+                'paginator' => $paginator,
+                'fields' => $fields,
+                'batch_form' => $this->createBatchForm($this->entity['name'])->createView(),
+                'delete_form_template' => $this->createDeleteForm($this->entity['name'], '__id__')->createView(),
+            ];
+
+            return $this->executeDynamicMethod('render<EntityName>Template', ['list', $this->entity['templates']['list'], $parameters]);
+        }
     }
 
     /**
@@ -497,6 +516,132 @@ trait AdminControllerTrait
             ->getQuery()
             ->execute()
         ;
+    }
+
+    /**
+     * @Route("/log", name="dom_admin_change_log")
+     *
+     * The method that is executed when the user performs a 'history' action on an entity.
+     *
+     * @return Response|RedirectResponse
+     */
+    public function historyAction(Request $request)
+    {
+        $this->em = $this->getDoctrine()->getManager();
+
+        $repo = $this->em->getRepository('Gedmo\Loggable\Entity\LogEntry'); // we use default log entry class
+        $logs = $repo->getLogEntries($item);
+
+        $result = [];
+
+        foreach ($logs as $log) {
+            $data = array();
+            if ($log->getData()) {
+                $metaData = $this->em->getClassMetadata(get_class($item));
+                foreach($log->getData() as $k => $entry){
+                    $type = $metaData->getTypeOfField($k);
+                    $retour = $entry;
+                    if($metaData->hasAssociation($k) && is_array($entry)){
+                        if ($entry) {
+                            $type = $metaData->isSingleValuedAssociation($k)? 'single_assoc':'multi_assoc';
+                            $assoc = $metaData->getAssociationMapping($k);
+                            $obj = $this->em->getRepository($assoc['targetEntity'])->findOneBy($entry);
+                            if ($obj) {
+                                $id = $this->em->getClassMetadata($assoc['targetEntity'])->getIdentifierValues($obj);
+                                $retour = (string) $obj; //(method_exists($obj, '__toString')) ? implode(',', $id) . ' ' . $obj->__toString() : $id;
+                            } else {
+                                $retour = "??";
+                            }
+                        }
+                    } else if($type === 'boolean'){
+                        $retour = ($entry)? 'label.true':'label.false';
+                    } else if($type === 'date'){
+                        $retour = ($entry)? $entry->format('d/m/Y'):'';
+                    } else if($type === 'datetime') {
+                        $retour = ($entry)? $entry->format('d/m/Y H:i'):'';
+                    } else if(is_array($entry)){
+                        $retour = implode('-',$entry);
+                    }
+                    $data[$k] = ['value' => $retour, 'type' => $type, 'raw' => $entry];
+                }
+            }
+            $result[] = array('log'=>$log,'data'=>$data);
+        }
+        return $this->render('@LleEasyAdminPlus/default/history.html.twig', array(
+            'logs'=>$result
+        ));
+    }
+
+    /**
+     *
+     * @param Request $request
+     * @return Response
+     */
+    public function getChildrenAction()
+    {
+        $id = $this->request->query->get('id');
+        $domadmin = $this->request->attributes->get('domadmin');
+
+        $repo = $this->getDoctrine()->getRepository($this->entity['class']);
+        $repo->setChildrenIndex('children');
+        $node = $repo->find($id);
+
+        $entity = $domadmin['item'];
+
+        $children = $repo->childrenHierarchy($node, false);
+
+        return $this->render('@DomAdmin/default/includes/_child.html.twig', ['children' => $children]);
+    }
+
+    /**
+     * The method that is executed when the user performs a 'new' action on an entity.
+     *
+     * @return Response|RedirectResponse
+     */
+    protected function newChildAction()
+    {
+        if (null == $parent_id = $this->request->query->get('parent_id', null)) {
+            throw new \RuntimeException('"parent_id" is required to add new resource.');
+        }
+
+        $repo = $this->getDoctrine()->getRepository($this->entity['class']);
+        $parent = $repo->find($parent_id);
+
+        $this->dispatch(EasyAdminEvents::PRE_NEW);
+
+        $entity = $this->executeDynamicMethod('createNew<EntityName>Entity');
+        $entity->setParent($parent);
+
+        $domadmin = $this->request->attributes->get('domadmin');
+        $domadmin['item'] = $entity;
+        $this->request->attributes->set('domadmin', $domadmin);
+
+        $fields = $this->entity['new']['fields'];
+
+        $newForm = $this->executeDynamicMethod('create<EntityName>NewForm', [$entity, $fields]);
+
+        $newForm->handleRequest($this->request);
+        if ($newForm->isSubmitted() && $newForm->isValid()) {
+            $this->dispatch(EasyAdminEvents::PRE_PERSIST, ['entity' => $entity]);
+            $this->executeDynamicMethod('persist<EntityName>Entity', [$entity, $newForm]);
+            $this->dispatch(EasyAdminEvents::POST_PERSIST, ['entity' => $entity]);
+
+            return $this->redirectToReferrer();
+        }
+
+        $this->dispatch(EasyAdminEvents::POST_NEW, [
+            'entity_fields' => $fields,
+            'form' => $newForm,
+            'entity' => $entity,
+        ]);
+
+        $parameters = [
+            'form' => $newForm->createView(),
+            'entity_fields' => $fields,
+            'entity' => $entity,
+        ];
+
+        return $this->executeDynamicMethod('render<EntityName>Template', ['new', $this->entity['templates']['new'], $parameters]);
     }
 
     /**
@@ -899,7 +1044,7 @@ trait AdminControllerTrait
         if (!\is_callable([$this, $methodName])) {
             $methodName = \str_replace('<EntityName>', '', $methodNamePattern);
         }
-
+        dump($methodName);
         return \call_user_func_array([$this, $methodName], $arguments);
     }
 
@@ -976,6 +1121,7 @@ trait AdminControllerTrait
      */
     protected function renderTemplate($actionName, $templatePath, array $parameters = [])
     {
+        dump($templatePath);
         return $this->render($templatePath, $parameters);
     }
 
@@ -1021,17 +1167,17 @@ trait AdminControllerTrait
     }
 
     /**
-     * Manage translations.
+     * @Route("/translations", name="dom_admin_translations")
      *
      * @param Request $request
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return RedirectResponse|Response
      *
-     * @throws \Exception
+     * @throws ForbiddenActionException
      */
     public function translationsAction(Request $request)
     {
-        $translator = $this->get('lle.easy_admin_plus.translator');
+        $translator = $this->get('domadmin.translator');
         $domain = $request->request->get('domain') ?? $request->query->get('domain');
         $locale = $this->container->getParameter('locale') ?? $this->container->getParameter('kernel.default_locale');
         $user = $this->getUser();

@@ -1,0 +1,5 @@
+<ul>
+    {% for child in children %}
+        <li class="{{ (child.children|length > 0) ? 'jstree-closed' : '' }}" id="{{ child.id }}">{{ child.name }}</li>
+    {% endfor %}
+</ul>

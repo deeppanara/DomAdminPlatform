@@ -23,6 +23,14 @@
       "js": [
         "./bootstrap-all.js"
       ]
+    },
+    "jquery-js-tree": {
+      "css": [
+        "./jquery-js-tree.css"
+      ],
+      "js": [
+        "./jquery-js-tree.js"
+      ]
     }
   }
 }

@@ -9,8 +9,8 @@ homepage:
 #    resource: '../src/Controller/AdminController.php'
 #    prefix: /admin
 #    type: annotation
-
-dom_admin_translations:
-    path: /admin/translations
-    defaults:
-        _controller: DomAdminBundle:Admin:translations
+#
+#dom_admin_translations:
+#    path: /admin/translations
+#    defaults:
+#        _controller: DomAdminBundle:Admin:translations

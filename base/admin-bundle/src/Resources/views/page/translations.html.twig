@@ -11,75 +11,78 @@
 {% endblock %}
 
 {% block content %}
-<form class="form-vertical edit-form" method="GET" action="">
     <div class="content mb-3">
         <div class="card w-100" >
             <div class="card-header">
-                Domain
+                {{ 'translator.header'|trans({}, 'DomAdminBundle') }}
             </div>
             <div class="card-body">
                 <div class="row">
-                    <div class="col-2">
-                        <select class="form-control custom-select" name="domain" id="domain" data-widget="select2">
-                            {% for curDomain in domains %}
-                            <option value="{{ curDomain }}"{{ (curDomain == domain ? ' selected="selected"') }}>{{ curDomain }}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
-                    <div class="col-2">
-                        <button class="btn btn-primary action-switch" type="submit">{{ 'translator.switch'|trans({}, 'DomAdminBundle') }}</button>
+                    <div class="col">
+                        <form class="edit-form form-inline" method="GET" action="">
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <select class="select2 form-control custom-select" name="domain" id="domain" data-widget="select2">
+                                        {% for curDomain in domains %}
+                                            <option value="{{ curDomain }}"{{ (curDomain == domain ? ' selected="selected"') }}>{{ curDomain }}</option>
+                                        {% endfor %}
+                                    </select>
+                                    <button class="btn btn-primary action-switch float-right ml-3" type="submit">{{ 'translator.switch'|trans({}, 'DomAdminBundle') }}</button>
+                                </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</form>
     <form class="form-vertical edit-form" method="POST" action="">
         <div class="content mb-3">
-            <input type="hidden" name="domain" value="{{ domain }}" />
-            {% set colBootstrap = locales|length + 1 %}
-            {% set dictionary = dictionaries[domain] %}
+            <div class="card w-100" >
+                <input type="hidden" name="domain" value="{{ domain }}" />
+                {% set colBootstrap = locales|length + 1 %}
+                {% set dictionary = dictionaries[domain] %}
 
-            {% for file, languages in dictionary %}
-                <div class="card w-100">
+                {% for file, languages in dictionary %}
+
                     <div class="card-header">
                         <i class="fa fa-file-text"></i> .{{ file|split('.')|last|upper }}
                     </div>
-                </div>
-
-                {% for key, value in dictionary[file][locale] %}
-
-                    <div class="row p-2 border-bottom">
-                        <div class="col-3 col-xs-12">
-                            <i class="fa fa-font"></i> <label class="control-label">{{ key|replace({'.': ' > '}) }}</label>
-                        </div>
-                        {% for locale in locales %}
-                            <div class="col col-xs-12">
-                                <div class="field-label">
-                                    <img class="" height="15px" width="15px" src="{{ asset('bundles/domadmin/images/country/' ~ locale ~ '.png') }}" alt="{{ locale }}" title="{{ locale }}" />
-                                    <label class="control-label">{{ locale }}</label>
-                                </div>
-                                <div class="field-textarea">
-                                    <textarea class="form-control" name="dictionaries[{{ domain }}][{{ file }}][{{ locale }}][{{ key }}]">{{ dictionary[file][locale][key] }}</textarea>
-                                </div>
+                    <div class="card-body">
+                    {% for key, value in dictionary[file][locale] %}
+                        <div class="row p-2 border-bottom border-secondary">
+                            <div class="col-3 col-xs-12 align-bottom">
+                                <br>
+                                <i class="fa fa-font"></i> <label class="control-label">{{ key|replace({'.': ' > '}) }}</label><br>
+                                <i class="fa fa-key"></i> <label class="control-label text-small text-muted">{{ key }}</label>
                             </div>
-                        {% endfor %}
+                            {% for locale in locales %}
+                                <div class="col col-xs-12">
+                                    <div class="field-label">
+                                        <img class="" height="15px" width="15px" src="{{ asset('bundles/domadmin/images/country/' ~ locale ~ '.png') }}" alt="{{ locale }}" title="{{ locale }}" />
+                                        <label class="control-label">{{ locale }}</label>
+                                    </div>
+                                    <div class="field-textarea">
+                                        <textarea class="form-control" name="dictionaries[{{ domain }}][{{ file }}][{{ locale }}][{{ key }}]">{{ dictionary[file][locale][key] }}</textarea>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% endfor %}
                     </div>
-
-                {% endfor %}
-                <div class="row">
-                    <div class="col-xs-12 form-actions stuck">
-                        <div class="form-group">
-                            <div id="form-actions-row">
-                                <button type="submit" name="submit" value="save" class="btn btn-primary action-save">
-                                    <i class="fa fa-save"></i> {{ 'translator.save'|trans({}, 'DomAdminBundle') }}
-                                </button>
+                    <div class="row">
+                        <div class="col-xs-12 form-actions stuck">
+                            <div class="form-group">
+                                <div id="form-actions-row">
+                                    <button type="submit" name="submit" value="save" class="btn btn-primary action-save">
+                                        <i class="fa fa-save"></i> {{ 'translator.save'|trans({}, 'DomAdminBundle') }}
+                                    </button>
+                                </div>
                             </div>
-                        </div>
-                    </div><div class="col-xs-12 form-actions sticky-wrapper"></div>
-                </div>
-
-            {% endfor %}
+                        </div><div class="col-xs-12 form-actions sticky-wrapper"></div>
+                    </div>
+                {% endfor %}
+            </div>
         </div>
     </form>
   {% endblock content %}

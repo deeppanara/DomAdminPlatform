@@ -47,11 +47,17 @@ class RequestPostInitializeListener
         if (null === $request) {
             return;
         }
+        $entity = $event->getArgument('entity');
+        $id = $request->query->get('id');
+
+        if ($id && $id != '#') {
+            $item = $this->findCurrentItem($entity, $id) ;
+        }
 
         $request->attributes->set('domadmin', [
-            'entity' => $entity = $event->getArgument('entity'),
+            'entity' => $entity,
             'view' => $request->query->get('action', 'list'),
-            'item' => ($id = $request->query->get('id')) ? $this->findCurrentItem($entity, $id) : null,
+            'item' => $item ?? null,
         ]);
     }
 

@@ -7,7 +7,7 @@ table.datagrid {
   width: 100%;
 }
 .datagrid thead {
-  background: var(--form-bg);
+  background: $form-bg;
 }
 .datagrid thead th {
   padding: 0;
@@ -49,7 +49,7 @@ table.datagrid {
   vertical-align: middle;
 }
 .datagrid tbody tr:hover td, .datagrid tbody tr:hover th {
-  background: var(--form-bg);
+  background: $form-bg;
 }
 .datagrid td.actions {
   text-align: right;

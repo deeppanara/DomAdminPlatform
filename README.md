@@ -47,8 +47,8 @@ Screenshot
 [2]: https://symfony.com
 [3]: https://symfony.com/doc/current/reference/requirements.html
 
-EasyAdmin
-=========
+DomAdmin
+========
 
 EasyAdmin creates administration backends for your Symfony applications with
 unprecedented simplicity.

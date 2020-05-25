@@ -20,6 +20,7 @@ class TemplateConfigPass implements ConfigPassInterface
         'menu' => '@DomAdmin/default/menu.html.twig',
         'edit' => '@DomAdmin/default/edit.html.twig',
         'list' => '@DomAdmin/default/list.html.twig',
+        'tree' => '@DomAdmin/default/tree.html.twig',
         'new' => '@DomAdmin/default/new.html.twig',
         'show' => '@DomAdmin/default/show.html.twig',
         'action' => '@DomAdmin/default/action.html.twig',
@@ -121,15 +122,17 @@ class TemplateConfigPass implements ConfigPassInterface
 
         // second, walk through all entity fields to determine their specific template
         foreach ($backendConfig['entities'] as $entityName => $entityConfig) {
-            foreach (['list', 'show'] as $view) {
-                foreach ($entityConfig[$view]['fields'] as $fieldName => $fieldMetadata) {
-                    // if the field defines its own template, use it. Otherwise, initialize
-                    // it to null because it will be resolved at runtime in the Configurator
-                    $entityConfig[$view]['fields'][$fieldName]['template'] = $fieldMetadata['template'] ?? null;
-                }
-            }
 
-            $backendConfig['entities'][$entityName] = $entityConfig;
+            if (!isset($entityConfig['tree'])) {
+                foreach (['list', 'show'] as $view) {
+                    foreach ($entityConfig[$view]['fields'] as $fieldName => $fieldMetadata) {
+                        // if the field defines its own template, use it. Otherwise, initialize
+                        // it to null because it will be resolved at runtime in the Configurator
+                        $entityConfig[$view]['fields'][$fieldName]['template'] = $fieldMetadata['template'] ?? null;
+                    }
+                }
+                $backendConfig['entities'][$entityName] = $entityConfig;
+            }
         }
 
         return $backendConfig;
