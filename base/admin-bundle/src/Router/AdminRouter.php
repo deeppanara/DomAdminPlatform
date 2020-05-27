@@ -12,7 +12,7 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 /**
  * @author Konstantin Grachev <me@grachevko.ru>
  */
-final class EasyAdminRouter
+final class AdminRouter
 {
     /** @var ConfigManager */
     private $configManager;

@@ -10,7 +10,7 @@ use Symfony\Component\DependencyInjection\Reference;
 /**
  * @author Maxime Steinhausser <maxime.steinhausser@gmail.com>
  */
-class EasyAdminFormTypePass implements CompilerPassInterface
+class AdminFormTypePass implements CompilerPassInterface
 {
     /**
      * {@inheritdoc}

@@ -5,7 +5,7 @@ namespace DomBase\DomAdminBundle\Event;
 /**
  * @author Javier Eguiluz <javier.eguiluz@gmail.com>
  */
-final class EasyAdminEvents
+final class DomAdminEvents
 {
     // Events related to initialization
     /** @Event("Symfony\Component\EventDispatcher\GenericEvent") */

@@ -53,7 +53,7 @@
         <service id="domadmin.paginator" class="DomBase\DomAdminBundle\Search\Paginator" public="true">
         </service>
 
-        <service id="domadmin.router" class="DomBase\DomAdminBundle\Router\EasyAdminRouter" public="true">
+        <service id="domadmin.router" class="DomBase\DomAdminBundle\Router\AdminRouter" public="true">
             <argument id="domadmin.config.manager" type="service" />
             <argument id="router" type="service" />
             <argument id="property_accessor" type="service" />
@@ -88,7 +88,7 @@
             <tag name="kernel.event_listener" event="easy_admin.post_initialize" method="initializeRequest" />
         </service>
 
-        <service id="domadmin.data_collector" class="DomBase\DomAdminBundle\DataCollector\EasyAdminDataCollector" public="false">
+        <service id="domadmin.data_collector" class="DomBase\DomAdminBundle\DataCollector\AdminDataCollector" public="false">
             <argument type="service" id="domadmin.config.manager" />
             <tag name="data_collector" template="@DomAdmin/data_collector/domadmin.html.twig" id="domadmin" />
         </service>

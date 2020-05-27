@@ -9,7 +9,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 /**
  * @author Konstantin Grachev <me@grachevko.ru>
  */
-final class EasyAdminConfigPass implements CompilerPassInterface
+final class AdminConfigPass implements CompilerPassInterface
 {
     use PriorityTaggedServiceTrait;
 

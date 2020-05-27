@@ -4,7 +4,7 @@ namespace DomBase\DomAdminBundle\Twig;
 
 use Doctrine\ORM\Mapping\ClassMetadata;
 use DomBase\DomAdminBundle\Configuration\ConfigManager;
-use DomBase\DomAdminBundle\Router\EasyAdminRouter;
+use DomBase\DomAdminBundle\Router\AdminRouter;
 use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\Intl\Countries;
 use Symfony\Component\Intl\Exception\MissingResourceException;
@@ -32,7 +32,7 @@ class EasyAdminTwigExtension extends AbstractExtension
     /** @var TranslatorInterface|null */
     private $translator;
 
-    public function __construct(ConfigManager $configManager, PropertyAccessorInterface $propertyAccessor, EasyAdminRouter $easyAdminRouter, bool $debug = false, LogoutUrlGenerator $logoutUrlGenerator = null, $translator = null)
+    public function __construct(ConfigManager $configManager, PropertyAccessorInterface $propertyAccessor, AdminRouter $easyAdminRouter, bool $debug = false, LogoutUrlGenerator $logoutUrlGenerator = null, $translator = null)
     {
         $this->configManager = $configManager;
         $this->propertyAccessor = $propertyAccessor;

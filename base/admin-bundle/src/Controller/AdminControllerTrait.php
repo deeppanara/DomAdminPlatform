@@ -6,7 +6,7 @@ use App\Entity\CategoryTree;
 use Doctrine\DBAL\Exception\ForeignKeyConstraintViolationException;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\QueryBuilder;
-use DomBase\DomAdminBundle\Event\EasyAdminEvents;
+use DomBase\DomAdminBundle\Event\DomAdminEvents;
 use DomBase\DomAdminBundle\Exception\EntityRemoveException;
 use DomBase\DomAdminBundle\Exception\ForbiddenActionException;
 use DomBase\DomAdminBundle\Exception\NoEntitiesConfiguredException;
@@ -88,7 +88,7 @@ trait AdminControllerTrait
      */
     protected function initialize(Request $request)
     {
-        $this->dispatch(EasyAdminEvents::PRE_INITIALIZE);
+        $this->dispatch(DomAdminEvents::PRE_INITIALIZE);
 
         $this->config = $this->get('domadmin.config.manager')->getBackendConfig();
 
@@ -121,7 +121,7 @@ trait AdminControllerTrait
         $this->em = $this->getDoctrine()->getManagerForClass($this->entity['class']);
         $this->request = $request;
 
-        $this->dispatch(EasyAdminEvents::POST_INITIALIZE);
+        $this->dispatch(DomAdminEvents::POST_INITIALIZE);
     }
 
     protected function dispatch($eventName, array $arguments = [])
@@ -167,7 +167,7 @@ trait AdminControllerTrait
      */
     protected function listAction()
     {
-        $this->dispatch(EasyAdminEvents::PRE_LIST);
+        $this->dispatch(DomAdminEvents::PRE_LIST);
 
         if(isset($this->entity['tree']) && $this->entity['tree'] == true) {
             $fields = $this->entity['list']['fields'];
@@ -195,7 +195,7 @@ trait AdminControllerTrait
                 $this->entity['list']['dql_filter']
             );
 
-            $this->dispatch(EasyAdminEvents::POST_LIST, ['paginator' => $paginator]);
+            $this->dispatch(DomAdminEvents::POST_LIST, ['paginator' => $paginator]);
 
             $parameters = [
                 'paginator' => $paginator,
@@ -217,7 +217,7 @@ trait AdminControllerTrait
      */
     protected function editAction()
     {
-        $this->dispatch(EasyAdminEvents::PRE_EDIT);
+        $this->dispatch(DomAdminEvents::PRE_EDIT);
 
         $id = $this->request->query->get('id');
         $domadmin = $this->request->attributes->get('domadmin');
@@ -244,14 +244,14 @@ trait AdminControllerTrait
 
         $editForm->handleRequest($this->request);
         if ($editForm->isSubmitted() && $editForm->isValid()) {
-            $this->dispatch(EasyAdminEvents::PRE_UPDATE, ['entity' => $entity]);
+            $this->dispatch(DomAdminEvents::PRE_UPDATE, ['entity' => $entity]);
             $this->executeDynamicMethod('update<EntityName>Entity', [$entity, $editForm]);
-            $this->dispatch(EasyAdminEvents::POST_UPDATE, ['entity' => $entity]);
+            $this->dispatch(DomAdminEvents::POST_UPDATE, ['entity' => $entity]);
 
             return $this->redirectToReferrer();
         }
 
-        $this->dispatch(EasyAdminEvents::POST_EDIT);
+        $this->dispatch(DomAdminEvents::POST_EDIT);
 
         $parameters = [
             'form' => $editForm->createView(),
@@ -270,7 +270,7 @@ trait AdminControllerTrait
      */
     protected function showAction()
     {
-        $this->dispatch(EasyAdminEvents::PRE_SHOW);
+        $this->dispatch(DomAdminEvents::PRE_SHOW);
 
         $id = $this->request->query->get('id');
         $domadmin = $this->request->attributes->get('domadmin');
@@ -279,7 +279,7 @@ trait AdminControllerTrait
         $fields = $this->entity['show']['fields'];
         $deleteForm = $this->createDeleteForm($this->entity['name'], $id);
 
-        $this->dispatch(EasyAdminEvents::POST_SHOW, [
+        $this->dispatch(DomAdminEvents::POST_SHOW, [
             'deleteForm' => $deleteForm,
             'fields' => $fields,
             'entity' => $entity,
@@ -301,7 +301,7 @@ trait AdminControllerTrait
      */
     protected function newAction()
     {
-        $this->dispatch(EasyAdminEvents::PRE_NEW);
+        $this->dispatch(DomAdminEvents::PRE_NEW);
 
         $entity = $this->executeDynamicMethod('createNew<EntityName>Entity');
 
@@ -315,14 +315,14 @@ trait AdminControllerTrait
 
         $newForm->handleRequest($this->request);
         if ($newForm->isSubmitted() && $newForm->isValid()) {
-            $this->dispatch(EasyAdminEvents::PRE_PERSIST, ['entity' => $entity]);
+            $this->dispatch(DomAdminEvents::PRE_PERSIST, ['entity' => $entity]);
             $this->executeDynamicMethod('persist<EntityName>Entity', [$entity, $newForm]);
-            $this->dispatch(EasyAdminEvents::POST_PERSIST, ['entity' => $entity]);
+            $this->dispatch(DomAdminEvents::POST_PERSIST, ['entity' => $entity]);
 
             return $this->redirectToReferrer();
         }
 
-        $this->dispatch(EasyAdminEvents::POST_NEW, [
+        $this->dispatch(DomAdminEvents::POST_NEW, [
             'entity_fields' => $fields,
             'form' => $newForm,
             'entity' => $entity,
@@ -347,7 +347,7 @@ trait AdminControllerTrait
      */
     protected function deleteAction()
     {
-        $this->dispatch(EasyAdminEvents::PRE_DELETE);
+        $this->dispatch(DomAdminEvents::PRE_DELETE);
 
         if ('DELETE' !== $this->request->getMethod()) {
             return $this->redirect($this->generateUrl('domadmin', ['action' => 'list', 'entity' => $this->entity['name']]));
@@ -361,7 +361,7 @@ trait AdminControllerTrait
             $domadmin = $this->request->attributes->get('domadmin');
             $entity = $domadmin['item'];
 
-            $this->dispatch(EasyAdminEvents::PRE_REMOVE, ['entity' => $entity]);
+            $this->dispatch(DomAdminEvents::PRE_REMOVE, ['entity' => $entity]);
 
             try {
                 $this->executeDynamicMethod('remove<EntityName>Entity', [$entity, $form]);
@@ -369,10 +369,10 @@ trait AdminControllerTrait
                 throw new EntityRemoveException(['entity_name' => $this->entity['name'], 'message' => $e->getMessage()]);
             }
 
-            $this->dispatch(EasyAdminEvents::POST_REMOVE, ['entity' => $entity]);
+            $this->dispatch(DomAdminEvents::POST_REMOVE, ['entity' => $entity]);
         }
 
-        $this->dispatch(EasyAdminEvents::POST_DELETE);
+        $this->dispatch(DomAdminEvents::POST_DELETE);
 
         return $this->redirectToReferrer();
     }
@@ -384,7 +384,7 @@ trait AdminControllerTrait
      */
     protected function searchAction()
     {
-        $this->dispatch(EasyAdminEvents::PRE_SEARCH);
+        $this->dispatch(DomAdminEvents::PRE_SEARCH);
 
         $query = \trim($this->request->query->get('query'));
         // if the search query is empty, redirect to the 'list' action
@@ -408,7 +408,7 @@ trait AdminControllerTrait
         );
         $fields = $this->entity['list']['fields'];
 
-        $this->dispatch(EasyAdminEvents::POST_SEARCH, [
+        $this->dispatch(DomAdminEvents::POST_SEARCH, [
             'fields' => $fields,
             'paginator' => $paginator,
         ]);
@@ -454,7 +454,7 @@ trait AdminControllerTrait
         $entityName = $this->entity['name'];
         $user = $this->getUser();
 
-        $this->dispatch(EasyAdminEvents::PRE_EXPORT, [
+        $this->dispatch(DomAdminEvents::PRE_EXPORT, [
             'user' => [
                 'username' => $user ? $user->getUsername() : null,
                 'roles' => $user ? $user->getRoles() : [],
@@ -469,7 +469,7 @@ trait AdminControllerTrait
             $this->config['entities'][$entityName]['export']['fields'] = $this->config['entities'][$entityName]['properties'];
         }
 
-        $this->dispatch(EasyAdminEvents::PRE_LIST);
+        $this->dispatch(DomAdminEvents::PRE_LIST);
         $paginator = $this->findFiltered(
             $this->entity, $this->entity['class'],
             1,
@@ -478,12 +478,12 @@ trait AdminControllerTrait
             $this->entity['list']['dql_filter']);
 
         $fields = $this->entity['list']['fields'];
-        $this->dispatch(EasyAdminEvents::POST_LIST, [
+        $this->dispatch(DomAdminEvents::POST_LIST, [
             'fields' => $fields,
             'paginator' => $paginator,
         ]);
 
-        $this->dispatch(EasyAdminEvents::POST_EXPORT, [
+        $this->dispatch(DomAdminEvents::POST_EXPORT, [
             'user' => [
                 'username' => $user ? $user->getUsername() : null,
                 'roles' => $user ? $user->getRoles() : [],
@@ -607,7 +607,7 @@ trait AdminControllerTrait
         $repo = $this->getDoctrine()->getRepository($this->entity['class']);
         $parent = $repo->find($parent_id);
 
-        $this->dispatch(EasyAdminEvents::PRE_NEW);
+        $this->dispatch(DomAdminEvents::PRE_NEW);
 
         $entity = $this->executeDynamicMethod('createNew<EntityName>Entity');
         $entity->setParent($parent);
@@ -622,14 +622,14 @@ trait AdminControllerTrait
 
         $newForm->handleRequest($this->request);
         if ($newForm->isSubmitted() && $newForm->isValid()) {
-            $this->dispatch(EasyAdminEvents::PRE_PERSIST, ['entity' => $entity]);
+            $this->dispatch(DomAdminEvents::PRE_PERSIST, ['entity' => $entity]);
             $this->executeDynamicMethod('persist<EntityName>Entity', [$entity, $newForm]);
-            $this->dispatch(EasyAdminEvents::POST_PERSIST, ['entity' => $entity]);
+            $this->dispatch(DomAdminEvents::POST_PERSIST, ['entity' => $entity]);
 
             return $this->redirectToReferrer();
         }
 
-        $this->dispatch(EasyAdminEvents::POST_NEW, [
+        $this->dispatch(DomAdminEvents::POST_NEW, [
             'entity_fields' => $fields,
             'form' => $newForm,
             'entity' => $entity,
@@ -735,11 +735,11 @@ trait AdminControllerTrait
 
         $this->get('domadmin.property_accessor')->setValue($entity, $property, $value);
 
-        $this->dispatch(EasyAdminEvents::PRE_UPDATE, ['entity' => $entity, 'newValue' => $value]);
+        $this->dispatch(DomAdminEvents::PRE_UPDATE, ['entity' => $entity, 'newValue' => $value]);
         $this->executeDynamicMethod('update<EntityName>Entity', [$entity]);
-        $this->dispatch(EasyAdminEvents::POST_UPDATE, ['entity' => $entity, 'newValue' => $value]);
+        $this->dispatch(DomAdminEvents::POST_UPDATE, ['entity' => $entity, 'newValue' => $value]);
 
-        $this->dispatch(EasyAdminEvents::POST_EDIT);
+        $this->dispatch(DomAdminEvents::POST_EDIT);
     }
 
     /**
@@ -815,7 +815,7 @@ trait AdminControllerTrait
 
         $this->filterQueryBuilder($queryBuilder);
 
-        $this->dispatch(EasyAdminEvents::POST_LIST_QUERY_BUILDER, [
+        $this->dispatch(DomAdminEvents::POST_LIST_QUERY_BUILDER, [
             'query_builder' => $queryBuilder,
             'sort_field' => $sortField,
             'sort_direction' => $sortDirection,
@@ -864,7 +864,7 @@ trait AdminControllerTrait
 
         $this->filterQueryBuilder($queryBuilder);
 
-        $this->dispatch(EasyAdminEvents::POST_SEARCH_QUERY_BUILDER, [
+        $this->dispatch(DomAdminEvents::POST_SEARCH_QUERY_BUILDER, [
             'query_builder' => $queryBuilder,
             'search_query' => $searchQuery,
             'searchable_fields' => $searchableFields,
@@ -1153,7 +1153,7 @@ trait AdminControllerTrait
         }
 
 
-        $this->dispatch(EasyAdminEvents::POST_LIST_QUERY_BUILDER, array(
+        $this->dispatch(DomAdminEvents::POST_LIST_QUERY_BUILDER, array(
             'query_builder' => $queryBuilder,
             'sort_field' => $sortField,
             'sort_direction' => $sortDirection,
@@ -1204,7 +1204,7 @@ trait AdminControllerTrait
                     $fileNames[] = $match[1] . '/' . $match[2] . '.' . $locale . '.' . $match[3];
                 }
             }
-            $this->get('event_dispatcher')->dispatch(EasyAdminEvents::POST_TRANSLATE,
+            $this->get('event_dispatcher')->dispatch(DomAdminEvents::POST_TRANSLATE,
                 new GenericEvent($domain, [
                     'domain' => $domain,
                     'files' => $fileNames,
@@ -1249,7 +1249,7 @@ trait AdminControllerTrait
         $dictionaries = $translator->formatDictionaries($translations, $dictionaries);
 
         // dispatch event
-        $this->get('event_dispatcher')->dispatch(EasyAdminEvents::PRE_TRANSLATE,
+        $this->get('event_dispatcher')->dispatch(DomAdminEvents::PRE_TRANSLATE,
             new GenericEvent($domain, [
                 'domain' => $domain,
                 'user' => [

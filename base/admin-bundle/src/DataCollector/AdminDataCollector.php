@@ -16,7 +16,7 @@ use Symfony\Component\Yaml\Yaml;
  *
  * @author Javier Eguiluz <javier.eguiluz@gmail.com>
  */
-class EasyAdminDataCollector extends DataCollector
+class AdminDataCollector extends DataCollector
 {
     /** @var ConfigManager */
     private $configManager;
