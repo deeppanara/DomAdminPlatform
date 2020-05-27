@@ -60,7 +60,57 @@
             {% endblock item_actions %}
         </div>
     </section>
+    {% if change_log|length %}
+    <div class="content mb-3">
+        <div class="card w-100" >
+            <div class="card-header">
+                {{ 'Update log'|trans({}, 'DomAdminBundle') }}
+            </div>
+            <div class="qa-message-list" id="wallmessages">
+                {% for entry in change_log %}
+                    {% set log = entry.log %}
+                    <div class="message-item">
+                        <div class="message-inner">
+                            <div class="message-head clearfix">
+                                <div class="user-detail">
+{#                                    <h5 class="handle">{{ log.action|upper() }}</h5>#}
+                                    <div class="post-meta">
+                                        <div class="asker-meta">
+                                            <span class="qa-message-what">{{ log.action|upper() }}</span>
+                                            <span class="qa-message-when">
+                                                <span class="time"><i class="fa fa-clock-o"></i> {{ log.loggedAt|date('d/m/Y H:i') }}<span class="text-muted"> by {{ log.username }}</span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="qa-message-content">
+                                <table>
+                                    {% for key,value in entry.data %}
+                                        <tr>
+                                            <td>{{ ('field.'~key) | trans() }}</td>
+                                            <td>&nbsp;<i class="fa fa-arrow-right"></i>&nbsp;</td>
+                                            <td>
+                                                {% if value.type == 'boolean' %}
+                                                    <span class="badge badge-success {% if not value.raw %}label-danger{% endif %}">{{ value.value|trans({}, 'EasyAdminBundle' ) }}</span>
+                                                {% elseif value.type == 'single_assoc' %}
+                                                    <span class="badge label-primary">{{ value.value }}</span>
+                                                {% else %}
+                                                    {{ value.value }}
+                                                {% endif %}
 
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    {% endif %}
     {% block delete_form %}
         {{ include('@DomAdmin/default/includes/_delete_form.html.twig', {
             view: 'show',

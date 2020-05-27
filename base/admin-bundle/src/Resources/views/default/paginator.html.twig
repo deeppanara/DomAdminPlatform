@@ -4,7 +4,7 @@
 
 <div class="list-pagination">
     <div class="list-pagination-counter">
-        {{ 'paginator.results'|transchoice(paginator.nbResults)|raw }}
+        <h6 class="mb-3">Showing {{ paginator.getCurrentPageOffsetStart }} - {{ paginator.getCurrentPageOffsetEnd}} of {{ 'paginator.results'|transchoice(paginator.nbResults)|raw }}</h6>
     </div>
 
     <div class="pager pagination list-pagination-paginator {{ not paginator.hasPreviousPage ? 'first-page' }} {{ not paginator.hasNextPage ? 'last-page' }}">

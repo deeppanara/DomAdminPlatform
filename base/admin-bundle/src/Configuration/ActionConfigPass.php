@@ -391,17 +391,17 @@ class ActionConfigPass implements ConfigPassInterface
         $actions = $this->doNormalizeActionsConfig([
             'delete' => ['name' => 'delete', 'label' => 'action.delete', 'icon' => 'trash-o', 'css_class' => 'btn text-danger'],
             'edit' => ['name' => 'edit', 'label' => 'action.edit', 'icon' => 'edit', 'css_class' => 'btn btn-primary'],
-            'new' => ['name' => 'new', 'label' => 'action.new', 'css_class' => 'btn btn-primary'],
-            'search' => ['name' => 'search', 'label' => 'action.search'],
-            'show' => ['name' => 'show', 'label' => 'action.show'],
+            'new' => ['name' => 'new', 'label' => 'action.new', 'icon' => 'plus-circle', 'css_class' => 'btn btn-primary'],
+            'search' => ['name' => 'search', 'label' => 'action.search', 'icon' => 'search'],
+            'show' => ['name' => 'show', 'label' => 'action.show', 'icon' => 'eye'],
             'list' => ['name' => 'list', 'label' => 'action.list', 'css_class' => 'btn btn-link pr-0'],
         ]);
 
         // minor tweaks for some action + view combinations
         if ('list' === $view) {
-            $actions['delete']['icon'] = null;
+            $actions['delete']['icon'] = 'trash-o';
             $actions['delete']['css_class'] = 'text-danger';
-            $actions['edit']['icon'] = null;
+            $actions['edit']['icon'] = 'edit';
             $actions['edit']['css_class'] = '';
             $actions['list']['css_class'] = '';
         }

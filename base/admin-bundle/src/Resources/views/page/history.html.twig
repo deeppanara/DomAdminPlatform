@@ -1,0 +1,71 @@
+{% extends domadmin_config('design.templates.layout') %}
+
+{% block page_title %}
+    {{ 'history.title'|trans({}, 'DomAdminBundle') }}
+{% endblock %}
+
+{% block content_title %}
+    {% apply spaceless %}
+        {{ 'history.title'|trans({}, 'DomAdminBundle') }}
+    {% endapply %}
+{% endblock %}
+
+{% block content %}
+    <div class="content mb-3">
+        <div class="card w-100" >
+{#            <div class="container p-0">#}
+                <div class="qa-message-list" id="wallmessages">
+                    {% if logs|length %}
+                    {% for entry in logs %}
+                        {% set log = entry.log %}
+                        <div class="message-item" id="m16">
+                            <div class="message-inner">
+                                <div class="message-head clearfix">
+                                    <div class="user-detail">
+                                        <h5 class="handle">{{ log.action|upper() }} - {{ log.objectClass|split('\\')[2] }} - #{{ log.objectId }}</h5>
+                                        <div class="post-meta">
+                                            <div class="asker-meta">
+                                                <span class="qa-message-what"></span>
+                                                <span class="qa-message-when">
+                                                    <span class="time"><i class="fa fa-clock-o"></i> {{ log.loggedAt|date('d/m/Y H:i') }}<span class="text-muted"> by {{ log.username }}</span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="qa-message-content">
+                                    <table>
+                                        {% for key,value in entry.data %}
+                                            <tr>
+                                                <td>{{ ('field.'~key) | trans() }}</td>
+                                                <td>&nbsp;<i class="fa fa-arrow-right"></i>&nbsp;</td>
+                                                <td>
+                                                    {% if value.type == 'boolean' %}
+                                                        <span class="badge badge-secondary {% if not value.raw %}label-danger{% endif %}">{{ value.value|trans({}, 'EasyAdminBundle' ) }}</span>
+                                                    {% elseif value.type == 'single_assoc' %}
+                                                        <span class="badge label-primary">{{ value.value }}</span>
+                                                    {% else %}
+                                                        {{ value.value }}
+                                                    {% endif %}
+
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                    {% endif %}
+                </div>
+{#            </div>#}
+        </div>
+    </div>
+{% endblock content %}
+
+{% block body_javascript %}
+    {{ parent() }}
+
+    {{ include('@DomAdmin/default/includes/_select2_widget.html.twig') }}
+{% endblock %}
+

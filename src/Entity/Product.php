@@ -42,6 +42,7 @@ class Product
      *
      * @var \DateTime
      * @ORM\Column(type="datetime", name="created_at")
+     * @Gedmo\Versioned
      */
     private $createdAt = null;
 
@@ -66,6 +67,7 @@ class Product
      *
      * @var bool
      * @ORM\Column(type="boolean")
+     * @Gedmo\Versioned
      */
     private $enabled = false;
 
@@ -98,6 +100,7 @@ class Product
      *
      * @var array
      * @ORM\Column(type="array")
+     * @Gedmo\Versioned
      */
     private $features = array();
 
