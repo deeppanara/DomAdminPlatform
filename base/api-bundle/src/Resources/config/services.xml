@@ -1,0 +1,120 @@
+<?xml version="1.0" ?>
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <service id="cache.domapi" parent="cache.system" public="false">
+            <tag name="cache.pool" />
+        </service>
+
+        <service id="domapi.config.manager" class="DomBase\DomApiBundle\Configuration\ConfigManager" public="true">
+            <argument>%domapi.config%</argument>
+            <argument>%kernel.debug%</argument>
+            <argument type="service" id="property_accessor" />
+            <argument type="service" id="cache.domapi" />
+        </service>
+
+        <service id="domapi.query_builder" class="DomBase\DomApiBundle\Search\QueryBuilder" public="true">
+            <argument type="service" id="doctrine" />
+        </service>
+
+        <service id="domapi.finder" class="DomBase\DomApiBundle\Search\Finder" public="false">
+            <argument type="service" id="domapi.query_builder" />
+            <argument type="service" id="domapi.paginator" />
+        </service>
+
+        <service id="domapi.autocomplete" class="DomBase\DomApiBundle\Search\Autocomplete" public="true">
+            <argument type="service" id="domapi.config.manager" />
+            <argument type="service" id="domapi.finder" />
+            <argument type="service" id="property_accessor" />
+        </service>
+
+        <service id="domapi.export.xlsx_exporter" class="DomBase\DomApiBundle\Search\Exporter\XlsxExporter">
+            <tag name="domapi.exporter"/>
+        </service>
+
+        <service id="domapi.export.csv_exporter" class="DomBase\DomApiBundle\Search\Exporter\CsvExporter">
+            <tag name="domapi.exporter"/>
+        </service>
+
+        <service id="domapi.export_service" class="DomBase\DomApiBundle\Search\Exporter" public="true">
+            <argument type="service" id="domapi.config.manager" />
+            <argument type="service" id="property_accessor" />
+            <argument type="service" id="translator" />
+            <argument type="tagged" tag="domapi.exporter" />
+        </service>
+
+        <service id="domapi.translator" class="DomBase\DomApiBundle\Search\Translator" public="true">
+            <argument type="service" id="domapi.config.manager" />
+            <argument>%kernel.cache_dir%</argument>
+        </service>
+
+        <service id="domapi.serializer" class="DomBase\DomApiBundle\Search\Serializer" public="true">
+        </service>
+
+        <service id="domapi.paginator" class="DomBase\DomApiBundle\Search\Paginator" public="true">
+        </service>
+
+        <service id="domapi.router" class="DomBase\DomApiBundle\Router\ApiRouter" public="true">
+            <argument id="domapi.config.manager" type="service" />
+            <argument id="router" type="service" />
+            <argument id="property_accessor" type="service" />
+            <argument id="request_stack" type="service" on-invalid="null" />
+        </service>
+
+        <service id="domapi.listener.controller" class="DomBase\DomApiBundle\EventListener\ControllerListener" public="true">
+            <argument type="service" id="domapi.config.manager" />
+            <argument type="service" id="controller_resolver" />
+            <tag name="kernel.event_listener" event="kernel.controller" method="onKernelController" />
+        </service>
+
+        <service id="domapi.listener.exception" class="DomBase\DomApiBundle\EventListener\ExceptionListener" public="true">
+            <argument type="service" id="twig" />
+            <argument>%domapi.config%</argument>
+            <tag name="kernel.event_listener" event="kernel.exception" method="onKernelException" priority="-64" />
+        </service>
+
+        <service id="domapi.listener.request_post_initialize" class="DomBase\DomApiBundle\EventListener\RequestPostInitializeListener" public="true">
+            <argument type="service" id="doctrine" />
+            <argument type="service" id="request_stack" on-invalid="null" />
+            <tag name="kernel.event_listener" event="easy_admin.post_initialize" method="initializeRequest" />
+        </service>
+
+        <service id="domapi.configuration.normalizer_config_pass" class="DomBase\DomApiBundle\Configuration\NormalizerConfigPass" public="false">
+            <argument type="service" id="service_container" />
+            <argument type="service" id="domapi.filter.registry" />
+            <tag name="domapi.config_pass" priority="90" />
+        </service>
+
+        <service id="domapi.configuration.metadata_config_pass" class="DomBase\DomApiBundle\Configuration\MetadataConfigPass" public="false">
+            <argument type="service" id="doctrine" />
+            <tag name="domapi.config_pass" priority="50" />
+        </service>
+
+        <service id="domapi.configuration.property_config_pass" class="DomBase\DomApiBundle\Configuration\PropertyConfigPass" public="false">
+            <argument type="service" id="form.registry" />
+            <argument type="service" id="domapi.filter.registry" />
+            <tag name="domapi.config_pass" priority="40" />
+        </service>
+
+        <service id="domapi.configuration.view_config_pass" class="DomBase\DomApiBundle\Configuration\ViewConfigPass" public="false">
+            <tag name="domapi.config_pass" priority="30" />
+        </service>
+
+        <service id="domapi.property_accessor" alias="property_accessor" public="true" />
+
+        <service id="DomBase\DomApiBundle\Controller\DomApiController" class="DomBase\DomApiBundle\Controller\DomApiController" public="true" autowire="true">
+            <tag name="container.service_subscriber" />
+        </service>
+
+        <!-- aliases needed for the service locator of the AbstractAdminController -->
+        <service id="DomBase\DomApiBundle\Configuration\ConfigManager" alias="domapi.config.manager" />
+        <service id="DomBase\DomApiBundle\Search\QueryBuilder" alias="domapi.query_builder" />
+        <service id="DomBase\DomApiBundle\Search\Paginator" alias="domapi.paginator" />
+        <service id="DomBase\DomApiBundle\Search\Autocomplete" alias="domapi.autocomplete" />
+        <service id="DomBase\DomApiBundle\Search\Exporter" alias="domapi.export_service" />
+        <service id="DomBase\DomApiBundle\Search\Translator" alias="domapi.translator" />
+        <service id="DomBase\DomApiBundle\Search\Serializer" alias="domapi.serializer" />
+    </services>
+</container>

@@ -1,0 +1,39 @@
+services:
+#    domapi.service.xlsx_exporter:
+#        class: DomBase\DomApiBundle\Search\Exporter\XlsxExporter
+#        tags: [domapi.exporter]
+#
+#    domapi.service.csv_exporter:
+#        class:  DomBase\DomApiBundle\Search\Exporter\CsvExporter
+#        tags: [domapi.exporter]
+#
+#
+#    DomBase\DomApiBundle\Search\Exporter\CsvExporter: '@domapi.service.csv_exporter'
+#    DomBase\DomApiBundle\Search\Exporter\XlsxExporter: '@domapi.service.xlsx_exporter'
+#
+#    domapi.service.export_manager:
+#        public: true
+#        class:  DomBase\DomApiBundle\Search\Exporter
+#        arguments: ["@domapi.config.manager","@property_accessor","@translator", !tagged domapi.exporter]
+#
+#    DomBase\DomApiBundle\Search\Exporter: '@domapi.service.export_manager'
+
+
+#    domapi.translator:
+#        class: DomBase\DomApiBundle\Search\Translator
+#        public: true
+#        arguments:
+#            - '%domapi.config%'
+#            - '%kernel.cache_dir%'
+
+    gedmo.listener.tree:
+        class: Gedmo\Tree\TreeListener
+        tags:
+            - { name: doctrine.event_subscriber, connection: default }
+        calls:
+            - [ setAnnotationReader, [ '@annotation_reader' ] ]
+
+    gedmo.listener.loggable:
+        class: Gedmo\Loggable\LoggableListener
+        tags:
+            - { name: doctrine.event_subscriber, connection: default }
