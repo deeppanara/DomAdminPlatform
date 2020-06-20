@@ -1,16 +1,16 @@
-#homepage:
-#    path: /
-#    defaults:
-#        _controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController::redirectAction
-#        route: domadmin
-#        permanent: true
+homepage:
+    path: /
+    defaults:
+        _controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController::redirectAction
+        route: domadmin
+        permanent: true
 
 easy_admin_bundle:
     resource: '@DomAdminBundle/Controller/AdminController.php'
     prefix: /admin
     type: annotation
 
-easy_api_bundle:
-    resource: '@DomApiBundle/Controller/DomApiController.php'
-    prefix: /api
-    type: annotation
+#easy_api_bundle:
+#    resource: '@DomApiBundle/Controller/DomApiController.php'
+#    prefix: /api
+#    type: annotation

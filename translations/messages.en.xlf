@@ -5,6 +5,50 @@
       <tool tool-id="symfony" tool-name="Symfony"/>
     </header>
     <body>
+      <trans-unit id="f.rvF6y" resname="action.new">
+        <source>action.new</source>
+        <target>Add %entity_label%</target>
+      </trans-unit>
+      <trans-unit id="Ffi98jp" resname="action.show">
+        <source>action.show</source>
+        <target>Show</target>
+      </trans-unit>
+      <trans-unit id="ovKkXwU" resname="action.edit">
+        <source>action.edit</source>
+        <target>Edit</target>
+      </trans-unit>
+      <trans-unit id="odDw0du" resname="action.search">
+        <source>action.search</source>
+        <target>Search</target>
+      </trans-unit>
+      <trans-unit id="hTKWQ6g" resname="action.delete">
+        <source>action.delete</source>
+        <target>Delete</target>
+      </trans-unit>
+      <trans-unit id="HLtdhYw" resname="action.save">
+        <source>action.save</source>
+        <target>Save changes</target>
+      </trans-unit>
+      <trans-unit id="Qj1ElaL" resname="action.cancel">
+        <source>action.cancel</source>
+        <target>Cancel</target>
+      </trans-unit>
+      <trans-unit id="8IveD6W" resname="action.list">
+        <source>action.list</source>
+        <target>Back to listing</target>
+      </trans-unit>
+      <trans-unit id="vqP80DT" resname="action.deselect">
+        <source>action.deselect</source>
+        <target>Deselect</target>
+      </trans-unit>
+      <trans-unit id="rSWmi1r" resname="label.form.empty_value">
+        <source>label.form.empty_value</source>
+        <target>None</target>
+      </trans-unit>
+      <trans-unit id="le023yQ" resname="__name__label__">
+        <source>__name__label__</source>
+        <target>__name__label__</target>
+      </trans-unit>
       <trans-unit id="uLHYlMa" resname="Categories">
         <source>Categories</source>
         <target>Categories</target>
@@ -240,50 +284,6 @@
       <trans-unit id="qQ57fB2" resname="EAN-13 valid code. Leave empty if unknown.">
         <source>EAN-13 valid code. Leave empty if unknown.</source>
         <target>EAN-13 valid code. Leave empty if unknown.</target>
-      </trans-unit>
-      <trans-unit id="f.rvF6y" resname="action.new">
-        <source>action.new</source>
-        <target>Add %entity_label%</target>
-      </trans-unit>
-      <trans-unit id="Ffi98jp" resname="action.show">
-        <source>action.show</source>
-        <target>Show</target>
-      </trans-unit>
-      <trans-unit id="ovKkXwU" resname="action.edit">
-        <source>action.edit</source>
-        <target>Edit</target>
-      </trans-unit>
-      <trans-unit id="odDw0du" resname="action.search">
-        <source>action.search</source>
-        <target>Search</target>
-      </trans-unit>
-      <trans-unit id="hTKWQ6g" resname="action.delete">
-        <source>action.delete</source>
-        <target>Delete</target>
-      </trans-unit>
-      <trans-unit id="HLtdhYw" resname="action.save">
-        <source>action.save</source>
-        <target>Save changes</target>
-      </trans-unit>
-      <trans-unit id="Qj1ElaL" resname="action.cancel">
-        <source>action.cancel</source>
-        <target>Cancel</target>
-      </trans-unit>
-      <trans-unit id="8IveD6W" resname="action.list">
-        <source>action.list</source>
-        <target>Back to listing</target>
-      </trans-unit>
-      <trans-unit id="vqP80DT" resname="action.deselect">
-        <source>action.deselect</source>
-        <target>Deselect</target>
-      </trans-unit>
-      <trans-unit id="rSWmi1r" resname="label.form.empty_value">
-        <source>label.form.empty_value</source>
-        <target>None</target>
-      </trans-unit>
-      <trans-unit id="le023yQ" resname="__name__label__">
-        <source>__name__label__</source>
-        <target>__name__label__</target>
       </trans-unit>
     </body>
   </file>
