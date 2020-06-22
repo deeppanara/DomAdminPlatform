@@ -9,7 +9,7 @@
 # The configuration options are explained in detail in the bundle documentation,
 # which is published at https://github.com/javiereguiluz/DomAdminBundle
 dom_admin:
-    site_name: 'ACME Backend'
+    site_name: 'DOM Backend'
     translator:
         # defines the locales you want to manage
         locales:

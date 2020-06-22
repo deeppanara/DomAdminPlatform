@@ -138,8 +138,9 @@
 
         <service id="domadmin.property_accessor" alias="property_accessor" public="true" />
 
-        <service id="DomBase\DomAdminBundle\Controller\EasyAdminController" class="DomBase\DomAdminBundle\Controller\EasyAdminController" public="true" autowire="true">
+        <service id="DomBase\DomAdminBundle\Controller\DomAdminController" class="DomBase\DomAdminBundle\Controller\DomAdminController" public="true" autowire="true">
             <tag name="container.service_subscriber" />
+            <tag name="controller.service_arguments" />
         </service>
 
         <!-- aliases needed for the service locator of the AbstractAdminController -->

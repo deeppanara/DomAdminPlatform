@@ -5,8 +5,13 @@ homepage:
         route: domadmin
         permanent: true
 
-easy_admin_bundle:
+admin_bundle:
     resource: '@DomAdminBundle/Controller/AdminController.php'
+    prefix: /admin
+    type: annotation
+
+dom_admin_bundle:
+    resource: '@DomAdminBundle/Controller/DomAdminController.php'
     prefix: /admin
     type: annotation
 

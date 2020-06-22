@@ -3,6 +3,9 @@
 
 {% block body_class 'page-login' %}
 
+{% block header %}
+{% endblock header %}
+
 {% block wrapper_wrapper %}
     {% set _username_label = username_label is defined ? username_label|trans : 'login.username'|trans({}, 'DomAdminBundle') %}
     {% set _password_label = password_label is defined ? password_label|trans : 'login.password'|trans({}, 'DomAdminBundle') %}
